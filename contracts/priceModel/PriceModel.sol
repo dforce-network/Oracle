@@ -39,6 +39,8 @@ abstract contract PriceModel is
         __Ownable_init();
     }
 
+    function _setPrice(address _asset, uint256 _requestedPrice) external override virtual returns (uint256);
+    
     function _calcDecimal(uint256 _assetDecimals, uint256 _priceDecimals, uint256 _price) internal virtual pure returns (uint256) {
 
         return _price.mul(10 ** (doubleDecimals_.sub(_assetDecimals.add(_priceDecimals))));
@@ -47,6 +49,4 @@ abstract contract PriceModel is
     function getAssetPrice(address _asset) external override virtual returns (uint256);
     function getAssetStatus(address _asset) external override virtual returns (bool);
     function getAssetPriceStatus(address _asset) external override virtual returns (uint256, bool);
-
-    function _setPrice(address _asset, uint256 _requestedPrice) external override virtual returns (uint256);
 }
