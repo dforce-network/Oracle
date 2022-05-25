@@ -96,7 +96,7 @@ contract ReadPostPriceModel is PostPriceModel {
      * @param _asset Asset for which to get the price.
      * @return Uint mantissa of asset price (scaled by 1e18) or zero if unset.
      */
-    function _getReaderPrice(address _asset) internal view returns (uint256) {
+    function _getReaderPrice(address _asset) internal virtual view returns (uint256) {
         Reader storage _reader = readers_[_asset];
         if (_reader.asset == address(0)) return assetPrices_[_asset];
 
