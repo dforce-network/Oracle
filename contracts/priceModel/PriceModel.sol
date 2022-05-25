@@ -17,12 +17,19 @@ abstract contract PriceModel is
 
     using SafeMath for uint256;
 
-    uint256 internal constant doubleDecimals = 36;
+    uint256 internal constant doubleDecimals_ = 36;
 
     bool public constant override isPriceModel = true;
 
     constructor() public {
         initialize();
+    }
+
+    /**
+     * @notice Do not pay into PriceModel.
+     */
+    receive() external payable {
+        revert();
     }
 
     /**
@@ -34,7 +41,7 @@ abstract contract PriceModel is
 
     function _calcDecimal(uint256 _assetDecimals, uint256 _priceDecimals, uint256 _price) internal virtual pure returns (uint256) {
 
-        return _price.mul(10 ** (doubleDecimals.sub(_assetDecimals.add(_priceDecimals))));
+        return _price.mul(10 ** (doubleDecimals_.sub(_assetDecimals.add(_priceDecimals))));
     }
 
     function getAssetPrice(address _asset) external override virtual returns (uint256);
