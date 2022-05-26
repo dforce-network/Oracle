@@ -96,7 +96,7 @@ contract ReadPostPriceModel is PostPriceModel {
      * @param _asset Asset for which to get the price.
      * @return Uint mantissa of asset price (scaled by 1e18) or zero if unset.
      */
-    function _getReaderPrice(address _asset) internal virtual view returns (uint256) {
+    function _getAssetPrice(address _asset) internal override virtual view returns (uint256) {
         Reader storage _reader = readers_[_asset];
         if (_reader.asset == address(0)) return assetPrices_[_asset];
 
@@ -106,16 +106,5 @@ contract ReadPostPriceModel is PostPriceModel {
             return readerPrice.mul(10 ** (uint256(0 - _reader.decimalsDifference)));
 
         return readerPrice.div(10 ** (uint256(_reader.decimalsDifference)));
-    }
-
-    function getAssetPrice(address _asset) external override virtual returns (uint256) {
-        return _getReaderPrice(_asset);
-    }
-    function getAssetStatus(address _asset) external override virtual returns (bool) {
-        _asset;
-        return true;
-    }
-    function getAssetPriceStatus(address _asset) external override virtual returns (uint256, bool) {
-        return (_getReaderPrice(_asset), true);
     }
 }
