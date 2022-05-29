@@ -2,8 +2,8 @@
 pragma solidity ^0.6.12;
 
 
-import "./PriceModel.sol";
-import "../interface/IChainlinkAggregator.sol";
+import "../PriceModel.sol";
+import "../../interface/IChainlinkAggregator.sol";
 
 contract ChainLinkPrice is PriceModel {
 

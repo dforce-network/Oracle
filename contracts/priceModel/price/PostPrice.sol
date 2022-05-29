@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "../library/SafeRatioMath.sol";
+import "../../library/SafeRatioMath.sol";
 
-import "./PriceModel.sol";
-import "../interface/IChainlinkAggregator.sol";
+import "../PriceModel.sol";
 
 contract PostPrice is PriceModel {
 
