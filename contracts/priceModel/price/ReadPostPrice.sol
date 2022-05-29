@@ -78,7 +78,7 @@ contract ReadPostPrice is PostPrice {
             _setReaderInternal(_assets[i], _readAssets[i]);
     }
 
-    function _setPrice(address _asset, uint256 _requestedPrice) external override virtual returns (uint256) {
+    function _setPrice(address _asset, uint256 _requestedPrice) external override virtual onlyOwner returns (uint256) {
         Reader storage _reader = readers_[_asset];
         if (_reader.asset != address(0))
             return assetPrices_[_reader.asset];

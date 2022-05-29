@@ -457,7 +457,7 @@ contract PostPrice is Base, PriceModel {
         return _localVars.price;
     }
 
-    function _setPrice(address _asset, uint256 _requestedPrice) external override virtual returns (uint256) {
+    function _setPrice(address _asset, uint256 _requestedPrice) external override virtual onlyOwner returns (uint256) {
         return _setPriceInternal(_asset, _requestedPrice);
     }
 
