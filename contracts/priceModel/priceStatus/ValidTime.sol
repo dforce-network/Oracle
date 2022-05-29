@@ -51,4 +51,8 @@ abstract contract ValidTime is Base {
         for (uint256 i = 0; i < _assets.length; i++)
             _setAssetValidIntervalInternal(_assets[i], _validIntervals[i]);
     }
+
+    function validInterval(address _asset) external view returns (uint256) {
+        return validInterval_[_asset];
+    }
 }
