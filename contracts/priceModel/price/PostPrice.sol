@@ -3,9 +3,10 @@ pragma solidity ^0.6.12;
 
 import "../../library/SafeRatioMath.sol";
 
-import "../PriceModel.sol";
+import "../Base.sol";
+import "./PriceModel.sol";
 
-contract PostPrice is PriceModel {
+contract PostPrice is Base, PriceModel {
 
     using SafeRatioMath for uint256;
 

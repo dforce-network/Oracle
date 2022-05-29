@@ -2,10 +2,12 @@
 pragma solidity ^0.6.12;
 
 
-import "../PriceModel.sol";
+import "../Base.sol";
+import "./PriceModel.sol";
+
 import "../../interface/IChainlinkAggregator.sol";
 
-contract ChainLinkPrice is PriceModel {
+contract ChainLinkPrice is Base, PriceModel {
 
     /**
      * @dev Mapping of asset addresses to aggregator.
@@ -88,6 +90,8 @@ contract ChainLinkPrice is PriceModel {
 
     function _getAssetPrice(address _asset) internal virtual view returns (uint256) {
         IChainlinkAggregator _aggregator = IChainlinkAggregator(aggregator_[_asset]);
+        if (_aggregator == IChainlinkAggregator(0))
+            return 0;
         (, int256 _answer, , ,) = _aggregator.latestRoundData();
         return _calcDecimal(uint256(IERC20(_asset).decimals()) , uint256(_aggregator.decimals()), uint256(_answer));
     }
