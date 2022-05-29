@@ -6,7 +6,7 @@ import "../library/SafeRatioMath.sol";
 import "./PriceModel.sol";
 import "../interface/IChainlinkAggregator.sol";
 
-contract PostPriceModel is PriceModel {
+contract PostPrice is PriceModel {
 
     using SafeRatioMath for uint256;
 

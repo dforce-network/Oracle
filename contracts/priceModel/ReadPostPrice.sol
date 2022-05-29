@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "./PostPriceModel.sol";
+import "./PostPrice.sol";
 
-contract ReadPostPriceModel is PostPriceModel {
+contract ReadPostPrice is PostPrice {
 
     /**
      * @dev Mapping of asset addresses to asset addresses. Stable coin can share a price.

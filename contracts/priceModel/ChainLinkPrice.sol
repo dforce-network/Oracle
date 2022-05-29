@@ -5,7 +5,7 @@ pragma solidity ^0.6.12;
 import "./PriceModel.sol";
 import "../interface/IChainlinkAggregator.sol";
 
-contract ChainLinkPriceModel is PriceModel {
+contract ChainLinkPrice is PriceModel {
 
     /**
      * @dev Mapping of asset addresses to aggregator.
