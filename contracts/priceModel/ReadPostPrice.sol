@@ -3,8 +3,9 @@ pragma solidity ^0.6.12;
 
 import "./PostPrice.sol";
 
-contract ReadPostPrice is PostPrice {
+import "../interface/IERC20.sol";
 
+contract ReadPostPrice is PostPrice {
     /**
      * @dev Mapping of asset addresses to asset addresses. Stable coin can share a price.
      *
@@ -26,16 +27,13 @@ contract ReadPostPrice is PostPrice {
         int256 decimalsDifference
     );
 
-
     /**
      * @notice Entry point for updating prices.
      * @dev Set reader for an asset.
      * @param _asset Asset for which to set the reader.
      * @param _readAsset Reader address, if the reader is address(0), cancel the reader.
      */
-    function _setReaderInternal(address _asset, address _readAsset)
-        internal
-    {
+    function _setReaderInternal(address _asset, address _readAsset) internal {
         address _oldReadAsset = readers_[_asset].asset;
         // require(_readAsset != _oldReadAsset, "setReaders: Old and new values cannot be the same.");
         require(
@@ -78,10 +76,15 @@ contract ReadPostPrice is PostPrice {
             _setReaderInternal(_assets[i], _readAssets[i]);
     }
 
-    function _setPrice(address _asset, uint256 _requestedPrice) external override virtual onlyOwner returns (uint256) {
+    function _setPrice(address _asset, uint256 _requestedPrice)
+        external
+        virtual
+        override
+        onlyOwner
+        returns (uint256)
+    {
         Reader storage _reader = readers_[_asset];
-        if (_reader.asset != address(0))
-            return assetPrices_[_reader.asset];
+        if (_reader.asset != address(0)) return assetPrices_[_reader.asset];
         return _setPriceInternal(_asset, _requestedPrice);
     }
 
@@ -96,15 +99,22 @@ contract ReadPostPrice is PostPrice {
      * @param _asset Asset for which to get the price.
      * @return Uint mantissa of asset price (scaled by 1e18) or zero if unset.
      */
-    function _getAssetPrice(address _asset) internal override virtual view returns (uint256) {
+    function _getAssetPrice(address _asset)
+        internal
+        view
+        virtual
+        override
+        returns (uint256)
+    {
         Reader storage _reader = readers_[_asset];
         if (_reader.asset == address(0)) return assetPrices_[_asset];
 
         uint256 readerPrice = assetPrices_[_reader.asset];
 
         if (_reader.decimalsDifference < 0)
-            return readerPrice.mul(10 ** (uint256(0 - _reader.decimalsDifference)));
+            return
+                readerPrice.mul(10**(uint256(0 - _reader.decimalsDifference)));
 
-        return readerPrice.div(10 ** (uint256(_reader.decimalsDifference)));
+        return readerPrice.div(10**(uint256(_reader.decimalsDifference)));
     }
 }

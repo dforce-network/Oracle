@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "../Base.sol";
+import "../base/Base.sol";
 
 abstract contract ValidTime is Base {
-
     /**
      * @dev Mapping of asset addresses to validInterval.
      */
@@ -15,17 +14,16 @@ abstract contract ValidTime is Base {
      */
     event SetAssetValidInterval(address asset, uint256 validInterval);
 
-
     /**
      * @notice Set `validInterval` for asset to the specified address.
      * @dev Admin function to change of validInterval.
      * @param _asset Asset for which to set the `validInterval`.
      * @param _validInterval Address to assign to `validInterval`.
      */
-    function _setAssetValidIntervalInternal(address _asset, uint256 _validInterval)
-        internal
-    {
-
+    function _setAssetValidIntervalInternal(
+        address _asset,
+        uint256 _validInterval
+    ) internal {
         uint256 _oldValidInterval = validInterval_[_asset];
         require(
             _validInterval != _oldValidInterval,
@@ -36,7 +34,11 @@ abstract contract ValidTime is Base {
         emit SetAssetValidInterval(_asset, _validInterval);
     }
 
-    function _setAssetValidInterval(address _asset, uint256 _validInterval) external virtual onlyOwner {
+    function _setAssetValidInterval(address _asset, uint256 _validInterval)
+        external
+        virtual
+        onlyOwner
+    {
         _setAssetValidIntervalInternal(_asset, _validInterval);
     }
 

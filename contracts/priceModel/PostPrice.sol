@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "../../library/SafeRatioMath.sol";
+import "../library/SafeRatioMath.sol";
 
-import "../Base.sol";
-import "./PriceModel.sol";
+import "./base/Base.sol";
+import "./base/PriceModel.sol";
 
 contract PostPrice is Base, PriceModel {
-
     using SafeRatioMath for uint256;
 
     // Approximately 1 hour: 60 seconds/minute * 60 minutes/hour * 1 block/15 seconds.
@@ -31,7 +30,6 @@ contract PostPrice is Base, PriceModel {
      * @dev The maximum allowed percentage difference for all assets between a new price and the anchor's price
      */
     mapping(address => uint256) internal maxSwings_;
-
 
     struct Anchor {
         // Floor(block.number / numBlocksPerPeriod) + 1
@@ -101,14 +99,12 @@ contract PostPrice is Base, PriceModel {
         uint256 cappedPriceMantissa
     );
 
-
     /**
      * @notice Set `maxSwing` to the specified value.
      * @dev Admin function to change of max swing.
      * @param _maxSwing Value to assign to `maxSwing`.
      */
     function _setMaxSwing(uint256 _maxSwing) public onlyOwner {
-
         uint256 _oldMaxSwing = maxSwing_;
         require(
             _maxSwing != _oldMaxSwing,
@@ -129,9 +125,7 @@ contract PostPrice is Base, PriceModel {
      * @param _asset Asset for which to set the `maxSwing`.
      * @param _maxSwing Value to assign to `maxSwing`.
      */
-    function _setMaxSwingsInternal(address _asset, uint256 _maxSwing)
-        internal
-    {
+    function _setMaxSwingsInternal(address _asset, uint256 _maxSwing) internal {
         uint256 _oldMaxSwing = maxSwings_[_asset];
         require(
             _maxSwing != _oldMaxSwing,
@@ -189,7 +183,11 @@ contract PostPrice is Base, PriceModel {
     /**
      * @dev Multiplies two numbers, returns an error on overflow.
      */
-    function _mul(uint256 _a, uint256 _b) internal pure returns (bool, uint256) {
+    function _mul(uint256 _a, uint256 _b)
+        internal
+        pure
+        returns (bool, uint256)
+    {
         if (_a == 0) {
             return (false, 0);
         }
@@ -214,16 +212,15 @@ contract PostPrice is Base, PriceModel {
         // bool _err;
         // uint256 _doubleScaledProduct;
         (bool _err, uint256 _doubleScaledProduct) = _mul(_a, _b);
-        if (_err)
-            return (true, 0);
+        if (_err) return (true, 0);
 
         // We add half the scale before dividing so that we get rounding instead of truncation.
         //  See "Listing 6" and text above it at https://accu.org/index.php/journals/1717
         // Without this change, a result like 6.6...e-19 will be truncated to 0 instead of being rounded to 1e-18.
 
-        uint256 _doubleScaledProductWithHalfScale = halfExpScale_ + _doubleScaledProduct;
-        if (_doubleScaledProductWithHalfScale < halfExpScale_)
-            return (true, 0);
+        uint256 _doubleScaledProductWithHalfScale = halfExpScale_ +
+            _doubleScaledProduct;
+        if (_doubleScaledProductWithHalfScale < halfExpScale_) return (true, 0);
 
         // (Error err1, uint256 _doubleScaledProductWithHalfScale) =
         //     add(halfExpScale, _doubleScaledProduct);
@@ -245,9 +242,10 @@ contract PostPrice is Base, PriceModel {
         pure
         returns (bool, uint256)
     {
-        if (_anchorPrice == 0)
-            return (true, 0);
-        uint256 _numerator = _anchorPrice > _price ? _anchorPrice - _price : _price - _anchorPrice;
+        if (_anchorPrice == 0) return (true, 0);
+        uint256 _numerator = _anchorPrice > _price
+            ? _anchorPrice - _price
+            : _price - _anchorPrice;
         return (false, _numerator.rdiv(_anchorPrice));
     }
 
@@ -272,8 +270,7 @@ contract PostPrice is Base, PriceModel {
         // Error _err;
 
         _onePlusMaxSwing = _one + _maxSwing;
-        if (_onePlusMaxSwing < _one)
-            return (true, false, 0);
+        if (_onePlusMaxSwing < _one) return (true, false, 0);
 
         // (_err, _onePlusMaxSwing) = addExp(_one, _maxSwing);
         // if (_err != Error.NO_ERROR) {
@@ -282,16 +279,13 @@ contract PostPrice is Base, PriceModel {
 
         // _max = _anchorPrice * (1 + _maxSwing)
         (bool _err, uint256 _max) = _rmulup(_anchorPrice, _onePlusMaxSwing);
-        if (_err)
-            return (true, false, 0);
+        if (_err) return (true, false, 0);
 
         // If _price > _anchorPrice * (1 + _maxSwing)
         // Set _price = _anchorPrice * (1 + _maxSwing)
-        if (_price > _max)
-            return (false, true, _max);
+        if (_price > _max) return (false, true, _max);
 
-        if (_maxSwing > _one)
-            return (true, false, 0);
+        if (_maxSwing > _one) return (true, false, 0);
         uint256 _oneMinusMaxSwing = _one - _maxSwing;
 
         // _min = _anchorPrice * (1 - _maxSwing)
@@ -302,8 +296,7 @@ contract PostPrice is Base, PriceModel {
 
         // If  _price < _anchorPrice * (1 - _maxSwing)
         // Set _price = _anchorPrice * (1 - _maxSwing)
-        if (_price < _min)
-            return (false, true, _min);
+        if (_price < _min) return (false, true, _min);
 
         return (false, false, _price);
     }
@@ -347,8 +340,7 @@ contract PostPrice is Base, PriceModel {
                 _localVars.price
             );
 
-            if (_err || _localVars.swing > _localVars.maxSwing)
-                return 0;
+            if (_err || _localVars.swing > _localVars.maxSwing) return 0;
             // if (_err != Error.NO_ERROR) {
             //     return
             //         failOracleWithDetails(
@@ -381,8 +373,7 @@ contract PostPrice is Base, PriceModel {
                     _localVars.price,
                     _localVars.maxSwing
                 );
-                if (_err)
-                    return 0;
+                if (_err) return 0;
                 // if (_err != Error.NO_ERROR) {
                 //     return
                 //         failOracleWithDetails(
@@ -394,7 +385,8 @@ contract PostPrice is Base, PriceModel {
                 // }
                 if (_localVars.priceCapped) {
                     // save for use in log
-                    _localVars.cappingAnchorPriceMantissa = _localVars.anchorPrice;
+                    _localVars.cappingAnchorPriceMantissa = _localVars
+                    .anchorPrice;
                 }
             } else {
                 // Setting first price. Accept as is (already assigned above from _requestedPriceMantissa) and use as anchor
@@ -457,22 +449,50 @@ contract PostPrice is Base, PriceModel {
         return _localVars.price;
     }
 
-    function _setPrice(address _asset, uint256 _requestedPrice) external override virtual onlyOwner returns (uint256) {
+    function _setPrice(address _asset, uint256 _requestedPrice)
+        external
+        virtual
+        override
+        onlyOwner
+        returns (uint256)
+    {
         return _setPriceInternal(_asset, _requestedPrice);
     }
 
-    function _getAssetPrice(address _asset) internal virtual view returns (uint256) {
+    function _getAssetPrice(address _asset)
+        internal
+        view
+        virtual
+        returns (uint256)
+    {
         return assetPrices_[_asset];
     }
 
-    function getAssetPrice(address _asset) external override virtual returns (uint256) {
+    function getAssetPrice(address _asset)
+        external
+        virtual
+        override
+        returns (uint256)
+    {
         return _getAssetPrice(_asset);
     }
-    function getAssetStatus(address _asset) external override virtual returns (bool) {
+
+    function getAssetStatus(address _asset)
+        external
+        virtual
+        override
+        returns (bool)
+    {
         _asset;
         return true;
     }
-    function getAssetPriceStatus(address _asset) external override virtual returns (uint256, bool) {
+
+    function getAssetPriceStatus(address _asset)
+        external
+        virtual
+        override
+        returns (uint256, bool)
+    {
         return (_getAssetPrice(_asset), true);
     }
 }
