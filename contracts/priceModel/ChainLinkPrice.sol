@@ -76,17 +76,6 @@ contract ChainLinkPrice is Base, PriceModel {
             _disableAssetAggregator(_assets[i]);
     }
 
-    function _setPrice(address _asset, uint256 _requestedPrice)
-        external
-        virtual
-        override
-        returns (uint256)
-    {
-        _asset;
-        _requestedPrice;
-        return 0;
-    }
-
     function _getAssetPrice(address _asset)
         internal
         view

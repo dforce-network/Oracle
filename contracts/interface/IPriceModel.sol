@@ -11,8 +11,4 @@ interface IPriceModel {
     function getAssetPriceStatus(address _asset)
         external
         returns (uint256, bool);
-
-    function _setPrice(address _asset, uint256 _requestedPrice)
-        external
-        returns (uint256);
 }

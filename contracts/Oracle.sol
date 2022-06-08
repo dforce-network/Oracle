@@ -26,12 +26,12 @@ contract Oracle is Initializable, Ownable {
     mapping(address => uint256) internal assetPrices_;
 
     /// @dev Mapping of asset addresses to priceModel_.
-    mapping(address => IPriceModel) internal priceModel_;
+    mapping(address => address) internal priceModel_;
 
     /**
      * @dev Emitted for priceModel_ changes.
      */
-    event SetAssetPriceModel(address asset, IPriceModel priceModel);
+    event SetAssetPriceModel(address asset, address priceModel);
 
     /**
      * @dev Emitted for all price changes.
@@ -130,12 +130,11 @@ contract Oracle is Initializable, Ownable {
      * @param _asset Asset for which to set the `priceModel_`.
      * @param _priceModel Address to assign to `priceModel_`.
      */
-    function _setAssetPriceModelInternal(
-        address _asset,
-        IPriceModel _priceModel
-    ) internal {
+    function _setAssetPriceModelInternal(address _asset, address _priceModel)
+        internal
+    {
         require(
-            _priceModel.isPriceModel(),
+            IPriceModel(_priceModel).isPriceModel(),
             "_setAssetPriceModelInternal: This is not the priceModel_ contract!"
         );
 
@@ -143,7 +142,7 @@ contract Oracle is Initializable, Ownable {
         emit SetAssetPriceModel(_asset, _priceModel);
     }
 
-    function _setAssetPriceModel(address _asset, IPriceModel _priceModel)
+    function _setAssetPriceModel(address _asset, address _priceModel)
         external
         onlyOwner
     {
@@ -152,7 +151,7 @@ contract Oracle is Initializable, Ownable {
 
     function _setAssetPriceModelBatch(
         address[] calldata _assets,
-        IPriceModel[] calldata _priceModels
+        address[] calldata _priceModels
     ) external onlyOwner {
         require(
             _assets.length == _priceModels.length,
@@ -167,9 +166,9 @@ contract Oracle is Initializable, Ownable {
      * @dev Function to disable of priceModel_.
      */
     function _disableAssetPriceModelInternal(address _asset) internal {
-        priceModel_[_asset] = IPriceModel(0);
+        priceModel_[_asset] = address(0);
 
-        emit SetAssetPriceModel(_asset, IPriceModel(0));
+        emit SetAssetPriceModel(_asset, address(0));
     }
 
     function _disableAssetPriceModel(address _asset) external onlyOwner {
@@ -240,11 +239,23 @@ contract Oracle is Initializable, Ownable {
         }
     }
 
-    function setPriceInternal(address _asset, uint256 _requestedPrice)
+    function _setPriceInternal(address _asset, uint256 _requestedPrice)
         internal
-        returns (uint256)
+        returns (bool)
     {
-        return priceModel_[_asset]._setPrice(_asset, _requestedPrice);
+        // return IPriceModel(priceModel_[_asset])._setPrice(_asset, _requestedPrice);
+        // return _execute(address(priceModel_[_asset]), "_setPrice(address,uint256)"_setPrice(_asset, _requestedPrice));
+        return
+            abi.decode(
+                priceModel_[_asset].functionCall(
+                    abi.encodeWithSignature(
+                        "_setPrice(address,uint256)",
+                        _asset,
+                        _requestedPrice
+                    )
+                ),
+                (bool)
+            );
     }
 
     /**
@@ -262,9 +273,9 @@ contract Oracle is Initializable, Ownable {
     function setPrice(address _asset, uint256 _requestedPrice)
         external
         onlyPoster
-        returns (uint256)
+        returns (bool)
     {
-        return setPriceInternal(_asset, _requestedPrice);
+        return _setPriceInternal(_asset, _requestedPrice);
     }
 
     /**
@@ -280,20 +291,20 @@ contract Oracle is Initializable, Ownable {
     function setPrices(
         address[] memory _assets,
         uint256[] memory _requestedPrices
-    ) external onlyPoster returns (uint256[] memory) {
-        uint256 numAssets = _assets.length;
-        uint256 numPrices = _requestedPrices.length;
+    ) external onlyPoster returns (bool[] memory) {
+        uint256 _numAssets = _assets.length;
+        uint256 _numPrices = _requestedPrices.length;
         require(
-            numAssets > 0 && numAssets == numPrices,
+            _numAssets > 0 && _numAssets == _numPrices,
             "setPrices: _assets & _requestedPrices must match the current length."
         );
 
-        uint256[] memory result = new uint256[](numAssets);
-        for (uint256 i = 0; i < numAssets; i++) {
-            result[i] = setPriceInternal(_assets[i], _requestedPrices[i]);
+        bool[] memory _result = new bool[](_numAssets);
+        for (uint256 i = 0; i < _numAssets; i++) {
+            _result[i] = _setPriceInternal(_assets[i], _requestedPrices[i]);
         }
 
-        return result;
+        return _result;
     }
 
     /**
@@ -306,11 +317,11 @@ contract Oracle is Initializable, Ownable {
         external
         returns (uint256)
     {
-        return priceModel_[_asset].getAssetPrice(_asset);
+        return IPriceModel(priceModel_[_asset]).getAssetPrice(_asset);
     }
 
     function getAssetPrice(address _asset) external returns (uint256) {
-        return priceModel_[_asset].getAssetPrice(_asset);
+        return IPriceModel(priceModel_[_asset]).getAssetPrice(_asset);
     }
 
     /**
@@ -325,7 +336,7 @@ contract Oracle is Initializable, Ownable {
      * @return Uint mantissa of asset price (scaled by 1e18) or zero if unset.
      */
     function getReaderPrice(address _asset) external returns (uint256) {
-        return priceModel_[_asset].getAssetPrice(_asset);
+        return IPriceModel(priceModel_[_asset]).getAssetPrice(_asset);
     }
 
     /**
@@ -339,7 +350,7 @@ contract Oracle is Initializable, Ownable {
         whetherPause
         returns (uint256 _price)
     {
-        _price = priceModel_[_asset].getAssetPrice(_asset);
+        _price = IPriceModel(priceModel_[_asset]).getAssetPrice(_asset);
     }
 
     /**
@@ -349,7 +360,7 @@ contract Oracle is Initializable, Ownable {
      * @return The asset price status is Boolean, the price status model is not set to true.true: available, false: unavailable.
      */
     function getAssetPriceStatus(address _asset) external returns (bool) {
-        return priceModel_[_asset].getAssetStatus(_asset);
+        return IPriceModel(priceModel_[_asset]).getAssetStatus(_asset);
     }
 
     /**
@@ -363,7 +374,8 @@ contract Oracle is Initializable, Ownable {
         whetherPause
         returns (uint256 _price, bool _status)
     {
-        (_price, _status) = priceModel_[_asset].getAssetPriceStatus(_asset);
+        (_price, _status) = IPriceModel(priceModel_[_asset])
+        .getAssetPriceStatus(_asset);
     }
 
     function paused() external view returns (bool) {
@@ -378,7 +390,7 @@ contract Oracle is Initializable, Ownable {
         return assetPrices_[_asset];
     }
 
-    function priceModel(address _asset) external view returns (IPriceModel) {
+    function priceModel(address _asset) external view returns (address) {
         return priceModel_[_asset];
     }
 }
