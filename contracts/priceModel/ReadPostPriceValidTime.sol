@@ -10,16 +10,16 @@ contract ReadPostPriceValidTime is PostPriceValidTime, ReadPostPrice {
         virtual
         override(PostPriceValidTime, ReadPostPrice)
         onlyOwner
-        returns (uint256)
+        returns (bool)
     {
         Reader storage _reader = readers_[_asset];
-        if (_reader.asset != address(0)) return assetPrices_[_reader.asset];
+        if (_reader.asset != address(0)) return false;
 
         if (validInterval_[_asset] > 0) {
             postTime_[_asset] = block.timestamp;
             return _setPriceInternal(_asset, _requestedPrice);
         }
-        return 0;
+        return false;
     }
 
     function _getAssetPrice(address _asset)

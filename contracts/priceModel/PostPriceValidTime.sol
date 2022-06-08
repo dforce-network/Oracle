@@ -20,13 +20,13 @@ contract PostPriceValidTime is ValidTime, PostPrice {
         virtual
         override
         onlyOwner
-        returns (uint256)
+        returns (bool)
     {
         if (validInterval_[_asset] > 0) {
             postTime_[_asset] = block.timestamp;
             return _setPriceInternal(_asset, _requestedPrice);
         }
-        return 0;
+        return false;
     }
 
     function _getAssetStatus(address _asset)

@@ -315,7 +315,7 @@ contract PostPrice is Base, PriceModel {
 
     function _setPriceInternal(address _asset, uint256 _requestedPriceMantissa)
         internal
-        returns (uint256)
+        returns (bool)
     {
         SetPriceLocalVars memory _localVars;
         // We add 1 for currentPeriod so that it can never be zero and there's no ambiguity about an unset value.
@@ -340,7 +340,7 @@ contract PostPrice is Base, PriceModel {
                 _localVars.price
             );
 
-            if (_err || _localVars.swing > _localVars.maxSwing) return 0;
+            if (_err || _localVars.swing > _localVars.maxSwing) return false;
             // if (_err != Error.NO_ERROR) {
             //     return
             //         failOracleWithDetails(
@@ -373,7 +373,7 @@ contract PostPrice is Base, PriceModel {
                     _localVars.price,
                     _localVars.maxSwing
                 );
-                if (_err) return 0;
+                if (_err) return false;
                 // if (_err != Error.NO_ERROR) {
                 //     return
                 //         failOracleWithDetails(
@@ -399,11 +399,11 @@ contract PostPrice is Base, PriceModel {
         // zero price is more likely as the result of bad input from the caller of this function
         if (_localVars.anchorPrice == 0) {
             // If we get here price could also be zero, but it does not seem worthwhile to distinguish the 3rd case
-            return 0;
+            return false;
         }
 
         if (_localVars.price == 0) {
-            return 0;
+            return false;
         }
 
         // BEGIN SIDE EFFECTS
@@ -446,15 +446,14 @@ contract PostPrice is Base, PriceModel {
             );
         }
 
-        return _localVars.price;
+        return _localVars.price != _previousPrice;
     }
 
     function _setPrice(address _asset, uint256 _requestedPrice)
         external
         virtual
-        override
         onlyOwner
-        returns (uint256)
+        returns (bool)
     {
         return _setPriceInternal(_asset, _requestedPrice);
     }

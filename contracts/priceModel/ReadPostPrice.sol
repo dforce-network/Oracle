@@ -81,10 +81,10 @@ contract ReadPostPrice is PostPrice {
         virtual
         override
         onlyOwner
-        returns (uint256)
+        returns (bool)
     {
         Reader storage _reader = readers_[_asset];
-        if (_reader.asset != address(0)) return assetPrices_[_reader.asset];
+        if (_reader.asset != address(0)) return false;
         return _setPriceInternal(_asset, _requestedPrice);
     }
 
