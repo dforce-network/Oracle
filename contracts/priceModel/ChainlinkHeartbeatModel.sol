@@ -21,7 +21,12 @@ contract ChainlinkHeartbeatModel is Heartbeat, ChainlinkModel {
         );
         if (_aggregator == IChainlinkAggregator(0)) return false;
         (, , , uint256 _updatedAt, ) = _aggregator.latestRoundData();
-        return block.timestamp < _updatedAt.add(validInterval_[_asset]);
+
+        uint256 _assetValidInterval = validInterval_[_asset];
+        if (_assetValidInterval == 0)
+            _assetValidInterval = defaultValidInterval_;
+
+        return block.timestamp < _updatedAt.add(_assetValidInterval);
     }
 
     /**
@@ -39,16 +44,23 @@ contract ChainlinkHeartbeatModel is Heartbeat, ChainlinkModel {
             aggregator_[_asset]
         );
         if (_aggregator == IChainlinkAggregator(0)) return (0, false);
+
         (, int256 _answer, , uint256 _updatedAt, ) = _aggregator
         .latestRoundData();
+
         if (_answer < 0) return (0, false);
+
+        uint256 _assetValidInterval = validInterval_[_asset];
+        if (_assetValidInterval == 0)
+            _assetValidInterval = defaultValidInterval_;
+
         return (
             _correctPrice(
                 uint256(IERC20(_asset).decimals()),
                 uint256(_aggregator.decimals()),
                 uint256(_answer)
             ),
-            block.timestamp < _updatedAt.add(validInterval_[_asset])
+            block.timestamp < _updatedAt.add(_assetValidInterval)
         );
     }
 }
