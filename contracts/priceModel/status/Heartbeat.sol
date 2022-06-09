@@ -4,11 +4,35 @@ pragma solidity ^0.6.12;
 import "../base/Base.sol";
 
 abstract contract Heartbeat is Base {
+    /// @dev asset default valid interval.
+    uint256 internal defaultValidInterval_ = 1 days;
+
     /// @dev Mapping of asset addresses to validInterval.
     mapping(address => uint256) internal validInterval_;
 
+    /// @dev Emitted when `defaultValidInterval_` is changed.
+    event SetDefaultValidInterval(uint256 defaultValidInterval);
+
     /// @dev Emitted when `validInterval_` is changed.
     event SetAssetValidInterval(address asset, uint256 validInterval);
+
+    /**
+     * @notice Set `defaultValidInterval_`.
+     * @dev Function to change of `defaultValidInterval_`.
+     * @param _defaultValidInterval Default valid interval.
+     */
+    function _setDefaultValidInterval(uint256 _defaultValidInterval)
+        external
+        virtual
+        onlyOwner
+    {
+        require(
+            _defaultValidInterval != defaultValidInterval_,
+            "_setDefaultValidInterval: defaultValidInterval is invalid!"
+        );
+        defaultValidInterval_ = _defaultValidInterval;
+        emit SetDefaultValidInterval(_defaultValidInterval);
+    }
 
     /**
      * @notice Set `validInterval` for asset to the specified address.
@@ -48,6 +72,14 @@ abstract contract Heartbeat is Base {
         );
         for (uint256 i = 0; i < _assets.length; i++)
             _setAssetValidIntervalInternal(_assets[i], _validIntervals[i]);
+    }
+
+    /**
+     * @dev Get default valid interval.
+     * @return Default valid interval.
+     */
+    function defaultValidInterval() external view returns (uint256) {
+        return defaultValidInterval_;
     }
 
     /**
