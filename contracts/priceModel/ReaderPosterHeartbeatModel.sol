@@ -51,21 +51,21 @@ contract ReaderPosterHeartbeatModel is PosterHeartbeatModel, ReaderPosterModel {
         return PosterHeartbeatModel._getAssetStatus(_asset);
     }
 
-    // function getAssetStatus(address _asset)
-    //     external
-    //     virtual
-    //     override(PosterModel, PosterHeartbeatModel)
-    //     returns (bool)
-    // {
-    //     return _getAssetStatus(_asset);
-    // }
+    function getAssetStatus(address _asset)
+        external
+        virtual
+        override(PosterModel, PosterHeartbeatModel)
+        returns (bool)
+    {
+        return _getAssetStatus(_asset);
+    }
 
-    // function getAssetPriceStatus(address _asset)
-    //     external
-    //     virtual
-    //     override(PosterModel, PosterHeartbeatModel)
-    //     returns (uint256, bool)
-    // {
-    //     return (_getAssetPrice(_asset), _getAssetStatus(_asset));
-    // }
+    function getAssetPriceStatus(address _asset)
+        external
+        virtual
+        override(PosterModel, PosterHeartbeatModel)
+        returns (uint256, bool)
+    {
+        return (_getAssetPrice(_asset), _getAssetStatus(_asset));
+    }
 }

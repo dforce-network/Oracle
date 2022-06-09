@@ -300,7 +300,7 @@ contract PosterModel is Base, Unit {
      * @notice Entry point for updating prices.
      * @dev Set price for an asset.
      * @param _asset Asset address.
-     * @param _requestedPrice Requested new price, scaled by 10**18.
+     * @param _requestedPriceMantissa Requested new price, scaled by 10**18.
      * @return Boolean ture:success, false:fail.
      */
     function _setPriceInternal(address _asset, uint256 _requestedPriceMantissa)
