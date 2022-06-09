@@ -5,14 +5,24 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "../../interface/IPriceModel.sol";
 
-abstract contract PriceModel is IPriceModel {
+abstract contract Unit is IPriceModel {
     using SafeMath for uint256;
 
+    /// @dev Double decimal point constant for padding token decimal point.
     uint256 internal constant doubleDecimals_ = 36;
 
+    /// @dev Whether it is a priceModel contract.
     bool public constant override isPriceModel = true;
 
-    function _calcDecimal(
+    /**
+     * @notice Correct price.
+     * @dev Correct price using price decimals and token decimals.
+     * @param _assetDecimals Asset token decimals.
+     * @param _priceDecimals Price token decimals.
+     * @param _price Price.
+     * @return Corrected price.
+     */
+    function _correctPrice(
         uint256 _assetDecimals,
         uint256 _priceDecimals,
         uint256 _price

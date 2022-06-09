@@ -3,20 +3,16 @@ pragma solidity ^0.6.12;
 
 import "../base/Base.sol";
 
-abstract contract ValidTime is Base {
-    /**
-     * @dev Mapping of asset addresses to validInterval.
-     */
+abstract contract Heartbeat is Base {
+    /// @dev Mapping of asset addresses to validInterval.
     mapping(address => uint256) internal validInterval_;
 
-    /**
-     * @dev Emitted for asset validInterval changes.
-     */
+    /// @dev Emitted when `validInterval_` is changed.
     event SetAssetValidInterval(address asset, uint256 validInterval);
 
     /**
      * @notice Set `validInterval` for asset to the specified address.
-     * @dev Admin function to change of validInterval.
+     * @dev Function to change of validInterval.
      * @param _asset Asset for which to set the `validInterval`.
      * @param _validInterval Address to assign to `validInterval`.
      */
@@ -54,6 +50,12 @@ abstract contract ValidTime is Base {
             _setAssetValidIntervalInternal(_assets[i], _validIntervals[i]);
     }
 
+    /**
+     * @notice Asset valid time interval.
+     * @dev Get valid time interval.
+     * @param _asset Asset address.
+     * @return Valid time interval.
+     */
     function validInterval(address _asset) external view returns (uint256) {
         return validInterval_[_asset];
     }

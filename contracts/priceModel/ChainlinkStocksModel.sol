@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "./ChainLinkPrice.sol";
-import "./status/StockTime.sol";
+import "./ChainlinkModel.sol";
+import "./status/Stocks.sol";
 
-contract ChainLinkPriceStockTime is StockTime, ChainLinkPrice {
+contract ChainlinkStocksModel is Stocks, ChainlinkModel {
     /**
      * @dev The constructor sets some data and initializes the owner
      * @param _timeZone Time zone.
@@ -15,8 +15,13 @@ contract ChainLinkPriceStockTime is StockTime, ChainLinkPrice {
         int256 _timeZone,
         uint256 _marketOpeningTime,
         uint256 _duration
-    ) public StockTime(_timeZone, _marketOpeningTime, _duration) {}
+    ) public Stocks(_timeZone, _marketOpeningTime, _duration) {}
 
+    /**
+     * @dev Get asset price status.
+     * @param _asset Asset address.
+     * @return Asset price status, ture: available; false: unavailable.
+     */
     function getAssetStatus(address _asset)
         external
         virtual
@@ -26,6 +31,11 @@ contract ChainLinkPriceStockTime is StockTime, ChainLinkPrice {
         return _getAssetStatus(_asset, block.timestamp);
     }
 
+    /**
+     * @dev The price and status of the asset.
+     * @param _asset Asset address.
+     * @return Asset price and status.
+     */
     function getAssetPriceStatus(address _asset)
         external
         virtual

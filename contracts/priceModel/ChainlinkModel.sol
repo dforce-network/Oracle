@@ -2,25 +2,21 @@
 pragma solidity ^0.6.12;
 
 import "./base/Base.sol";
-import "./base/PriceModel.sol";
+import "./base/Unit.sol";
 
 import "../interface/IERC20.sol";
 import "../interface/IChainlinkAggregator.sol";
 
-contract ChainLinkPrice is Base, PriceModel {
-    /**
-     * @dev Mapping of asset addresses to aggregator.
-     */
+contract ChainlinkModel is Base, Unit {
+    /// @dev Mapping of asset addresses to aggregator.
     mapping(address => address) internal aggregator_;
 
-    /**
-     * @dev Emitted for asset aggregator changes.
-     */
+    /// @dev Emitted when `aggregator_` is changed.
     event SetAssetAggregator(address asset, address aggregator);
 
     /**
      * @notice Set `aggregator` for asset to the specified address.
-     * @dev Admin function to change of aggregator.
+     * @dev Owner function to change of aggregator.
      * @param _asset Asset for which to set the `aggregator`.
      * @param _aggregator Address to assign to `aggregator`.
      */
@@ -58,7 +54,7 @@ contract ChainLinkPrice is Base, PriceModel {
 
     /**
      * @notice Set the asset’s `aggregator` to disabled.
-     * @dev Admin function to disable of aggregator.
+     * @dev Owner function to disable of aggregator.
      * @param _asset Asset for which to disable the `aggregator`.
      */
     function _disableAssetAggregator(address _asset) public virtual onlyOwner {
@@ -76,6 +72,11 @@ contract ChainLinkPrice is Base, PriceModel {
             _disableAssetAggregator(_assets[i]);
     }
 
+    /**
+     * @dev Get asset price.
+     * @param _asset Asset address.
+     * @return Asset price.
+     */
     function _getAssetPrice(address _asset)
         internal
         view
@@ -87,14 +88,20 @@ contract ChainLinkPrice is Base, PriceModel {
         );
         if (_aggregator == IChainlinkAggregator(0)) return 0;
         (, int256 _answer, , , ) = _aggregator.latestRoundData();
+        if (_answer < 0) return 0;
         return
-            _calcDecimal(
+            _correctPrice(
                 uint256(IERC20(_asset).decimals()),
                 uint256(_aggregator.decimals()),
                 uint256(_answer)
             );
     }
 
+    /**
+     * @dev Get asset price.
+     * @param _asset Asset address.
+     * @return Asset price.
+     */
     function getAssetPrice(address _asset)
         external
         virtual
@@ -104,6 +111,11 @@ contract ChainLinkPrice is Base, PriceModel {
         return _getAssetPrice(_asset);
     }
 
+    /**
+     * @dev Get asset price status.
+     * @param _asset Asset address.
+     * @return Asset price status, ture: available; false: unavailable.
+     */
     function getAssetStatus(address _asset)
         external
         virtual
@@ -114,6 +126,11 @@ contract ChainLinkPrice is Base, PriceModel {
         return true;
     }
 
+    /**
+     * @dev The price and status of the asset.
+     * @param _asset Asset address.
+     * @return Asset price and status.
+     */
     function getAssetPriceStatus(address _asset)
         external
         virtual
@@ -123,6 +140,12 @@ contract ChainLinkPrice is Base, PriceModel {
         return (_getAssetPrice(_asset), true);
     }
 
+    /**
+     * @notice Asset chain link aggregator address.
+     * @dev Get chain link aggregator address.
+     * @param _asset Asset address.
+     * @return Chain link aggregator address.
+     */
     function aggregator(address _asset) external view returns (address) {
         return aggregator_[_asset];
     }

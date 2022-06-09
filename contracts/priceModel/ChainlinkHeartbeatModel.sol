@@ -1,10 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "./ChainLinkPrice.sol";
-import "./status/ValidTime.sol";
+import "./ChainlinkModel.sol";
+import "./status/Heartbeat.sol";
 
-contract ChainLinkPriceValidTime is ValidTime, ChainLinkPrice {
+contract ChainlinkHeartbeatModel is Heartbeat, ChainlinkModel {
+    /**
+     * @dev Get asset price status.
+     * @param _asset Asset address.
+     * @return Asset price status, ture: available; false: unavailable.
+     */
     function getAssetStatus(address _asset)
         external
         virtual
@@ -19,6 +24,11 @@ contract ChainLinkPriceValidTime is ValidTime, ChainLinkPrice {
         return block.timestamp < _updatedAt.add(validInterval_[_asset]);
     }
 
+    /**
+     * @dev The price and status of the asset.
+     * @param _asset Asset address.
+     * @return Asset price and status.
+     */
     function getAssetPriceStatus(address _asset)
         external
         virtual
@@ -31,8 +41,9 @@ contract ChainLinkPriceValidTime is ValidTime, ChainLinkPrice {
         if (_aggregator == IChainlinkAggregator(0)) return (0, false);
         (, int256 _answer, , uint256 _updatedAt, ) = _aggregator
         .latestRoundData();
+        if (_answer < 0) return (0, false);
         return (
-            _calcDecimal(
+            _correctPrice(
                 uint256(IERC20(_asset).decimals()),
                 uint256(_aggregator.decimals()),
                 uint256(_answer)

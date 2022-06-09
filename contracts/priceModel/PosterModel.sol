@@ -4,9 +4,9 @@ pragma solidity ^0.6.12;
 import "../library/SafeRatioMath.sol";
 
 import "./base/Base.sol";
-import "./base/PriceModel.sol";
+import "./base/Unit.sol";
 
-contract PostPrice is Base, PriceModel {
+contract PosterModel is Base, Unit {
     using SafeRatioMath for uint256;
 
     // Approximately 1 hour: 60 seconds/minute * 60 minutes/hour * 1 block/15 seconds.
@@ -20,15 +20,10 @@ contract PostPrice is Base, PriceModel {
     uint256 internal constant expScale_ = 10**18;
     uint256 internal constant halfExpScale_ = expScale_ / 2;
 
-    /**
-     * @dev The maximum allowed percentage difference between a new price and the anchor's price
-     *      Set only in the constructor
-     */
-    uint256 internal maxSwing_;
+    /// @dev The maximum allowed percentage difference between a new price and the anchor's price
+    uint256 internal maxSwing_ = MAXIMUM_SWING_;
 
-    /**
-     * @dev The maximum allowed percentage difference for all assets between a new price and the anchor's price
-     */
+    /// @dev The maximum allowed percentage difference for all assets between a new price and the anchor's price
     mapping(address => uint256) internal maxSwings_;
 
     struct Anchor {
@@ -38,14 +33,10 @@ contract PostPrice is Base, PriceModel {
         uint256 priceMantissa;
     }
 
-    /**
-     * @dev Anchors by asset.
-     */
+    /// @dev Anchors by asset.
     mapping(address => Anchor) internal anchors_;
 
-    /**
-     * @dev Pending anchor prices by asset.
-     */
+    /// @dev Pending anchor prices by asset.
     mapping(address => uint256) internal pendingAnchors_;
 
     /**
@@ -56,14 +47,10 @@ contract PostPrice is Base, PriceModel {
      */
     mapping(address => uint256) internal assetPrices_;
 
-    /**
-     * @dev Emitted for max swing changes.
-     */
+    /// @dev Emitted when `maxSwing_` is changed.
     event SetMaxSwing(uint256 maxSwing);
 
-    /**
-     * @dev Emitted for asset max swing changes.
-     */
+    /// @dev Emitted when `maxSwings_` is changed.
     event SetMaxSwings(address asset, uint256 maxSwing);
 
     /**
@@ -79,9 +66,7 @@ contract PostPrice is Base, PriceModel {
         uint256 newScaledPrice
     );
 
-    /**
-     * @dev Emitted for all price changes.
-     */
+    /// @dev Emitted for all price changes.
     event PricePosted(
         address asset,
         uint256 previousPriceMantissa,
@@ -89,9 +74,7 @@ contract PostPrice is Base, PriceModel {
         uint256 newPriceMantissa
     );
 
-    /**
-     * @dev Emitted if this contract successfully posts a capped-to-max price.
-     */
+    /// @dev Emitted if this contract successfully posts a capped-to-max price.
     event CappedPricePosted(
         address asset,
         uint256 requestedPriceMantissa,
@@ -313,6 +296,13 @@ contract PostPrice is Base, PriceModel {
         uint256 pendingAnchorMantissa;
     }
 
+    /**
+     * @notice Entry point for updating prices.
+     * @dev Set price for an asset.
+     * @param _asset Asset address.
+     * @param _requestedPrice Requested new price, scaled by 10**18.
+     * @return Boolean ture:success, false:fail.
+     */
     function _setPriceInternal(address _asset, uint256 _requestedPriceMantissa)
         internal
         returns (bool)
@@ -449,6 +439,12 @@ contract PostPrice is Base, PriceModel {
         return _localVars.price != _previousPrice;
     }
 
+    /**
+     * @dev Set price for an asset.
+     * @param _asset Asset address.
+     * @param _requestedPrice Requested new price, scaled by 10**18.
+     * @return Boolean ture:success, false:fail.
+     */
     function _setPrice(address _asset, uint256 _requestedPrice)
         external
         virtual
@@ -458,6 +454,11 @@ contract PostPrice is Base, PriceModel {
         return _setPriceInternal(_asset, _requestedPrice);
     }
 
+    /**
+     * @dev Get asset price.
+     * @param _asset Asset address.
+     * @return Asset price.
+     */
     function _getAssetPrice(address _asset)
         internal
         view
@@ -467,6 +468,11 @@ contract PostPrice is Base, PriceModel {
         return assetPrices_[_asset];
     }
 
+    /**
+     * @dev Get asset price.
+     * @param _asset Asset address.
+     * @return Asset price.
+     */
     function getAssetPrice(address _asset)
         external
         virtual
@@ -476,6 +482,11 @@ contract PostPrice is Base, PriceModel {
         return _getAssetPrice(_asset);
     }
 
+    /**
+     * @dev Get asset price status.
+     * @param _asset Asset address.
+     * @return Asset price status, ture: available; false: unavailable.
+     */
     function getAssetStatus(address _asset)
         external
         virtual
@@ -486,6 +497,11 @@ contract PostPrice is Base, PriceModel {
         return true;
     }
 
+    /**
+     * @dev The price and status of the asset.
+     * @param _asset Asset address.
+     * @return Asset price and status.
+     */
     function getAssetPriceStatus(address _asset)
         external
         virtual

@@ -6,91 +6,68 @@ import "@openzeppelin/contracts/utils/Address.sol";
 
 import "./library/Initializable.sol";
 import "./library/Ownable.sol";
-// import "./library/ReentrancyGuard.sol";
-// import "./library/SafeRatioMath.sol";
 
 import "./interface/IPriceModel.sol";
 
+/**
+ * @title dForce's Oracle Contract
+ * @author dForce Team.
+ */
 contract Oracle is Initializable, Ownable {
     using Address for address;
     /// @dev Flag for whether or not contract is paused_.
     bool internal paused_;
 
-    /// @dev Address of the price poster_.
+    /// @dev Address of the price poster.
     address internal poster_;
 
-    /// @dev Mapping of asset addresses and their corresponding price in terms of Eth-Wei
-    ///     which is simply equal to AssetWeiPrice * 10e18. For instance, if OMG token was
-    ///     worth 5x Eth then the price for OMG would be 5*10e18 or 5000000000000000000.
-    ///     map: assetAddress -> uint256
-    mapping(address => uint256) internal assetPrices_;
-
-    /// @dev Mapping of asset addresses to priceModel_.
+    /// @dev Mapping of asset addresses to priceModel.
     mapping(address => address) internal priceModel_;
 
-    /**
-     * @dev Emitted for priceModel_ changes.
-     */
+    /// @dev Emitted when `priceModel_` is changed.
     event SetAssetPriceModel(address asset, address priceModel);
 
-    /**
-     * @dev Emitted for all price changes.
-     */
-    event PricePosted(
-        address asset,
-        uint256 previousPriceMantissa,
-        uint256 requestedPriceMantissa,
-        uint256 newPriceMantissa
-    );
-
-    /**
-     * @dev Emitted if this contract successfully posts a capped-to-max price.
-     */
-    event CappedPricePosted(
-        address asset,
-        uint256 requestedPriceMantissa,
-        uint256 anchorPriceMantissa,
-        uint256 cappedPriceMantissa
-    );
-
-    /**
-     * @dev Emitted when admin either pauses or resumes the contract; `newState` is the resulting state.
-     */
+    /// @dev Emitted when owner either pauses or resumes the contract; `newState` is the resulting state.
     event SetPaused(bool newState);
 
-    /**
-     * @dev Emitted when `poster_` is changed.
-     */
+    /// @dev Emitted when `poster_` is changed.
     event NewPoster(address oldPoster, address newPoster);
 
+    /**
+     * @notice Only for the implementation contract, as for the proxy pattern,
+     *            should call `initialize()` separately.
+     * @param _poster poster address.
+     */
     constructor(address _poster) public {
         initialize(_poster);
     }
 
     /**
      * @dev Initialize contract to set some configs.
-     * @param _poster Staked DF token address.
+     * @param _poster poster address.
      */
     function initialize(address _poster) public initializer {
         __Ownable_init();
-        // __ReentrancyGuard_init();
         _setPoster(_poster);
     }
 
     /**
-     * @dev Throws if called by any account other than the owner.
+     * @dev Throws if called by any account other than the poster.
      */
     modifier onlyPoster() {
-        require(poster_ == msg.sender, "onlyPoster: caller is not the poster_");
+        require(poster_ == msg.sender, "onlyPoster: caller is not the poster");
         _;
     }
 
-    modifier whetherPause() {
+    /**
+     * @dev If paused, function logic is not executed.
+     */
+    modifier NotPaused() {
         if (!paused_) _;
     }
 
     /**
-     * @notice Do not pay into PriceOracle.
+     * @notice Do not pay into Oracle.
      */
     receive() external payable {
         revert();
@@ -107,16 +84,16 @@ contract Oracle is Initializable, Ownable {
     }
 
     /**
-     * @notice Set new poster_.
-     * @dev Owner function to change of poster_.
-     * @param _newPoster New poster_.
+     * @notice Set new poster.
+     * @dev Owner function to change of poster.
+     * @param _newPoster New poster.
      */
     function _setPoster(address _newPoster) public onlyOwner {
         // Save current value, if any, for inclusion in log.
         address _oldPoster = poster_;
         require(
             _oldPoster != _newPoster,
-            "_setPoster: poster_ address invalid!"
+            "_setPoster: poster address invalid!"
         );
         // Store poster_ = newPoster.
         poster_ = _newPoster;
@@ -163,7 +140,7 @@ contract Oracle is Initializable, Ownable {
 
     /**
      * @notice Set the `priceModel_` to disabled.
-     * @dev Function to disable of priceModel_.
+     * @dev Function to disable of `priceModel_`.
      */
     function _disableAssetPriceModelInternal(address _asset) internal {
         priceModel_[_asset] = address(0);
@@ -183,6 +160,14 @@ contract Oracle is Initializable, Ownable {
             _disableAssetPriceModelInternal(_assets[i]);
     }
 
+    /**
+     * @notice Generic call contract function.
+     * @dev Call the asset's priceModel function.
+     * @param _target Target contract address (`priceModel_`).
+     * @param _signature Function signature.
+     * @param _data Param data.
+     * @return The return value of calling the target contract function.
+     */
     function _execute(
         address _target,
         string memory _signature,
@@ -217,6 +202,12 @@ contract Oracle is Initializable, Ownable {
         }
     }
 
+    /**
+     * @dev Config asset's priceModel
+     * @param _asset Asset address.
+     * @param _signature Function signature.
+     * @param _data Param data.
+     */
     function _setAsset(
         address _asset,
         string memory _signature,
@@ -225,6 +216,12 @@ contract Oracle is Initializable, Ownable {
         _execute(address(priceModel_[_asset]), _signature, _data);
     }
 
+    /**
+     * @dev Config multiple assets priceModel
+     * @param _assets Asset address list.
+     * @param _signatures Function signature list.
+     * @param _calldatas Param data list.
+     */
     function _setAssets(
         address[] memory _assets,
         string[] memory _signatures,
@@ -239,12 +236,17 @@ contract Oracle is Initializable, Ownable {
         }
     }
 
+    /**
+     * @notice Entry point for updating prices.
+     * @dev Set price for an asset.
+     * @param _asset Asset address.
+     * @param _requestedPrice Requested new price, scaled by 10**18.
+     * @return Boolean ture:success, false:fail.
+     */
     function _setPriceInternal(address _asset, uint256 _requestedPrice)
         internal
         returns (bool)
     {
-        // return IPriceModel(priceModel_[_asset])._setPrice(_asset, _requestedPrice);
-        // return _execute(address(priceModel_[_asset]), "_setPrice(address,uint256)"_setPrice(_asset, _requestedPrice));
         return
             abi.decode(
                 priceModel_[_asset].functionCall(
@@ -259,16 +261,10 @@ contract Oracle is Initializable, Ownable {
     }
 
     /**
-     * @notice Entry point for updating prices.
-     *         1) If admin has set a `readerPrice` for this asset, then poster_ can not use this function.
-     *         2) Standard stablecoin has 18 deicmals, and its price should be 1e18,
-     *            so when the poster_ set a new price for a token,
-     *            `requestedPriceMantissa` = actualPrice * 10 ** (18-tokenDecimals),
-     *            actualPrice is scaled by 10**18.
      * @dev Set price for an asset.
-     * @param _asset Asset for which to set the price.
+     * @param _asset Asset address.
      * @param _requestedPrice Requested new price, scaled by 10**18.
-     * @return Uint 0=success, otherwise a failure (see enum OracleError for details).
+     * @return Boolean ture:success, false:fail.
      */
     function setPrice(address _asset, uint256 _requestedPrice)
         external
@@ -285,8 +281,8 @@ contract Oracle is Initializable, Ownable {
      *        Notice: 0 < _assets.length == _requestedPrices.length
      * @param _requestedPrices Requested new prices for the assets, scaled by 10**18.
      *        Notice: 0 < _assets.length == _requestedPrices.length
-     * @return Uint values in same order as inputs.
-     *         For each: 0=success, otherwise a failure (see enum OracleError for details)
+     * @return Boolean values in same order as inputs.
+     *         For each: ture:success, false:fail.
      */
     function setPrices(
         address[] memory _assets,
@@ -308,38 +304,6 @@ contract Oracle is Initializable, Ownable {
     }
 
     /**
-     * @notice Asset prices are provided by chain link or other aggregator.
-     * @dev Get price of `asset` from aggregator.
-     * @param _asset Asset for which to get the price.
-     * @return Uint mantissa of asset price (scaled by 1e18) or zero if unset or under unexpected case.
-     */
-    function getAssetAggregatorPrice(address _asset)
-        external
-        returns (uint256)
-    {
-        return IPriceModel(priceModel_[_asset]).getAssetPrice(_asset);
-    }
-
-    function getAssetPrice(address _asset) external returns (uint256) {
-        return IPriceModel(priceModel_[_asset]).getAssetPrice(_asset);
-    }
-
-    /**
-     * @notice This is a basic function to read price, although this is a public function,
-     *         It is not recommended, the recommended function is `assetPrices(asset)`.
-     *         If `asset` does not has a reader to reader price, then read price from original
-     *         structure `assetPrices_`;
-     *         If `asset` has a reader to read price, first gets the price of reader, then
-     *         `readerPrice * 10 ** |(18-assetDecimals)|`
-     * @dev Get price of `asset`.
-     * @param _asset Asset for which to get the price.
-     * @return Uint mantissa of asset price (scaled by 1e18) or zero if unset.
-     */
-    function getReaderPrice(address _asset) external returns (uint256) {
-        return IPriceModel(priceModel_[_asset]).getAssetPrice(_asset);
-    }
-
-    /**
      * @notice Retrieves price of an asset.
      * @dev Get price for an asset.
      * @param _asset Asset for which to get the price.
@@ -347,15 +311,15 @@ contract Oracle is Initializable, Ownable {
      */
     function getUnderlyingPrice(address _asset)
         external
-        whetherPause
+        NotPaused
         returns (uint256 _price)
     {
         _price = IPriceModel(priceModel_[_asset]).getAssetPrice(_asset);
     }
 
     /**
-     * @notice The asset price status is provided by priceModel_.
-     * @dev Get price status of `asset` from priceModel_.
+     * @notice The asset price status is provided by `priceModel_`.
+     * @dev Get price status of `asset` from `priceModel_`.
      * @param _asset Asset for which to get the price status.
      * @return The asset price status is Boolean, the price status model is not set to true.true: available, false: unavailable.
      */
@@ -371,25 +335,37 @@ contract Oracle is Initializable, Ownable {
      */
     function getUnderlyingPriceAndStatus(address _asset)
         external
-        whetherPause
+        NotPaused
         returns (uint256 _price, bool _status)
     {
         (_price, _status) = IPriceModel(priceModel_[_asset])
         .getAssetPriceStatus(_asset);
     }
 
+    /**
+     * @notice Oracle status.
+     * @dev Stored the value of `paused_` .
+     * @return Boolean ture: paused, false: not paused.
+     */
     function paused() external view returns (bool) {
         return paused_;
     }
 
+    /**
+     * @notice Poster address.
+     * @dev Stored the value of `poster_` .
+     * @return Address poster address.
+     */
     function poster() external view returns (address) {
         return poster_;
     }
 
-    function assetPrices(address _asset) external view returns (uint256) {
-        return assetPrices_[_asset];
-    }
-
+    /**
+     * @notice Asset's priceModel address.
+     * @dev Stored the value of asset's `priceModel_` .
+     * @param _asset The asset address.
+     * @return Address priceModel address.
+     */
     function priceModel(address _asset) external view returns (address) {
         return priceModel_[_asset];
     }

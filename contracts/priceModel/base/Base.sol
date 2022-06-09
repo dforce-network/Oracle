@@ -10,7 +10,7 @@ abstract contract Base is Initializable, Ownable {
     }
 
     /**
-     * @notice Do not pay into PriceModel.
+     * @notice Do not pay into Base.
      */
     receive() external payable {
         revert();

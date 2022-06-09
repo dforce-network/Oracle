@@ -6,10 +6,10 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "../base/Base.sol";
 
 /**
- * @title dForce's lending StatusOracle Contract
- * @author dForce
+ * @title dForce's Stocks Contract
+ * @author dForce Team.
  */
-contract StockTime is Base {
+contract Stocks is Base {
     using SafeMath for uint256;
 
     /// @dev Time zone (in seconds).
@@ -51,7 +51,7 @@ contract StockTime is Base {
     /// @dev Emitted when `duration` is changed.
     event SetDuration(uint256 oldDuration, uint256 newDuration);
 
-    /// @dev Emitted when `date` is set.
+    /// @dev Emitted when `date` is changed.
     event SetDate(
         uint256 timestamp,
         uint256 timeKey,
@@ -358,13 +358,13 @@ contract StockTime is Base {
     //     return _getAssetStatus(_asset, block.timestamp);
     // }
 
-    function getAssetStatus(address _asset, uint256 _timestamp)
-        external
-        view
-        returns (bool)
-    {
-        return _getAssetStatus(_asset, _timestamp);
-    }
+    // function getAssetStatus(address _asset, uint256 _timestamp)
+    //     external
+    //     view
+    //     returns (bool)
+    // {
+    //     return _getAssetStatus(_asset, _timestamp);
+    // }
 
     /**
      * @dev Get timeZone.

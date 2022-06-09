@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "./PostPrice.sol";
+import "./PosterModel.sol";
 
 import "../interface/IERC20.sol";
 
-contract ReadPostPrice is PostPrice {
+contract ReaderPosterModel is PosterModel {
     /**
      * @dev Mapping of asset addresses to asset addresses. Stable coin can share a price.
      *
@@ -17,9 +17,7 @@ contract ReadPostPrice is PostPrice {
     }
     mapping(address => Reader) internal readers_;
 
-    /**
-     * @dev Emitted for all readers changes.
-     */
+    /// @dev Emitted when `readers_` is changed.
     event ReaderPosted(
         address asset,
         address oldReader,
@@ -76,6 +74,12 @@ contract ReadPostPrice is PostPrice {
             _setReaderInternal(_assets[i], _readAssets[i]);
     }
 
+    /**
+     * @dev Set price for an asset.
+     * @param _asset Asset address.
+     * @param _requestedPrice Requested new price, scaled by 10**18.
+     * @return Boolean ture:success, false:fail.
+     */
     function _setPrice(address _asset, uint256 _requestedPrice)
         external
         virtual
