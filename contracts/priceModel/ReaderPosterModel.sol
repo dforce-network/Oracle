@@ -87,8 +87,7 @@ contract ReaderPosterModel is PosterModel {
         onlyOwner
         returns (bool)
     {
-        Reader storage _reader = readers_[_asset];
-        if (_reader.asset != address(0)) return false;
+        if (readers_[_asset].asset != address(0)) return false;
         return _setPriceInternal(_asset, _requestedPrice);
     }
 
@@ -120,5 +119,18 @@ contract ReaderPosterModel is PosterModel {
                 readerPrice.mul(10**(uint256(0 - _reader.decimalsDifference)));
 
         return readerPrice.div(10**(uint256(_reader.decimalsDifference)));
+    }
+
+    function postPriceStatus(
+        address _asset,
+        uint256 _requestedPrice,
+        uint256 _postBuffer
+    ) public view virtual override returns (bool _success) {
+        if (readers_[_asset].asset == address(0))
+            _success = PosterModel.postPriceStatus(
+                _asset,
+                _requestedPrice,
+                _postBuffer
+            );
     }
 }

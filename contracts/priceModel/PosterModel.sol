@@ -362,8 +362,7 @@ contract PosterModel is Base, Unit {
                 if (_localVars.err) return (false, 0, 0, 0, false, 0);
                 if (_localVars.priceCapped) {
                     // save for use in log
-                    _localVars.cappingAnchorPrice = _localVars
-                    .anchorPrice;
+                    _localVars.cappingAnchorPrice = _localVars.anchorPrice;
                 }
             } else {
                 // Setting first price. Accept as is (already assigned above from _requestedPrice) and use as anchor
@@ -380,7 +379,7 @@ contract PosterModel is Base, Unit {
         }
 
         return (
-            true,
+            true && _localVars.price != assetPrices_[_asset],
             _localVars.price,
             _localVars.currentPeriod,
             _localVars.anchorPeriod,
@@ -409,48 +408,43 @@ contract PosterModel is Base, Unit {
             uint256 _cappingAnchorPrice
         ) = _updatePriceRes(_asset, _requestedPrice);
 
-        if (!_success) return _success;
+        if (_success) {
+            // BEGIN SIDE EFFECTS
 
-        // BEGIN SIDE EFFECTS
+            // Set pendingAnchor = Nothing
+            // Pending anchor is only used once.
+            if (pendingAnchors_[_asset] != 0) {
+                pendingAnchors_[_asset] = 0;
+            }
 
-        // Set pendingAnchor = Nothing
-        // Pending anchor is only used once.
-        if (pendingAnchors_[_asset] != 0) {
-            pendingAnchors_[_asset] = 0;
+            // If currentPeriod > anchorPeriod:
+            //  Set anchors_[_asset] = (currentPeriod, price)
+            //  The new anchor is if we're in a new period or we had a pending anchor, then we become the new anchor
+            if (_currentPeriod > _anchorPeriod) {
+                anchors_[_asset] = Anchor({
+                    period: _currentPeriod,
+                    price: _price
+                });
+            }
+
+            uint256 _previousPrice = assetPrices_[_asset];
+
+            assetPrices_[_asset] = _price;
+
+            emit PricePosted(_asset, _previousPrice, _requestedPrice, _price);
+
+            if (_priceCapped) {
+                // We have set a capped price. Log it so we can detect the situation and investigate.
+                emit CappedPricePosted(
+                    _asset,
+                    _requestedPrice,
+                    _cappingAnchorPrice,
+                    _price
+                );
+            }
         }
 
-        // If currentPeriod > anchorPeriod:
-        //  Set anchors_[_asset] = (currentPeriod, price)
-        //  The new anchor is if we're in a new period or we had a pending anchor, then we become the new anchor
-        if (_currentPeriod > _anchorPeriod) {
-            anchors_[_asset] = Anchor({
-                period: _currentPeriod,
-                price: _price
-            });
-        }
-
-        uint256 _previousPrice = assetPrices_[_asset];
-
-        assetPrices_[_asset] = _price;
-
-        emit PricePosted(
-            _asset,
-            _previousPrice,
-            _requestedPrice,
-            _price
-        );
-
-        if (_priceCapped) {
-            // We have set a capped price. Log it so we can detect the situation and investigate.
-            emit CappedPricePosted(
-                _asset,
-                _requestedPrice,
-                _cappingAnchorPrice,
-                _price
-            );
-        }
-
-        return _price != _previousPrice;
+        return _success;
     }
 
     /**
@@ -523,5 +517,14 @@ contract PosterModel is Base, Unit {
         returns (uint256, bool)
     {
         return (_getAssetPrice(_asset), true);
+    }
+
+    function postPriceStatus(
+        address _asset,
+        uint256 _requestedPrice,
+        uint256 _postBuffer
+    ) public view virtual returns (bool _success) {
+        _postBuffer;
+        (_success, , , , , ) = _updatePriceRes(_asset, _requestedPrice);
     }
 }

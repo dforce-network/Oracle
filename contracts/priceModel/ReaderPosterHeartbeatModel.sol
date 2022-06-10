@@ -18,8 +18,7 @@ contract ReaderPosterHeartbeatModel is PosterHeartbeatModel, ReaderPosterModel {
         onlyOwner
         returns (bool)
     {
-        Reader storage _reader = readers_[_asset];
-        if (_reader.asset != address(0)) return false;
+        if (readers_[_asset].asset != address(0)) return false;
 
         if (validInterval_[_asset] > 0) {
             postTime_[_asset] = block.timestamp;
@@ -67,5 +66,24 @@ contract ReaderPosterHeartbeatModel is PosterHeartbeatModel, ReaderPosterModel {
         returns (uint256, bool)
     {
         return (_getAssetPrice(_asset), _getAssetStatus(_asset));
+    }
+
+    function postPriceStatus(
+        address _asset,
+        uint256 _requestedPrice,
+        uint256 _postBuffer
+    )
+        public
+        view
+        virtual
+        override(ReaderPosterModel, PosterHeartbeatModel)
+        returns (bool _success)
+    {
+        if (readers_[_asset].asset == address(0))
+            _success = PosterHeartbeatModel.postPriceStatus(
+                _asset,
+                _requestedPrice,
+                _postBuffer
+            );
     }
 }

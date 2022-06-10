@@ -22,11 +22,26 @@ contract PosterHeartbeatModel is Heartbeat, PosterModel {
         onlyOwner
         returns (bool)
     {
-        if (validInterval_[_asset] > 0) {
-            postTime_[_asset] = block.timestamp;
-            return _setPriceInternal(_asset, _requestedPrice);
-        }
-        return false;
+        bool _status = _getAssetStatus(_asset);
+
+        postTime_[_asset] = block.timestamp;
+
+        return !_status || _setPriceInternal(_asset, _requestedPrice);
+    }
+
+    function _getAssetStatus(address _asset, uint256 _postBuffer)
+        internal
+        view
+        virtual
+        returns (bool)
+    {
+        uint256 _assetValidInterval = validInterval_[_asset];
+        if (_assetValidInterval == 0)
+            _assetValidInterval = defaultValidInterval_;
+
+        return
+            block.timestamp.add(_postBuffer) <
+            postTime_[_asset].add(_assetValidInterval);
     }
 
     function _getAssetStatus(address _asset)
@@ -35,7 +50,7 @@ contract PosterHeartbeatModel is Heartbeat, PosterModel {
         virtual
         returns (bool)
     {
-        return block.timestamp < postTime_[_asset].add(validInterval_[_asset]);
+        return _getAssetStatus(_asset, 0);
     }
 
     function getAssetStatus(address _asset)
@@ -58,5 +73,18 @@ contract PosterHeartbeatModel is Heartbeat, PosterModel {
 
     function postTime(address _asset) external view returns (uint256) {
         return postTime_[_asset];
+    }
+
+    function postPriceStatus(
+        address _asset,
+        uint256 _requestedPrice,
+        uint256 _postBuffer
+    ) public view virtual override returns (bool _success) {
+        _success = PosterModel.postPriceStatus(
+            _asset,
+            _requestedPrice,
+            _postBuffer
+        );
+        _success = _success && !_getAssetStatus(_asset, _postBuffer);
     }
 }
