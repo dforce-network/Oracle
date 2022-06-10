@@ -30,7 +30,7 @@ contract PosterModel is Base, Unit {
         // Floor(block.number / numBlocksPerPeriod) + 1
         uint256 period;
         // Price in ETH, scaled by 10**18
-        uint256 priceMantissa;
+        uint256 price;
     }
 
     /// @dev Anchors by asset.
@@ -69,17 +69,17 @@ contract PosterModel is Base, Unit {
     /// @dev Emitted for all price changes.
     event PricePosted(
         address asset,
-        uint256 previousPriceMantissa,
-        uint256 requestedPriceMantissa,
-        uint256 newPriceMantissa
+        uint256 previousPrice,
+        uint256 requestedPrice,
+        uint256 newPrice
     );
 
     /// @dev Emitted if this contract successfully posts a capped-to-max price.
     event CappedPricePosted(
         address asset,
-        uint256 requestedPriceMantissa,
-        uint256 anchorPriceMantissa,
-        uint256 cappedPriceMantissa
+        uint256 requestedPrice,
+        uint256 anchorPrice,
+        uint256 cappedPrice
     );
 
     /**
@@ -284,7 +284,7 @@ contract PosterModel is Base, Unit {
         return (false, false, _price);
     }
 
-    struct SetPriceLocalVars {
+    struct UpdatePriceLocalVars {
         uint256 price;
         uint256 swing;
         uint256 maxSwing;
@@ -292,109 +292,124 @@ contract PosterModel is Base, Unit {
         uint256 anchorPeriod;
         uint256 currentPeriod;
         bool priceCapped;
-        uint256 cappingAnchorPriceMantissa;
-        uint256 pendingAnchorMantissa;
+        bool err;
+        uint256 cappingAnchorPrice;
+        uint256 pendingAnchor;
     }
 
     /**
-     * @notice Entry point for updating prices.
-     * @dev Set price for an asset.
+     * @notice Update the status of price-related data.
+     * @dev Update asset price, swing and time period against requested price check.
      * @param _asset Asset address.
-     * @param _requestedPriceMantissa Requested new price, scaled by 10**18.
-     * @return Boolean ture:success, false:fail.
+     * @param _requestedPrice Requested new price.
+     * @return bool ture: update asset price successfully, false: update asset price failed.
+     *         uint256 correct price,
+     *         uint256 current period,
+     *         uint256 anchor period,
+     *         bool ture: price capped, false: not reached the limit,
+     *         uint256 capping anchor price,
      */
-    function _setPriceInternal(address _asset, uint256 _requestedPriceMantissa)
+    function _updatePriceRes(address _asset, uint256 _requestedPrice)
         internal
-        returns (bool)
+        view
+        returns (
+            bool,
+            uint256,
+            uint256,
+            uint256,
+            bool,
+            uint256
+        )
     {
-        SetPriceLocalVars memory _localVars;
+        UpdatePriceLocalVars memory _localVars;
         // We add 1 for currentPeriod so that it can never be zero and there's no ambiguity about an unset value.
         // (It can be a problem in tests with low block numbers.)
         _localVars.currentPeriod = (block.number / numBlocksPerPeriod_) + 1;
-        _localVars.pendingAnchorMantissa = pendingAnchors_[_asset];
-        _localVars.price = _requestedPriceMantissa;
+        _localVars.pendingAnchor = pendingAnchors_[_asset];
+        _localVars.price = _requestedPrice;
 
         _localVars.maxSwing = maxSwings_[_asset] == 0
             ? maxSwing_
             : maxSwings_[_asset];
 
-        bool _err;
-        if (_localVars.pendingAnchorMantissa != 0) {
+        if (_localVars.pendingAnchor != 0) {
             // let's explicitly set to 0 rather than relying on default of declaration
             _localVars.anchorPeriod = 0;
-            _localVars.anchorPrice = _localVars.pendingAnchorMantissa;
+            _localVars.anchorPrice = _localVars.pendingAnchor;
 
             // Verify movement is within max swing of pending anchor (currently: 10%)
-            (_err, _localVars.swing) = _calculateSwing(
+            (_localVars.err, _localVars.swing) = _calculateSwing(
                 _localVars.anchorPrice,
                 _localVars.price
             );
 
-            if (_err || _localVars.swing > _localVars.maxSwing) return false;
-            // if (_err != Error.NO_ERROR) {
-            //     return
-            //         failOracleWithDetails(
-            //             _asset,
-            //             OracleError.FAILED_TO_SET_PRICE,
-            //             OracleFailureInfo.SET_PRICE_CALCULATE_SWING,
-            //             uint256(_err)
-            //         );
-            // }
-
-            // Fail when swing > maxSwing
-            // if (greaterThanExp(_localVars.swing, maxSwing)) {
-            // if (greaterThanExp(_localVars.swing, _localVars.maxSwing)) {
-            //     return
-            //         failOracleWithDetails(
-            //             _asset,
-            //             OracleError.FAILED_TO_SET_PRICE,
-            //             OracleFailureInfo.SET_PRICE_MAX_SWING_CHECK,
-            //             _localVars.swing.mantissa
-            //         );
-            // }
+            if (_localVars.err || _localVars.swing > _localVars.maxSwing)
+                return (false, 0, 0, 0, false, 0);
         } else {
             _localVars.anchorPeriod = anchors_[_asset].period;
-            _localVars.anchorPrice = anchors_[_asset].priceMantissa;
+            _localVars.anchorPrice = anchors_[_asset].price;
 
             if (_localVars.anchorPeriod != 0) {
-                // (_err, _localVars.priceCapped, _localVars.price) = _capToMax(_localVars.anchorPrice, _localVars.price);
-                (_err, _localVars.priceCapped, _localVars.price) = _capToMax(
+                (
+                    _localVars.err,
+                    _localVars.priceCapped,
+                    _localVars.price
+                ) = _capToMax(
                     _localVars.anchorPrice,
                     _localVars.price,
                     _localVars.maxSwing
                 );
-                if (_err) return false;
-                // if (_err != Error.NO_ERROR) {
-                //     return
-                //         failOracleWithDetails(
-                //             _asset,
-                //             OracleError.FAILED_TO_SET_PRICE,
-                //             OracleFailureInfo.SET_PRICE_CAP_TO_MAX,
-                //             uint256(_err)
-                //         );
-                // }
+                if (_localVars.err) return (false, 0, 0, 0, false, 0);
                 if (_localVars.priceCapped) {
                     // save for use in log
-                    _localVars.cappingAnchorPriceMantissa = _localVars
+                    _localVars.cappingAnchorPrice = _localVars
                     .anchorPrice;
                 }
             } else {
-                // Setting first price. Accept as is (already assigned above from _requestedPriceMantissa) and use as anchor
-                _localVars.anchorPrice = _requestedPriceMantissa;
+                // Setting first price. Accept as is (already assigned above from _requestedPrice) and use as anchor
+                _localVars.anchorPrice = _requestedPrice;
             }
         }
 
         // Fail if anchorPrice or price is zero.
         // zero anchor represents an unexpected situation likely due to a problem in this contract
         // zero price is more likely as the result of bad input from the caller of this function
-        if (_localVars.anchorPrice == 0) {
+        if (_localVars.anchorPrice == 0 || _localVars.price == 0) {
             // If we get here price could also be zero, but it does not seem worthwhile to distinguish the 3rd case
-            return false;
+            return (false, 0, 0, 0, false, 0);
         }
 
-        if (_localVars.price == 0) {
-            return false;
-        }
+        return (
+            true,
+            _localVars.price,
+            _localVars.currentPeriod,
+            _localVars.anchorPeriod,
+            _localVars.priceCapped,
+            _localVars.cappingAnchorPrice
+        );
+    }
+
+    /**
+     * @notice Entry point for updating prices.
+     * @dev Set price for an asset.
+     * @param _asset Asset address.
+     * @param _requestedPrice Requested new price, scaled by 10**18.
+     * @return Boolean ture:success, false:fail.
+     */
+    function _setPriceInternal(address _asset, uint256 _requestedPrice)
+        internal
+        returns (bool)
+    {
+        (
+            bool _success,
+            uint256 _price,
+            uint256 _currentPeriod,
+            uint256 _anchorPeriod,
+            bool _priceCapped,
+            uint256 _cappingAnchorPrice
+        ) = _updatePriceRes(_asset, _requestedPrice);
+
+        if (!_success) return _success;
 
         // BEGIN SIDE EFFECTS
 
@@ -407,36 +422,35 @@ contract PosterModel is Base, Unit {
         // If currentPeriod > anchorPeriod:
         //  Set anchors_[_asset] = (currentPeriod, price)
         //  The new anchor is if we're in a new period or we had a pending anchor, then we become the new anchor
-        if (_localVars.currentPeriod > _localVars.anchorPeriod) {
+        if (_currentPeriod > _anchorPeriod) {
             anchors_[_asset] = Anchor({
-                period: _localVars.currentPeriod,
-                priceMantissa: _localVars.price
+                period: _currentPeriod,
+                price: _price
             });
         }
 
         uint256 _previousPrice = assetPrices_[_asset];
 
-        assetPrices_[_asset] = _localVars.price;
-        // setPriceStorageInternal(_asset, _localVars.price);
+        assetPrices_[_asset] = _price;
 
         emit PricePosted(
             _asset,
             _previousPrice,
-            _requestedPriceMantissa,
-            _localVars.price
+            _requestedPrice,
+            _price
         );
 
-        if (_localVars.priceCapped) {
+        if (_priceCapped) {
             // We have set a capped price. Log it so we can detect the situation and investigate.
             emit CappedPricePosted(
                 _asset,
-                _requestedPriceMantissa,
-                _localVars.cappingAnchorPriceMantissa,
-                _localVars.price
+                _requestedPrice,
+                _cappingAnchorPrice,
+                _price
             );
         }
 
-        return _localVars.price != _previousPrice;
+        return _price != _previousPrice;
     }
 
     /**
