@@ -519,7 +519,7 @@ contract PosterModel is Base, Unit {
         return (_getAssetPrice(_asset), true);
     }
 
-    function postPriceStatus(
+    function shouldUpdatePrice(
         address _asset,
         uint256 _requestedPrice,
         uint256 _postBuffer

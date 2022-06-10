@@ -121,13 +121,13 @@ contract ReaderPosterModel is PosterModel {
         return readerPrice.div(10**(uint256(_reader.decimalsDifference)));
     }
 
-    function postPriceStatus(
+    function shouldUpdatePrice(
         address _asset,
         uint256 _requestedPrice,
         uint256 _postBuffer
     ) public view virtual override returns (bool _success) {
         if (readers_[_asset].asset == address(0))
-            _success = PosterModel.postPriceStatus(
+            _success = PosterModel.shouldUpdatePrice(
                 _asset,
                 _requestedPrice,
                 _postBuffer
