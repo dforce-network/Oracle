@@ -161,6 +161,30 @@ contract Oracle is Initializable, Ownable {
     }
 
     /**
+     * @notice Generic static call contract function.
+     * @dev Static call the asset's priceModel function.
+     * @param _target Target contract address (`priceModel_`).
+     * @param _signature Function signature.
+     * @param _data Param data.
+     * @return The return value of calling the target contract function.
+     */
+    function _staticCall(
+        address _target,
+        string memory _signature,
+        bytes memory _data
+    ) internal view returns (bytes memory) {
+        require(
+            bytes(_signature).length > 0,
+            "_staticCall: Parameter signature can not be empty!"
+        );
+        bytes memory _callData = abi.encodePacked(
+            bytes4(keccak256(bytes(_signature))),
+            _data
+        );
+        return _target.functionStaticCall(_callData);
+    }
+
+    /**
      * @notice Generic call contract function.
      * @dev Call the asset's priceModel function.
      * @param _target Target contract address (`priceModel_`).
@@ -247,17 +271,17 @@ contract Oracle is Initializable, Ownable {
         internal
         returns (bool)
     {
-        return
-            abi.decode(
-                priceModel_[_asset].functionCall(
-                    abi.encodeWithSignature(
-                        "_setPrice(address,uint256)",
-                        _asset,
-                        _requestedPrice
-                    )
-                ),
-                (bool)
-            );
+        bytes memory _callData = abi.encodeWithSignature(
+            "_setPrice(address,uint256)",
+            _asset,
+            _requestedPrice
+        );
+        (bool _success, bytes memory _returndata) = priceModel_[_asset].call(
+            _callData
+        );
+
+        if (_success) return abi.decode(_returndata, (bool));
+        return false;
     }
 
     /**
@@ -368,5 +392,50 @@ contract Oracle is Initializable, Ownable {
      */
     function priceModel(address _asset) external view returns (address) {
         return priceModel_[_asset];
+    }
+
+    /**
+     * @notice should update price.
+     * @dev Whether the asset price needs to be updated.
+     * @param _asset The asset address.
+     * @param _requestedPrice New asset price.
+     * @param _postBuffer Price invalidation buffer time.
+     * @return bool true: can be updated; false: no need to update.
+     */
+    function shouldUpdatePrice(
+        address _asset,
+        uint256 _requestedPrice,
+        uint256 _postBuffer
+    ) public view returns (bool) {
+        bytes memory _callData = abi.encodeWithSignature(
+            "shouldUpdatePrice(address,uint256,uint256)",
+            _asset,
+            _requestedPrice,
+            _postBuffer
+        );
+        (bool _success, bytes memory _returndata) = priceModel_[_asset]
+        .staticcall(_callData);
+
+        if (_success) return abi.decode(_returndata, (bool));
+        return false;
+    }
+
+    function shouldUpdatePrices(
+        address[] memory _assets,
+        uint256[] memory _requestedPrices,
+        uint256[] memory _postBuffer
+    ) external view returns (bool[] memory) {
+        uint256 _numAssets = _assets.length;
+
+        bool[] memory _result = new bool[](_numAssets);
+        for (uint256 i = 0; i < _numAssets; i++) {
+            _result[i] = shouldUpdatePrice(
+                _assets[i],
+                _requestedPrices[i],
+                _postBuffer[i]
+            );
+        }
+
+        return _result;
     }
 }
