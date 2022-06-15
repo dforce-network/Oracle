@@ -6,14 +6,12 @@ import "./status/Heartbeat.sol";
 
 contract PosterHeartbeatModel is Heartbeat, PosterModel {
     /**
-     * @dev Mapping of asset addresses to validInterval.
+     * @dev Mapping of asset addresses to updatedAt.
      */
-    mapping(address => uint256) internal postTime_;
+    mapping(address => uint256) internal updatedAt_;
 
-    /**
-     * @dev Emitted for asset validInterval changes.
-     */
-    event SetAssetPostTime(address asset, address validInterval);
+    /// @dev Emitted when `updatedAt_` is changed.
+    event SetAssetPostTime(address asset, uint256 updatedAt);
 
     function _setPrice(address _asset, uint256 _requestedPrice)
         external
@@ -24,7 +22,7 @@ contract PosterHeartbeatModel is Heartbeat, PosterModel {
     {
         bool _status = _getAssetStatus(_asset);
 
-        postTime_[_asset] = block.timestamp;
+        updatedAt_[_asset] = block.timestamp;
 
         return !_status || _setPriceInternal(_asset, _requestedPrice);
     }
@@ -35,13 +33,13 @@ contract PosterHeartbeatModel is Heartbeat, PosterModel {
         virtual
         returns (bool)
     {
-        uint256 _assetValidInterval = validInterval_[_asset];
+        uint256 _assetValidInterval = heartbeat_[_asset];
         if (_assetValidInterval == 0)
-            _assetValidInterval = defaultValidInterval_;
+            _assetValidInterval = defaultHeartbeat_;
 
         return
             block.timestamp.add(_postBuffer) <
-            postTime_[_asset].add(_assetValidInterval);
+            updatedAt_[_asset].add(_assetValidInterval);
     }
 
     function _getAssetStatus(address _asset)
@@ -72,7 +70,7 @@ contract PosterHeartbeatModel is Heartbeat, PosterModel {
     }
 
     function postTime(address _asset) external view returns (uint256) {
-        return postTime_[_asset];
+        return updatedAt_[_asset];
     }
 
     function shouldUpdatePrice(

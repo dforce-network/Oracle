@@ -22,9 +22,9 @@ contract ChainlinkHeartbeatModel is Heartbeat, ChainlinkModel {
         if (_aggregator == IChainlinkAggregator(0)) return false;
         (, , , uint256 _updatedAt, ) = _aggregator.latestRoundData();
 
-        uint256 _assetValidInterval = validInterval_[_asset];
+        uint256 _assetValidInterval = heartbeat_[_asset];
         if (_assetValidInterval == 0)
-            _assetValidInterval = defaultValidInterval_;
+            _assetValidInterval = defaultHeartbeat_;
 
         return block.timestamp < _updatedAt.add(_assetValidInterval);
     }
@@ -50,9 +50,9 @@ contract ChainlinkHeartbeatModel is Heartbeat, ChainlinkModel {
 
         if (_answer < 0) return (0, false);
 
-        uint256 _assetValidInterval = validInterval_[_asset];
+        uint256 _assetValidInterval = heartbeat_[_asset];
         if (_assetValidInterval == 0)
-            _assetValidInterval = defaultValidInterval_;
+            _assetValidInterval = defaultHeartbeat_;
 
         return (
             _correctPrice(

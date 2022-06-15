@@ -20,8 +20,8 @@ contract ReaderPosterHeartbeatModel is PosterHeartbeatModel, ReaderPosterModel {
     {
         if (readers_[_asset].asset != address(0)) return false;
 
-        if (validInterval_[_asset] > 0) {
-            postTime_[_asset] = block.timestamp;
+        if (heartbeat_[_asset] > 0) {
+            updatedAt_[_asset] = block.timestamp;
             return _setPriceInternal(_asset, _requestedPrice);
         }
         return false;

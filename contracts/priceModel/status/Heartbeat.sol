@@ -5,20 +5,20 @@ import "../base/Base.sol";
 
 abstract contract Heartbeat is Base {
     /// @dev asset default valid interval.
-    uint256 internal defaultValidInterval_ = 1 days;
+    uint256 internal defaultHeartbeat_ = 1 days;
 
     /// @dev Mapping of asset addresses to validInterval.
-    mapping(address => uint256) internal validInterval_;
+    mapping(address => uint256) internal heartbeat_;
 
-    /// @dev Emitted when `defaultValidInterval_` is changed.
+    /// @dev Emitted when `defaultHeartbeat_` is changed.
     event SetDefaultValidInterval(uint256 defaultValidInterval);
 
-    /// @dev Emitted when `validInterval_` is changed.
+    /// @dev Emitted when `heartbeat_` is changed.
     event SetAssetValidInterval(address asset, uint256 validInterval);
 
     /**
-     * @notice Set `defaultValidInterval_`.
-     * @dev Function to change of `defaultValidInterval_`.
+     * @notice Set `defaultHeartbeat_`.
+     * @dev Function to change of `defaultHeartbeat_`.
      * @param _defaultValidInterval Default valid interval.
      */
     function _setDefaultValidInterval(uint256 _defaultValidInterval)
@@ -27,10 +27,10 @@ abstract contract Heartbeat is Base {
         onlyOwner
     {
         require(
-            _defaultValidInterval != defaultValidInterval_,
+            _defaultValidInterval != defaultHeartbeat_,
             "_setDefaultValidInterval: defaultValidInterval is invalid!"
         );
-        defaultValidInterval_ = _defaultValidInterval;
+        defaultHeartbeat_ = _defaultValidInterval;
         emit SetDefaultValidInterval(_defaultValidInterval);
     }
 
@@ -44,13 +44,13 @@ abstract contract Heartbeat is Base {
         address _asset,
         uint256 _validInterval
     ) internal {
-        uint256 _oldValidInterval = validInterval_[_asset];
+        uint256 _oldValidInterval = heartbeat_[_asset];
         require(
             _validInterval != _oldValidInterval,
             "_setAssetValidIntervalInternal: validInterval is invalid!"
         );
 
-        validInterval_[_asset] = _validInterval;
+        heartbeat_[_asset] = _validInterval;
         emit SetAssetValidInterval(_asset, _validInterval);
     }
 
@@ -79,7 +79,7 @@ abstract contract Heartbeat is Base {
      * @return Default valid interval.
      */
     function defaultValidInterval() external view returns (uint256) {
-        return defaultValidInterval_;
+        return defaultHeartbeat_;
     }
 
     /**
@@ -89,6 +89,6 @@ abstract contract Heartbeat is Base {
      * @return Valid time interval.
      */
     function validInterval(address _asset) external view returns (uint256) {
-        return validInterval_[_asset];
+        return heartbeat_[_asset];
     }
 }
