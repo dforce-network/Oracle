@@ -2,7 +2,7 @@
 pragma solidity 0.6.12;
 
 interface IPriceModel {
-    function isPriceModel() external returns (bool);
+    function isPriceModel() external view returns (bool);
 
     function getAssetPrice(address _asset) external returns (uint256);
 
