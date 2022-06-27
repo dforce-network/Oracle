@@ -34,8 +34,7 @@ contract PosterHeartbeatModel is Heartbeat, PosterModel {
         returns (bool)
     {
         uint256 _assetValidInterval = heartbeat_[_asset];
-        if (_assetValidInterval == 0)
-            _assetValidInterval = defaultHeartbeat_;
+        if (_assetValidInterval == 0) _assetValidInterval = defaultHeartbeat_;
 
         return
             block.timestamp.add(_postBuffer) <
