@@ -83,6 +83,6 @@ contract PosterHeartbeatModel is Heartbeat, PosterModel {
             _requestedPrice,
             _postBuffer
         );
-        _success = _success && !_getAssetStatus(_asset, _postBuffer);
+        _success = _success || !_getAssetStatus(_asset, _postBuffer);
     }
 }
