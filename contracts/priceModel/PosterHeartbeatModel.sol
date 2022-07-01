@@ -23,8 +23,9 @@ contract PosterHeartbeatModel is Heartbeat, PosterModel {
         bool _status = _getAssetStatus(_asset);
 
         updatedAt_[_asset] = block.timestamp;
+        bool _setPriceStatus = _setPriceInternal(_asset, _requestedPrice);
 
-        return !_status || _setPriceInternal(_asset, _requestedPrice);
+        return !_status || _setPriceStatus;
     }
 
     function _getAssetStatus(address _asset, uint256 _postBuffer)

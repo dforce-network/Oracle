@@ -20,11 +20,12 @@ contract ReaderPosterHeartbeatModel is PosterHeartbeatModel, ReaderPosterModel {
     {
         if (readers_[_asset].asset != address(0)) return false;
 
-        if (heartbeat_[_asset] > 0) {
-            updatedAt_[_asset] = block.timestamp;
-            return _setPriceInternal(_asset, _requestedPrice);
-        }
-        return false;
+        bool _status = PosterHeartbeatModel._getAssetStatus(_asset);
+
+        updatedAt_[_asset] = block.timestamp;
+        bool _setPriceStatus = _setPriceInternal(_asset, _requestedPrice);
+
+        return !_status || _setPriceStatus;
     }
 
     function _getAssetPrice(address _asset)
