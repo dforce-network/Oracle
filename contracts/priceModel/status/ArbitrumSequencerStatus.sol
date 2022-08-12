@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.12;
 
-import "../base/Base.sol";
-
 interface FlagsInterface {
     function getFlag(address) external view returns (bool);
 }
