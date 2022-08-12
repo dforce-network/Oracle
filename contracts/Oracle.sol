@@ -67,6 +67,13 @@ contract Oracle is Initializable, Ownable {
     }
 
     /**
+     * @dev If there is no price model, no functional logic is executed.
+     */
+    modifier whetherModel(address _asset) {
+        if (priceModel_[_asset] != address(0)) _;
+    }
+
+    /**
      * @notice Do not pay into Oracle.
      */
     receive() external payable {
@@ -336,6 +343,7 @@ contract Oracle is Initializable, Ownable {
     function getUnderlyingPrice(address _asset)
         external
         NotPaused
+        whetherModel(_asset)
         returns (uint256 _price)
     {
         _price = IPriceModel(priceModel_[_asset]).getAssetPrice(_asset);
@@ -347,7 +355,11 @@ contract Oracle is Initializable, Ownable {
      * @param _asset Asset for which to get the price status.
      * @return The asset price status is Boolean, the price status model is not set to true.true: available, false: unavailable.
      */
-    function getAssetPriceStatus(address _asset) external returns (bool) {
+    function getAssetPriceStatus(address _asset)
+        external
+        whetherModel(_asset)
+        returns (bool)
+    {
         return IPriceModel(priceModel_[_asset]).getAssetStatus(_asset);
     }
 
@@ -360,6 +372,7 @@ contract Oracle is Initializable, Ownable {
     function getUnderlyingPriceAndStatus(address _asset)
         external
         NotPaused
+        whetherModel(_asset)
         returns (uint256 _price, bool _status)
     {
         (_price, _status) = IPriceModel(priceModel_[_asset])
