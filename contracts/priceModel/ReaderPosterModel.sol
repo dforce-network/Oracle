@@ -133,4 +133,14 @@ contract ReaderPosterModel is PosterModel {
                 _postBuffer
             );
     }
+
+    /**
+     * @dev Get reader for an asset.
+     * @param _asset Asset address.
+     * @return reader address.
+     *         asset and reader decimal spreads.
+     */
+    function reader(address _asset) external view returns (address, int256) {
+        return (readers_[_asset].asset, readers_[_asset].decimalsDifference);
+    }
 }
