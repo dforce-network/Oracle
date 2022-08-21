@@ -10,7 +10,7 @@ contract PosterModel is Base, Unit {
     using SafeRatioMath for uint256;
 
     // Approximately 1 hour: 60 seconds/minute * 60 minutes/hour * 1 block/15 seconds.
-    uint256 internal constant numBlocksPerPeriod_ = 240;
+    uint256 internal constant numBlocksPerPeriod_ = 3600;
 
     uint256 internal constant MINIMUM_SWING_ = 10**15;
     uint256 internal constant MAXIMUM_SWING_ = 10**17;
@@ -324,7 +324,7 @@ contract PosterModel is Base, Unit {
         UpdatePriceLocalVars memory _localVars;
         // We add 1 for currentPeriod so that it can never be zero and there's no ambiguity about an unset value.
         // (It can be a problem in tests with low block numbers.)
-        _localVars.currentPeriod = (block.number / numBlocksPerPeriod_) + 1;
+        _localVars.currentPeriod = (block.timestamp / numBlocksPerPeriod_) + 1;
         _localVars.pendingAnchor = pendingAnchors_[_asset];
         _localVars.price = _requestedPrice;
 
