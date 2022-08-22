@@ -73,12 +73,12 @@ contract PosterHeartbeatModel is Heartbeat, PosterModel {
         return updatedAt_[_asset];
     }
 
-    function shouldUpdatePrice(
+    function readyToUpdate(
         address _asset,
         uint256 _requestedPrice,
         uint256 _postBuffer
     ) public view virtual override returns (bool _success) {
-        _success = PosterModel.shouldUpdatePrice(
+        _success = PosterModel.readyToUpdate(
             _asset,
             _requestedPrice,
             _postBuffer

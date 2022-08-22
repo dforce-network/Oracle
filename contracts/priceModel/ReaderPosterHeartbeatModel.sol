@@ -69,7 +69,7 @@ contract ReaderPosterHeartbeatModel is PosterHeartbeatModel, ReaderPosterModel {
         return (_getAssetPrice(_asset), _getAssetStatus(_asset));
     }
 
-    function shouldUpdatePrice(
+    function readyToUpdate(
         address _asset,
         uint256 _requestedPrice,
         uint256 _postBuffer
@@ -81,7 +81,7 @@ contract ReaderPosterHeartbeatModel is PosterHeartbeatModel, ReaderPosterModel {
         returns (bool _success)
     {
         if (readers_[_asset].asset == address(0))
-            _success = PosterHeartbeatModel.shouldUpdatePrice(
+            _success = PosterHeartbeatModel.readyToUpdate(
                 _asset,
                 _requestedPrice,
                 _postBuffer

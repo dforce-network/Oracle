@@ -9,8 +9,8 @@ import "./base/Unit.sol";
 contract PosterModel is Base, Unit {
     using SafeRatioMath for uint256;
 
-    // Approximately 1 hour: 60 seconds/minute * 60 minutes/hour * 1 block/15 seconds.
-    uint256 internal constant numBlocksPerPeriod_ = 3600;
+    // Approximately 1 hour: 3600 seconds.
+    uint256 internal constant numSecondsPerPeriod_ = 3600;
 
     uint256 internal constant MINIMUM_SWING_ = 10**15;
     uint256 internal constant MAXIMUM_SWING_ = 10**17;
@@ -27,7 +27,7 @@ contract PosterModel is Base, Unit {
     mapping(address => uint256) internal maxSwings_;
 
     struct Anchor {
-        // Floor(block.number / numBlocksPerPeriod) + 1
+        // Floor(block.timestamp / numSecondsPerPeriod) + 1
         uint256 period;
         // Price in ETH, scaled by 10**18
         uint256 price;
@@ -323,8 +323,8 @@ contract PosterModel is Base, Unit {
     {
         UpdatePriceLocalVars memory _localVars;
         // We add 1 for currentPeriod so that it can never be zero and there's no ambiguity about an unset value.
-        // (It can be a problem in tests with low block numbers.)
-        _localVars.currentPeriod = (block.timestamp / numBlocksPerPeriod_) + 1;
+        // (It can be a problem in tests with low block timestamp.)
+        _localVars.currentPeriod = (block.timestamp / numSecondsPerPeriod_) + 1;
         _localVars.pendingAnchor = pendingAnchors_[_asset];
         _localVars.price = _requestedPrice;
 
@@ -519,7 +519,7 @@ contract PosterModel is Base, Unit {
         return (_getAssetPrice(_asset), true);
     }
 
-    function shouldUpdatePrice(
+    function readyToUpdate(
         address _asset,
         uint256 _requestedPrice,
         uint256 _postBuffer

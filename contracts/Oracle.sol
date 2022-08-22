@@ -69,7 +69,7 @@ contract Oracle is Initializable, Ownable {
     /**
      * @dev If there is no price model, no functional logic is executed.
      */
-    modifier whetherModel(address _asset) {
+    modifier hasModel(address _asset) {
         if (priceModel_[_asset] != address(0)) _;
     }
 
@@ -343,7 +343,7 @@ contract Oracle is Initializable, Ownable {
     function getUnderlyingPrice(address _asset)
         external
         NotPaused
-        whetherModel(_asset)
+        hasModel(_asset)
         returns (uint256 _price)
     {
         _price = IPriceModel(priceModel_[_asset]).getAssetPrice(_asset);
@@ -357,7 +357,7 @@ contract Oracle is Initializable, Ownable {
      */
     function getAssetPriceStatus(address _asset)
         external
-        whetherModel(_asset)
+        hasModel(_asset)
         returns (bool)
     {
         return IPriceModel(priceModel_[_asset]).getAssetStatus(_asset);
@@ -372,7 +372,7 @@ contract Oracle is Initializable, Ownable {
     function getUnderlyingPriceAndStatus(address _asset)
         external
         NotPaused
-        whetherModel(_asset)
+        hasModel(_asset)
         returns (uint256 _price, bool _status)
     {
         (_price, _status) = IPriceModel(priceModel_[_asset])
@@ -415,13 +415,13 @@ contract Oracle is Initializable, Ownable {
      * @param _postBuffer Price invalidation buffer time.
      * @return bool true: can be updated; false: no need to update.
      */
-    function shouldUpdatePrice(
+    function readyToUpdate(
         address _asset,
         uint256 _requestedPrice,
         uint256 _postBuffer
     ) public view returns (bool) {
         bytes memory _callData = abi.encodeWithSignature(
-            "shouldUpdatePrice(address,uint256,uint256)",
+            "readyToUpdate(address,uint256,uint256)",
             _asset,
             _requestedPrice,
             _postBuffer
@@ -433,7 +433,7 @@ contract Oracle is Initializable, Ownable {
         return false;
     }
 
-    function shouldUpdatePrices(
+    function readyToUpdates(
         address[] memory _assets,
         uint256[] memory _requestedPrices,
         uint256[] memory _postBuffer
@@ -442,7 +442,7 @@ contract Oracle is Initializable, Ownable {
 
         bool[] memory _result = new bool[](_numAssets);
         for (uint256 i = 0; i < _numAssets; i++) {
-            _result[i] = shouldUpdatePrice(
+            _result[i] = readyToUpdate(
                 _assets[i],
                 _requestedPrices[i],
                 _postBuffer[i]
