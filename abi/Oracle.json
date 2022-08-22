@@ -456,6 +456,64 @@
         "internalType": "uint256",
         "name": "_requestedPrice",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_postBuffer",
+        "type": "uint256"
+      }
+    ],
+    "name": "readyToUpdate",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "_assets",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_requestedPrices",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_postBuffer",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "readyToUpdates",
+    "outputs": [
+      {
+        "internalType": "bool[]",
+        "name": "",
+        "type": "bool[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_asset",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_requestedPrice",
+        "type": "uint256"
       }
     ],
     "name": "setPrice",
@@ -491,64 +549,6 @@
       }
     ],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_asset",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_requestedPrice",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_postBuffer",
-        "type": "uint256"
-      }
-    ],
-    "name": "shouldUpdatePrice",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address[]",
-        "name": "_assets",
-        "type": "address[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_requestedPrices",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "_postBuffer",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "shouldUpdatePrices",
-    "outputs": [
-      {
-        "internalType": "bool[]",
-        "name": "",
-        "type": "bool[]"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
