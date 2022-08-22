@@ -81,7 +81,7 @@ export const deployInfo = {
         aggregator: "0xA14d53bC1F1c0F31B4aA3BD109344E5009051a84",
         heartbeat: ethers.utils.parseUnits("3600", "wei"),
       },
-      iMUSX: {
+      iMEUX: {
         address: "0x5BE49B2e04aC55A17c72aC37E3a85D9602322021",
         priceModel: "Layer2ChainlinkHeartbeatModel",
         aggregator: "0xA14d53bC1F1c0F31B4aA3BD109344E5009051a84",
