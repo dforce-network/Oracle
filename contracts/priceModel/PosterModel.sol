@@ -29,7 +29,7 @@ contract PosterModel is Base, Unit {
     struct Anchor {
         // Floor(block.timestamp / numSecondsPerPeriod) + 1
         uint256 period;
-        // Price in ETH, scaled by 10**18
+        // Price in USD, scaled by decimals
         uint256 price;
     }
 
@@ -192,8 +192,6 @@ contract PosterModel is Base, Unit {
         pure
         returns (bool, uint256)
     {
-        // bool _err;
-        // uint256 _doubleScaledProduct;
         (bool _err, uint256 _doubleScaledProduct) = _mul(_a, _b);
         if (_err) return (true, 0);
 
@@ -205,17 +203,7 @@ contract PosterModel is Base, Unit {
             _doubleScaledProduct;
         if (_doubleScaledProductWithHalfScale < halfExpScale_) return (true, 0);
 
-        // (Error err1, uint256 _doubleScaledProductWithHalfScale) =
-        //     add(halfExpScale, _doubleScaledProduct);
-        // if (err1 != Error.NO_ERROR) {
-        //     return (err1, Exp({ mantissa: 0 }));
-        // }
-
-        // (Error err2, uint256 product) =
-        //     div(_doubleScaledProductWithHalfScale, expScale);
         // The only error `div` can return is Error.DIVISION_BY_ZERO but we control `expScale` and it is not zero.
-        // assert(err2 == Error.NO_ERROR);
-
         return (false, _doubleScaledProductWithHalfScale.div(expScale_));
     }
 
@@ -249,29 +237,18 @@ contract PosterModel is Base, Unit {
         uint256 _one = mantissaOne_;
         uint256 _onePlusMaxSwing;
         // re-used for intermediate errors
-        // bool _err;
-        // Error _err;
 
         _onePlusMaxSwing = _one + _maxSwing;
         if (_onePlusMaxSwing < _one) return (true, false, 0);
 
-        // (_err, _onePlusMaxSwing) = addExp(_one, _maxSwing);
-        // if (_err != Error.NO_ERROR) {
-        //     return (_err, false, Exp({ mantissa: 0 }));
-        // }
-
-        // _max = _anchorPrice * (1 + _maxSwing)
         (bool _err, uint256 _max) = _rmulup(_anchorPrice, _onePlusMaxSwing);
         if (_err) return (true, false, 0);
 
-        // If _price > _anchorPrice * (1 + _maxSwing)
-        // Set _price = _anchorPrice * (1 + _maxSwing)
         if (_price > _max) return (false, true, _max);
 
         if (_maxSwing > _one) return (true, false, 0);
         uint256 _oneMinusMaxSwing = _one - _maxSwing;
 
-        // _min = _anchorPrice * (1 - _maxSwing)
         uint256 _min;
         (_err, _min) = _rmulup(_anchorPrice, _oneMinusMaxSwing);
         // We can't overflow here or we would have already overflowed above when calculating `max`
@@ -379,7 +356,7 @@ contract PosterModel is Base, Unit {
         }
 
         return (
-            true && _localVars.price != assetPrices_[_asset],
+            true,
             _localVars.price,
             _localVars.currentPeriod,
             _localVars.anchorPeriod,
@@ -519,12 +496,68 @@ contract PosterModel is Base, Unit {
         return (_getAssetPrice(_asset), true);
     }
 
+    /**
+     * @notice ready to update price.
+     * @dev Whether the asset price needs to be updated.
+     * @param _asset The asset address.
+     * @param _requestedPrice New asset price.
+     * @param _postBuffer Price invalidation buffer time.
+     * @return _success bool true: can be updated; false: no need to update.
+     */
     function readyToUpdate(
         address _asset,
         uint256 _requestedPrice,
         uint256 _postBuffer
     ) public view virtual returns (bool _success) {
         _postBuffer;
-        (_success, , , , , ) = _updatePriceRes(_asset, _requestedPrice);
+        uint256 _price;
+        (_success, _price, , , , ) = _updatePriceRes(_asset, _requestedPrice);
+        if (_success)
+            _success = _price > 0 && _price != assetPrices_[_asset];
+    }
+
+    /**
+     * @dev The maximum allowed percentage difference between a new price and the anchor's price.
+     * @return The global maximum swing.
+     */
+    function maxSwing() external view returns (uint256) {
+        return maxSwing_;
+    }
+
+    /**
+     * @dev Maximum swing by asset.
+     * @param _asset Asset address.
+     * @return The maximum swing value of the asset.
+     */
+    function maxSwings(address _asset) external view returns (uint256) {
+        return maxSwings_[_asset];
+    }
+
+    /**
+     * @dev Anchors by asset.
+     * @param _asset Asset address.
+     * @return Period = Floor(block.timestamp / numSecondsPerPeriod) + 1.
+     *         Price in USD, scaled by decimals.
+     */
+    function anchors(address _asset) external view returns (uint256, uint256) {
+        return (anchors_[_asset].period, anchors_[_asset].price);
+    }
+
+    /**
+     * @dev Pending anchor prices by asset.
+     * @param _asset Asset address.
+     * @return Pending anchor.
+     */
+    function pendingAnchors(address _asset) external view returns (uint256) {
+        return pendingAnchors_[_asset];
+    }
+
+    /**
+     * @dev Asset price in storage.
+     * @param _asset Asset address.
+     * @return Asset price.
+     */
+    function assetPrices(address _asset) external view returns (uint256) {
+        return assetPrices_[_asset];
     }
 }
