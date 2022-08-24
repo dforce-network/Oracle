@@ -42,9 +42,9 @@ contract ReaderPosterModel is PosterModel {
         readers_[_asset].asset = _readAsset;
         if (_readAsset == address(0)) readers_[_asset].decimalsDifference = 0;
         else
-            readers_[_asset].decimalsDifference = int256(
-                IERC20(_asset).decimals() - IERC20(_readAsset).decimals()
-            );
+            readers_[_asset].decimalsDifference =
+                int256(IERC20(_asset).decimals()) -
+                int256(IERC20(_readAsset).decimals());
 
         emit ReaderPosted(
             _asset,
@@ -121,6 +121,14 @@ contract ReaderPosterModel is PosterModel {
         return readerPrice.div(10**(uint256(_reader.decimalsDifference)));
     }
 
+    /**
+     * @notice ready to update price.
+     * @dev Whether the asset price needs to be updated.
+     * @param _asset The asset address.
+     * @param _requestedPrice New asset price.
+     * @param _postBuffer Price invalidation buffer time.
+     * @return _success bool true: can be updated; false: no need to update.
+     */
     function readyToUpdate(
         address _asset,
         uint256 _requestedPrice,
