@@ -19,12 +19,12 @@
     "path": "contracts/priceModel/layer2/",
     "address": "0x1441b99Da7854a304133630048dc6CF43580B1Af"
   },
-  "Layer2PosterModel": {
+  "Layer2PosterModel(abandoned)": {
     "contract": "Layer2PosterModel",
     "path": "contracts/priceModel/layer2/",
     "address": "0xe48CFcb8Ce8abB3B8a212fEEaD57526DCdc3D396"
   },
-  "Layer2ReaderPosterHeartbeatModel": {
+  "Layer2ReaderPosterHeartbeatModel(abandoned)": {
     "contract": "Layer2ReaderPosterHeartbeatModel",
     "path": "contracts/priceModel/layer2/",
     "address": "0x639120d9C5595573321d34F6ee8B97784f42c734"

@@ -100,7 +100,8 @@ export const deployInfo = {
       iDF: {
         address: "0xaEa8e2e7C97C5B7Cd545d3b152F669bAE29C4a63",
         priceModel: "Layer2ReaderPosterHeartbeatModel",
-        heartbeat: ethers.utils.parseUnits("86400", "wei"),
+        heartbeat: ethers.utils.parseUnits("3600", "wei"), // test
+        // heartbeat: ethers.utils.parseUnits("86400", "wei"),
       },
       DF: {
         address: "0xaE6aab43C4f3E0cea4Ab83752C278f8dEbabA689",
