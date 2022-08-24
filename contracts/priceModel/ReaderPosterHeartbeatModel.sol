@@ -69,6 +69,14 @@ contract ReaderPosterHeartbeatModel is PosterHeartbeatModel, ReaderPosterModel {
         return (_getAssetPrice(_asset), _getAssetStatus(_asset));
     }
 
+    /**
+     * @notice ready to update price.
+     * @dev Whether the asset price needs to be updated.
+     * @param _asset The asset address.
+     * @param _requestedPrice New asset price.
+     * @param _postBuffer Price invalidation buffer time.
+     * @return _success bool true: can be updated; false: no need to update.
+     */
     function readyToUpdate(
         address _asset,
         uint256 _requestedPrice,
