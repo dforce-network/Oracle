@@ -16,6 +16,9 @@ async function checkPrice(asset) {
     return (
       (
         await task.contracts.Oracle.callStatic.getUnderlyingPrice(asset.address)
+      ).toString() != asset.price.toString() &&
+      (
+        await task.contracts[asset.priceModel].callStatic.getAssetPrice(asset.address)
       ).toString() != asset.price.toString()
     );
   }
@@ -63,9 +66,7 @@ async function setAssets() {
     assets: [],
     priceModels: [],
   };
-  let assets = [];
-  let signatures = [];
-  let calldatas = [];
+
   await Promise.all(
     Object.values(info.assets).map(async (asset) => {
       if (await checkAssetPriceModel(asset)) {
@@ -74,7 +75,22 @@ async function setAssets() {
           task.deployments[asset.priceModel].address
         );
       }
+    })
+  );
 
+  if (assetPriceModel.assets.length > 0) {
+    console.log(`Set the price model of asset\n`);
+    await task.contracts.Oracle._setAssetPriceModelBatch(
+      assetPriceModel.assets,
+      assetPriceModel.priceModels
+    );
+  }
+
+  let assets = [];
+  let signatures = [];
+  let calldatas = [];
+  await Promise.all(
+    Object.values(info.assets).map(async (asset) => {
       if (await checkPrice(asset)) {
         assets.push(asset.address);
         signatures.push("_setPrice(address,uint256)");
@@ -107,14 +123,6 @@ async function setAssets() {
       }
     })
   );
-
-  if (assetPriceModel.assets.length > 0) {
-    console.log(`Set the price model of asset\n`);
-    await task.contracts.Oracle._setAssetPriceModelBatch(
-      assetPriceModel.assets,
-      assetPriceModel.priceModels
-    );
-  }
 
   if (assets.length > 0) {
     console.log(`Set asset param\n`);
