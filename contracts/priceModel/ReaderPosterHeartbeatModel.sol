@@ -74,12 +74,14 @@ contract ReaderPosterHeartbeatModel is PosterHeartbeatModel, ReaderPosterModel {
      * @dev Whether the asset price needs to be updated.
      * @param _asset The asset address.
      * @param _requestedPrice New asset price.
+     * @param _postSwing Min swing of the price feed.
      * @param _postBuffer Price invalidation buffer time.
      * @return _success bool true: can be updated; false: no need to update.
      */
     function readyToUpdate(
         address _asset,
         uint256 _requestedPrice,
+        uint256 _postSwing,
         uint256 _postBuffer
     )
         public
@@ -92,6 +94,7 @@ contract ReaderPosterHeartbeatModel is PosterHeartbeatModel, ReaderPosterModel {
             _success = PosterHeartbeatModel.readyToUpdate(
                 _asset,
                 _requestedPrice,
+                _postSwing,
                 _postBuffer
             );
     }

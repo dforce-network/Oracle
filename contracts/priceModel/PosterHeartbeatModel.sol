@@ -78,17 +78,20 @@ contract PosterHeartbeatModel is Heartbeat, PosterModel {
      * @dev Whether the asset price needs to be updated.
      * @param _asset The asset address.
      * @param _requestedPrice New asset price.
+     * @param _postSwing Min swing of the price feed.
      * @param _postBuffer Price invalidation buffer time.
      * @return _success bool true: can be updated; false: no need to update.
      */
     function readyToUpdate(
         address _asset,
         uint256 _requestedPrice,
+        uint256 _postSwing,
         uint256 _postBuffer
     ) public view virtual override returns (bool _success) {
         _success = PosterModel.readyToUpdate(
             _asset,
             _requestedPrice,
+            _postSwing,
             _postBuffer
         );
         _success = _success || !_getAssetStatus(_asset, _postBuffer);

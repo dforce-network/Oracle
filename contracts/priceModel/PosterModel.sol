@@ -501,19 +501,32 @@ contract PosterModel is Base, Unit {
      * @dev Whether the asset price needs to be updated.
      * @param _asset The asset address.
      * @param _requestedPrice New asset price.
+     * @param _postSwing Min swing of the price feed.
      * @param _postBuffer Price invalidation buffer time.
      * @return _success bool true: can be updated; false: no need to update.
      */
     function readyToUpdate(
         address _asset,
         uint256 _requestedPrice,
+        uint256 _postSwing,
         uint256 _postBuffer
     ) public view virtual returns (bool _success) {
         _postBuffer;
         uint256 _price;
-        (_success, _price, , , , ) = _updatePriceRes(_asset, _requestedPrice);
-        if (_success)
-            _success = _price > 0 && _price != assetPrices_[_asset];
+        uint256 _currentPeriod;
+        uint256 _anchorPeriod;
+        (_success, _price, _currentPeriod, _anchorPeriod, , ) = _updatePriceRes(
+            _asset,
+            _requestedPrice
+        );
+        if (_success) {
+            uint256 _assetPrice = assetPrices_[_asset];
+            (, uint256 _swing) = _calculateSwing(_assetPrice, _requestedPrice);
+            _success =
+                _swing >= _postSwing ||
+                (_currentPeriod > _anchorPeriod &&
+                    _price != anchors_[_asset].price);
+        }
     }
 
     /**
