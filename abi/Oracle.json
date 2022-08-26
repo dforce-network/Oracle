@@ -459,6 +459,11 @@
       },
       {
         "internalType": "uint256",
+        "name": "_postSwing",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "_postBuffer",
         "type": "uint256"
       }
@@ -488,7 +493,12 @@
       },
       {
         "internalType": "uint256[]",
-        "name": "_postBuffer",
+        "name": "_postSwings",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_postBuffers",
         "type": "uint256[]"
       }
     ],
