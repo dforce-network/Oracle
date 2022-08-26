@@ -412,18 +412,21 @@ contract Oracle is Initializable, Ownable {
      * @dev Whether the asset price needs to be updated.
      * @param _asset The asset address.
      * @param _requestedPrice New asset price.
+     * @param _postSwing Min swing of the price feed.
      * @param _postBuffer Price invalidation buffer time.
      * @return bool true: can be updated; false: no need to update.
      */
     function readyToUpdate(
         address _asset,
         uint256 _requestedPrice,
+        uint256 _postSwing,
         uint256 _postBuffer
     ) public view returns (bool) {
         bytes memory _callData = abi.encodeWithSignature(
-            "readyToUpdate(address,uint256,uint256)",
+            "readyToUpdate(address,uint256,uint256,uint256)",
             _asset,
             _requestedPrice,
+            _postSwing,
             _postBuffer
         );
         (bool _success, bytes memory _returndata) = priceModel_[_asset]
@@ -436,7 +439,8 @@ contract Oracle is Initializable, Ownable {
     function readyToUpdates(
         address[] memory _assets,
         uint256[] memory _requestedPrices,
-        uint256[] memory _postBuffer
+        uint256[] memory _postSwings,
+        uint256[] memory _postBuffers
     ) external view returns (bool[] memory) {
         uint256 _numAssets = _assets.length;
 
@@ -445,7 +449,8 @@ contract Oracle is Initializable, Ownable {
             _result[i] = readyToUpdate(
                 _assets[i],
                 _requestedPrices[i],
-                _postBuffer[i]
+                _postSwings[i],
+                _postBuffers[i]
             );
         }
 
