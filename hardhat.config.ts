@@ -6,6 +6,7 @@ import "@nomiclabs/hardhat-waffle";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
+import "hardhat-abi-exporter";
 
 dotenv.config();
 
@@ -30,6 +31,11 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
+    arbitrumRinkeby: {
+      url: "https://rinkeby.arbitrum.io/rpc",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
@@ -50,6 +56,16 @@ const config: HardhatUserConfig = {
         },
       },
     ],
+  },
+  abiExporter: {
+    runOnCompile: true,
+    clear: true,
+    flat: true,
+    only: [
+      "Oracle",
+    ],
+    spacing: 2,
+    pretty: false,
   },
 };
 
