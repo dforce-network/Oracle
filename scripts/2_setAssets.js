@@ -18,7 +18,9 @@ async function checkPrice(asset) {
         await task.contracts.Oracle.callStatic.getUnderlyingPrice(asset.address)
       ).toString() != asset.price.toString() &&
       (
-        await task.contracts[asset.priceModel].callStatic.getAssetPrice(asset.address)
+        await task.contracts[asset.priceModel].callStatic.getAssetPrice(
+          asset.address
+        )
       ).toString() != asset.price.toString()
     );
   }
