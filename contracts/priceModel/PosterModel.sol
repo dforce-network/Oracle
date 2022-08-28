@@ -513,11 +513,22 @@ contract PosterModel is Base, Unit {
     ) public view virtual returns (bool _success) {
         _postBuffer;
         uint256 _price;
-        (_success, _price, , , , ) = _updatePriceRes(_asset, _requestedPrice);
+        uint256 _currentPeriod;
+        uint256 _anchorPeriod;
+        (_success, _price, _currentPeriod, _anchorPeriod, , ) = _updatePriceRes(
+            _asset,
+            _requestedPrice
+        );
         if (_success) {
             uint256 _assetPrice = assetPrices_[_asset];
             (, uint256 _swing) = _calculateSwing(_assetPrice, _requestedPrice);
-            _success = _swing >= _postSwing && _price != _assetPrice;
+            _success = _swing >= _postSwing;
+            if (_success) {
+                _success =
+                    _price != _assetPrice ||
+                    (_currentPeriod > _anchorPeriod &&
+                        _price != anchors_[_asset].price);
+            }
         }
     }
 
