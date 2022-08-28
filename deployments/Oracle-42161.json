@@ -4,12 +4,12 @@
     "path": "contracts/library/",
     "address": "0xc9aa79F70ac4a11619c649e857D74F517bBFeE47"
   },
-  "OracleImpl": {
+  "OracleImpl(abandoned)": {
     "contract": "Oracle",
     "path": "contracts/",
     "address": "0x66941a87529Ed17667dB4Ebd554b34ebBEb9372E"
   },
-  "Oracle": {
+  "Oracle(abandoned)": {
     "contract": "Oracle",
     "path": "contracts/",
     "address": "0xa35f31A76634385694B8BaF182A18fFEC3E541e0"
@@ -29,12 +29,12 @@
     "path": "contracts/priceModel/layer2/",
     "address": "0x639120d9C5595573321d34F6ee8B97784f42c734"
   },
-  "Layer2PosterModel": {
+  "Layer2PosterModel(abandoned2)": {
     "contract": "Layer2PosterModel",
     "path": "contracts/priceModel/layer2/",
     "address": "0x663f82d8191B04e826209793D592049f98172F24"
   },
-  "Layer2ReaderPosterHeartbeatModel": {
+  "Layer2ReaderPosterHeartbeatModel(abandoned2)": {
     "contract": "Layer2ReaderPosterHeartbeatModel",
     "path": "contracts/priceModel/layer2/",
     "address": "0xf56F6349B1b57E96c65a79Fc782A046F44b8f0DE"
