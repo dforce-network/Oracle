@@ -1,0 +1,7 @@
+{
+  "proxyAdmin": {
+    "contract": "ProxyAdmin",
+    "path": "contracts/library/",
+    "address": "0x7e2Dc2b896b7AAc98D6ee8e954d3f5bDCC90076b"
+  }
+}
