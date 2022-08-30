@@ -48,10 +48,12 @@ async function checkHeartbeat(asset) {
     const assetHeartbeat = await task.contracts[asset.priceModel].validInterval(
       asset.address
     );
-    if (assetHeartbeat.eq(ethers.utils.parseEther("0"))) return;
-    (
-      await task.contracts[asset.priceModel].defaultValidInterval()
-    ).toString() != asset.heartbeat.toString();
+    if (assetHeartbeat.eq(ethers.utils.parseEther("0")))
+      return (
+        (
+          await task.contracts[asset.priceModel].defaultValidInterval()
+        ).toString() != asset.heartbeat.toString()
+      );
     return assetHeartbeat.toString() != asset.heartbeat.toString();
   }
   return false;
