@@ -34,18 +34,25 @@ async function checkAggregator(asset) {
       asset.aggregator
     );
   }
+  if (asset.hasOwnProperty("aggregatorModel")) {
+    const aggregator = asset.aggregatorModel;
+    return (
+      (await task.contracts[asset.priceModel].aggregator(asset.address)) !=
+      task.deployments[`${aggregator.model}(${aggregator.key})`].address
+    );
+  }
   return false;
 }
 async function checkHeartbeat(asset) {
   if (asset.hasOwnProperty("heartbeat")) {
-    return (
-      (
-        await task.contracts[asset.priceModel].validInterval(asset.address)
-      ).toString() != asset.heartbeat.toString() &&
-      (
-        await task.contracts[asset.priceModel].defaultValidInterval()
-      ).toString() != asset.heartbeat.toString()
+    const assetHeartbeat = await task.contracts[asset.priceModel].validInterval(
+      asset.address
     );
+    if (assetHeartbeat.eq(ethers.utils.parseEther("0"))) return;
+    (
+      await task.contracts[asset.priceModel].defaultValidInterval()
+    ).toString() != asset.heartbeat.toString();
+    return assetHeartbeat.toString() != asset.heartbeat.toString();
   }
   return false;
 }
@@ -104,8 +111,13 @@ async function setAssets() {
       if (await checkAggregator(asset)) {
         assets.push(asset.address);
         signatures.push("_setAssetAggregator(address,address)");
+        let aggregator = asset.hasOwnProperty("aggregator")
+          ? asset.aggregator
+          : task.deployments[
+              `${asset.aggregatorModel.model}(${asset.aggregatorModel.key})`
+            ].address;
         calldatas.push(
-          abi.encode(["address", "address"], [asset.address, asset.aggregator])
+          abi.encode(["address", "address"], [asset.address, aggregator])
         );
       }
 

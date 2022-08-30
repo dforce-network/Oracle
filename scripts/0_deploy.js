@@ -19,6 +19,15 @@ async function deploy() {
   let result = [];
   Object.values(info.assets).map((asset) => {
     result.push(asset.priceModel);
+    if (asset.hasOwnProperty("aggregatorModel")) {
+      const aggregator = asset.aggregatorModel;
+      let item = {};
+      item.contract = aggregator.model;
+      item.path = "contracts/aggregator/";
+      item.useProxy = false;
+      item.getArgs = () => aggregator.param;
+      task.contractsToDeploy[`${aggregator.model}(${aggregator.key})`] = item;
+    }
   });
   const priceModels = Array.from(new Set(result));
   for (let index = 0; index < priceModels.length; index++) {
