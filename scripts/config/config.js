@@ -85,7 +85,7 @@ export const deployInfo = {
             "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
           ],
         },
-        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
       iFEI: {
         address: "0x47C19A2ab52DA26551A22e2b2aEED5d19eF4022F",
@@ -193,7 +193,7 @@ export const deployInfo = {
       iDF: {
         address: "0xb3dc7425e63E1855Eb41107134D471DD34d7b239",
         priceModel: "ReaderPosterHeartbeatModel",
-        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        heartbeat: ethers.utils.parseUnits("608400", "wei"),
       },
       DF: {
         address: "0x431ad2ff6a9C365805eBaD47Ee021148d6f7DBe0",
