@@ -3,5 +3,45 @@
     "contract": "ProxyAdmin",
     "path": "contracts/library/",
     "address": "0x4FF0455bcfBB5886607c078E0F43Efb5DE34DeF4"
+  },
+  "OracleImpl": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0xbb6a6874C91231056646A6FEcE0b2038Fb467B2c"
+  },
+  "Oracle": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0xb4De37b03f7AcE98FB795572B18aE3CFae85A628"
+  },
+  "TransitAggregator(wstETH)": {
+    "contract": "TransitAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0x53280DaeE675493C87468867001D4f6274926CeC"
+  },
+  "TransitAggregator(renFIL)": {
+    "contract": "TransitAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0x9c471234a95400d1A550a4b359E43FEfD5a5632B"
+  },
+  "UnitTransitAggregator(GOLDx)": {
+    "contract": "UnitTransitAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0x3A376f39b041E29b90C3d3a8833Dd1601E8facc6"
+  },
+  "ChainlinkHeartbeatModel": {
+    "contract": "ChainlinkHeartbeatModel",
+    "path": "contracts/priceModel/",
+    "address": "0xBFFEBf86CBa6B4695a414059Ca5d10b6727E19f0"
+  },
+  "PosterModel": {
+    "contract": "PosterModel",
+    "path": "contracts/priceModel/",
+    "address": "0xF21fC8d23bBAE7C9d0B8106F8C8BD39c7B6f1543"
+  },
+  "ReaderPosterHeartbeatModel": {
+    "contract": "ReaderPosterHeartbeatModel",
+    "path": "contracts/priceModel/",
+    "address": "0xc76611f6d2F6CAfD6AC8e9507295403843E7Fe16"
   }
 }
