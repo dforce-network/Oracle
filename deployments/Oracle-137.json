@@ -3,5 +3,30 @@
     "contract": "ProxyAdmin",
     "path": "contracts/library/",
     "address": "0x7e2Dc2b896b7AAc98D6ee8e954d3f5bDCC90076b"
+  },
+  "OracleImpl": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0x40a33fB67B8Dafe88A5B1930be03C82157F47c65"
+  },
+  "Oracle": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0xD2DE888007e7F417CeC5C9119c48E18250cBe1Df"
+  },
+  "ChainlinkHeartbeatModel": {
+    "contract": "ChainlinkHeartbeatModel",
+    "path": "contracts/priceModel/",
+    "address": "0x663f82d8191B04e826209793D592049f98172F24"
+  },
+  "PosterModel": {
+    "contract": "PosterModel",
+    "path": "contracts/priceModel/",
+    "address": "0xf56F6349B1b57E96c65a79Fc782A046F44b8f0DE"
+  },
+  "ReaderPosterHeartbeatModel": {
+    "contract": "ReaderPosterHeartbeatModel",
+    "path": "contracts/priceModel/",
+    "address": "0x7EC1F05FAdFfd3e8c0dAb508E7F3266aa2e815dD"
   }
 }
