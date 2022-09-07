@@ -3,5 +3,35 @@
     "contract": "ProxyAdmin",
     "path": "contracts/library/",
     "address": "0x0800604DA276c1D5e9c2C7FEC0e3b43FAb1Ca61a"
+  },
+  "OracleImpl": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0x938f330d77A0c2432C0A8e247155297393f39645"
+  },
+  "Oracle": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0x08A8c406b69a9312bCe46A07c58871E2d82d71fA"
+  },
+  "UnitAggregator(GOLDx)": {
+    "contract": "UnitAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0xb75D68a879d37bCF0Ac0FAf0f3c08319E54166D1"
+  },
+  "ChainlinkHeartbeatModel": {
+    "contract": "ChainlinkHeartbeatModel",
+    "path": "contracts/priceModel/",
+    "address": "0xB92e0763E3844f3f3d65c74F2aD691AFF5f97f70"
+  },
+  "PosterModel": {
+    "contract": "PosterModel",
+    "path": "contracts/priceModel/",
+    "address": "0x480798e9496A99E6A48948ab478807079289C4C1"
+  },
+  "ReaderPosterHeartbeatModel": {
+    "contract": "ReaderPosterHeartbeatModel",
+    "path": "contracts/priceModel/",
+    "address": "0x995B838C2daA933402Cd9FBF7E6202ec8acDd714"
   }
 }
