@@ -1,7 +1,7 @@
 {
   "timeLock": {
     "contract": "Timelock",
-    "path": "contracts/governance/",
+    "path": "contracts/timelock/",
     "address": "0xB9498979c686f6662D916ceC08A9B759d6783E9C"
   },
   "proxyAdmin": {
