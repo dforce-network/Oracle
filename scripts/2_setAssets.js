@@ -1,6 +1,7 @@
 import { run, getSignatureData } from "./helpers/utils";
 import { deployContracts } from "./helpers/deploy";
 import { deployInfo, network } from "./config/config";
+import { printArgs } from "./helpers/timelock";
 
 let task = { name: "Oracle" };
 
@@ -142,12 +143,22 @@ async function setAssets() {
 
   if (assets.length > 0) {
     console.log(`Set asset param\n`);
-    const tx = await task.contracts.Oracle._setAssets(
-      assets,
-      signatures,
-      calldatas
-    );
-    await tx.wait(2);
+    if (
+      (await task.contracts.Oracle.owner()) == task.contracts.timeLock.address
+    ) {
+      const transactions = [
+        ["Oracle", "_setAssets", [assets, signatures, calldatas]],
+      ];
+
+      await printArgs(task, transactions);
+    } else {
+      const tx = await task.contracts.Oracle._setAssets(
+        assets,
+        signatures,
+        calldatas
+      );
+      await tx.wait(2);
+    }
   }
 }
 
