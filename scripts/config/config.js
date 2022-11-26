@@ -21,7 +21,15 @@ export const deployInfo = {
       iWBTC: {
         address: "0x5812fCF91adc502a765E5707eBB3F36a07f63c02",
         priceModel: "ChainlinkHeartbeatModel",
-        aggregator: "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+        // aggregator: "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c", // BTC
+        aggregatorModel: {
+          model: "TransitAggregator",
+          key: "WBTC",
+          param: [
+            "0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23", // WBTC/BTC
+            "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c", // BTC
+          ],
+        },
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
       iUSDC: {
@@ -374,7 +382,8 @@ export const deployInfo = {
       iDF: {
         address: "0xeC3FD540A2dEE6F479bE539D64da593a59e12D08",
         priceModel: "ReaderPosterHeartbeatModel",
-        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        // heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        heartbeat: ethers.utils.parseUnits("262800", "wei"),
       },
       DF: {
         address: "0x4A9A2b2b04549C3927dd2c9668A5eF3fCA473623",
@@ -396,7 +405,8 @@ export const deployInfo = {
       iWBTC: {
         address: "0xD3204E4189BEcD9cD957046A8e4A643437eE0aCC",
         priceModel: "Layer2ChainlinkHeartbeatModel",
-        aggregator: "0x6ce185860a4963106506C203335A2910413708e9",
+        // aggregator: "0x6ce185860a4963106506C203335A2910413708e9", // BTC
+        aggregator: "0xd0C7101eACbB49F3deCcCc166d238410D6D46d57", // WBTC
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
       iUNI: {
@@ -473,7 +483,8 @@ export const deployInfo = {
         address: "0xaEa8e2e7C97C5B7Cd545d3b152F669bAE29C4a63",
         priceModel: "Layer2ReaderPosterHeartbeatModel",
         // heartbeat: ethers.utils.parseUnits("3600", "wei"), // test
-        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        // heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        heartbeat: ethers.utils.parseUnits("262800", "wei"),
       },
       DF: {
         address: "0xaE6aab43C4f3E0cea4Ab83752C278f8dEbabA689",
@@ -543,7 +554,8 @@ export const deployInfo = {
       iWBTC: {
         address: "0x24d30216c07Df791750081c8D77C83cc8b06eB27",
         priceModel: "Layer2ChainlinkHeartbeatModel",
-        aggregator: "0xD702DD976Fb76Fffc2D3963D037dfDae5b04E593",
+        // aggregator: "0xD702DD976Fb76Fffc2D3963D037dfDae5b04E593", // BTC
+        aggregator: "0x718A5788b89454aAE3A028AE9c111A29Be6c2a6F", // WBTC
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
       iUSX: {
@@ -559,7 +571,8 @@ export const deployInfo = {
       iDF: {
         address: "0x6832364e9538Db15655FA84A497f2927F74A6cE6",
         priceModel: "Layer2ReaderPosterHeartbeatModel",
-        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        // heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        heartbeat: ethers.utils.parseUnits("262800", "wei"),
       },
       DF: {
         address: "0x9e5AAC1Ba1a2e6aEd6b32689DFcF62A509Ca96f3",
@@ -586,8 +599,8 @@ export const deployInfo = {
       iWBTC: {
         address: "0x94a14Ba6E59f4BE36a77041Ef5590Fe24445876A",
         priceModel: "ChainlinkHeartbeatModel",
-        aggregator: "0xc907E116054Ad103354f2D350FD2514433D57F6f",
-        // aggregator: "0xDE31F8bFBD8c84b5360CFACCa3539B938dd78ae6", // WBTC
+        // aggregator: "0xc907E116054Ad103354f2D350FD2514433D57F6f", // BTC
+        aggregator: "0xDE31F8bFBD8c84b5360CFACCa3539B938dd78ae6", // WBTC
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
       iDAI: {
@@ -634,7 +647,8 @@ export const deployInfo = {
       iDF: {
         address: "0xcB5D9b6A9BA8eA6FA82660fAA9cC130586F939B2",
         priceModel: "ReaderPosterHeartbeatModel",
-        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        // heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        heartbeat: ethers.utils.parseUnits("262800", "wei"),
       },
       DF: {
         address: "0x08C15FA26E519A78a666D19CE5C646D55047e0a3",
