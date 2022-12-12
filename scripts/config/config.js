@@ -21,15 +21,15 @@ export const deployInfo = {
       iWBTC: {
         address: "0x5812fCF91adc502a765E5707eBB3F36a07f63c02",
         priceModel: "ChainlinkHeartbeatModel",
-        // aggregator: "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c", // BTC
-        aggregatorModel: {
-          model: "TransitAggregator",
-          key: "WBTC",
-          param: [
-            "0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23", // WBTC/BTC
-            "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c", // BTC
-          ],
-        },
+        aggregator: "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c", // BTC
+        // aggregatorModel: {
+        //   model: "TransitAggregator",
+        //   key: "WBTC",
+        //   param: [
+        //     "0xfdFD9C85aD200c506Cf9e21F1FD8dd01932FBB23", // WBTC/BTC
+        //     "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c", // BTC
+        //   ],
+        // },
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
       iUSDC: {
@@ -405,8 +405,8 @@ export const deployInfo = {
       iWBTC: {
         address: "0xD3204E4189BEcD9cD957046A8e4A643437eE0aCC",
         priceModel: "Layer2ChainlinkHeartbeatModel",
-        // aggregator: "0x6ce185860a4963106506C203335A2910413708e9", // BTC
-        aggregator: "0xd0C7101eACbB49F3deCcCc166d238410D6D46d57", // WBTC
+        aggregator: "0x6ce185860a4963106506C203335A2910413708e9", // BTC
+        // aggregator: "0xd0C7101eACbB49F3deCcCc166d238410D6D46d57", // WBTC
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
       iUNI: {
@@ -554,8 +554,8 @@ export const deployInfo = {
       iWBTC: {
         address: "0x24d30216c07Df791750081c8D77C83cc8b06eB27",
         priceModel: "Layer2ChainlinkHeartbeatModel",
-        // aggregator: "0xD702DD976Fb76Fffc2D3963D037dfDae5b04E593", // BTC
-        aggregator: "0x718A5788b89454aAE3A028AE9c111A29Be6c2a6F", // WBTC
+        aggregator: "0xD702DD976Fb76Fffc2D3963D037dfDae5b04E593", // BTC
+        // aggregator: "0x718A5788b89454aAE3A028AE9c111A29Be6c2a6F", // WBTC
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
       iUSX: {
@@ -599,8 +599,8 @@ export const deployInfo = {
       iWBTC: {
         address: "0x94a14Ba6E59f4BE36a77041Ef5590Fe24445876A",
         priceModel: "ChainlinkHeartbeatModel",
-        // aggregator: "0xc907E116054Ad103354f2D350FD2514433D57F6f", // BTC
-        aggregator: "0xDE31F8bFBD8c84b5360CFACCa3539B938dd78ae6", // WBTC
+        aggregator: "0xc907E116054Ad103354f2D350FD2514433D57F6f", // BTC
+        // aggregator: "0xDE31F8bFBD8c84b5360CFACCa3539B938dd78ae6", // WBTC
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
       iDAI: {
