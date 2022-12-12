@@ -491,6 +491,19 @@ export const deployInfo = {
         priceModel: "Layer2ReaderPosterHeartbeatModel",
         reader: "0xaEa8e2e7C97C5B7Cd545d3b152F669bAE29C4a63",
       },
+      iwstETH: {
+        address: "0x0000000000000000000000000000000000000000",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregatorModel: {
+          model: "TransitAggregator",
+          key: "wstETH",
+          param: [
+            "0xB1552C5e96B312d0Bf8b554186F846C40614a540", // wstETH/stETH
+            "0x07C5b924399cc23c24a95c8743DE4006a32b7f2a", // stETH
+          ],
+        },
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
     },
   },
   optimism: {
@@ -578,6 +591,19 @@ export const deployInfo = {
         address: "0x9e5AAC1Ba1a2e6aEd6b32689DFcF62A509Ca96f3",
         priceModel: "Layer2ReaderPosterHeartbeatModel",
         reader: "0x6832364e9538Db15655FA84A497f2927F74A6cE6",
+      },
+      iwstETH: {
+        address: "0x0000000000000000000000000000000000000000",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregatorModel: {
+          model: "TransitAggregator",
+          key: "wstETH",
+          param: [
+            "0xe59EBa0D492cA53C6f46015EEa00517F2707dc77", // wstETH/stETH
+            "0x41878779a388585509657CE5Fb95a80050502186", // stETH
+          ],
+        },
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
     },
   },
