@@ -492,7 +492,7 @@ export const deployInfo = {
         reader: "0xaEa8e2e7C97C5B7Cd545d3b152F669bAE29C4a63",
       },
       iwstETH: {
-        address: "0x0000000000000000000000000000000000000000",
+        address: "0xa8bAd6CE1937F8e047bcA239Cff1f2224B899b23",
         priceModel: "Layer2ChainlinkHeartbeatModel",
         aggregatorModel: {
           model: "TransitAggregator",
@@ -593,7 +593,7 @@ export const deployInfo = {
         reader: "0x6832364e9538Db15655FA84A497f2927F74A6cE6",
       },
       iwstETH: {
-        address: "0x0000000000000000000000000000000000000000",
+        address: "0x4B3488123649E8A671097071A02DA8537fE09A16",
         priceModel: "Layer2ChainlinkHeartbeatModel",
         aggregatorModel: {
           model: "TransitAggregator",
