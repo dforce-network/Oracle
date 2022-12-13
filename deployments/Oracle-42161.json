@@ -63,5 +63,10 @@
     "contract": "Layer2ReaderPosterHeartbeatModel",
     "path": "contracts/priceModel/layer2/",
     "address": "0x53280DaeE675493C87468867001D4f6274926CeC"
+  },
+  "TransitAggregator(wstETH)": {
+    "contract": "TransitAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0x938f330d77A0c2432C0A8e247155297393f39645"
   }
 }
