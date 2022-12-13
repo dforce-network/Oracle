@@ -92,10 +92,25 @@ async function setAssets() {
 
   if (assetPriceModel.assets.length > 0) {
     console.log(`Set the price model of asset\n`);
-    await task.contracts.Oracle._setAssetPriceModelBatch(
-      assetPriceModel.assets,
-      assetPriceModel.priceModels
-    );
+    if (
+      (await task.contracts.Oracle.owner()) == task.contracts.timeLock.address
+    ) {
+      const transactions = [
+        [
+          "Oracle",
+          "_setAssetPriceModelBatch",
+          [assetPriceModel.assets, assetPriceModel.priceModels],
+        ],
+      ];
+
+      await printArgs(task, transactions);
+    } else {
+      const tx = await task.contracts.Oracle._setAssetPriceModelBatch(
+        assetPriceModel.assets,
+        assetPriceModel.priceModels
+      );
+      await tx.wait(2);
+    }
   }
 
   let assets = [];
