@@ -73,11 +73,18 @@ export const deployInfo = {
         address: "0xbfD291DA8A403DAAF7e5E9DC1ec0aCEaCd4848B9",
         priceModel: "ChainlinkHeartbeatModel",
         aggregatorModel: {
-          model: "TransitAggregator",
+          // model: "TransitAggregator",
+          // key: "wstETH",
+          // param: [
+          //   "0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
+          //   "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+          // ],
+          model: "WstETHTransitAggregator",
           key: "wstETH",
           param: [
-            "0x86392dC19c0b719886221c78AB11eb8Cf5c52812",
-            "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+            "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0", // wstETH
+            "0x86392dC19c0b719886221c78AB11eb8Cf5c52812", // STETH/ETH
+            "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419", // ETH/USD
           ],
         },
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
