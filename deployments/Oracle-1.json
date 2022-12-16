@@ -48,5 +48,10 @@
     "contract": "ReaderPosterHeartbeatModel",
     "path": "contracts/priceModel/",
     "address": "0xc76611f6d2F6CAfD6AC8e9507295403843E7Fe16"
+  },
+  "WstETHTransitAggregator(wstETH)": {
+    "contract": "WstETHTransitAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0xd8150d333AA9dECbfd4b5Cb535867ED9538aBF26"
   }
 }
