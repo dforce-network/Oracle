@@ -464,6 +464,12 @@ export const deployInfo = {
         aggregator: "0x0809E3d38d1B4214958faf06D8b1B1a2b73f2ab8",
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
+      iARB: {
+        address: "0xD037c36dbc81a8890728D850E080e38F6EeB95EF",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregator: "0xb2A824043730FE05F3DA2efaFa1CBbe83fa548D6",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
       iEUX: {
         address: "0x5675546Eb94c2c256e6d7c3F7DcAB59bEa3B0B8B",
         priceModel: "Layer2ChainlinkHeartbeatModel",
