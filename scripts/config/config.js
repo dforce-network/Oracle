@@ -7,6 +7,7 @@ export const network = {
   43114: "avalanche",
   2222: "kava",
   421611: "arbitrumRinkeby",
+  71: "confluxTestnet",
 };
 export const deployInfo = {
   mainnet: {
@@ -780,6 +781,34 @@ export const deployInfo = {
         address: "0x261d5E1C34ad02e40D8E2A95A326821288a78718",
         priceModel: "Layer2ReaderPosterHeartbeatModel",
         reader: "0x515482d94b0d45C06532dbcb3443C09c6aB22Ed2",
+      },
+    },
+  },
+  confluxTestnet: {
+    poster: "0x6b29b8af9AF126170513AE6524395E09025b214E",
+    pyth: "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729",
+    assets: {
+      iETH: {
+        address: "0x81004bB91c611B646b630426eB8A46f0eBea69F5",
+        priceModel: "PythModel",
+        feedID:
+          "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6",
+      },
+      iCFX: {
+        address: "0xF77508f5deEc008238C226e074E00455be7B9c74",
+        priceModel: "PythModel",
+        feedID:
+          "0xeba2144f04b3af59382d92b8cbc3170008b4a2945a01f36e81f92dfdeb8cc519",
+      },
+      // iWBTC: {
+      //   address: "",
+      //   priceModel: "PythModel",
+      //   aggregator: "0x0c9973e7a27d00e656B9f153348dA46CaD70d03d",
+      // },
+      iUSX: {
+        address: "0xC4fF55776eF0dAC86890cA2C1aD7859d5C0Ae3c6",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
       },
     },
   },

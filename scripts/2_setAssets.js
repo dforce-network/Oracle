@@ -70,6 +70,16 @@ async function checkReader(asset) {
   return false;
 }
 
+async function checkPythFeedID(asset) {
+  if (asset.hasOwnProperty("feedID")) {
+    return (
+      (await task.contracts[asset.priceModel].feedID(asset.address)) !=
+      asset.feedID
+    );
+  }
+  return false;
+}
+
 async function setAssets() {
   const abi = ethers.utils.defaultAbiCoder;
   let info = deployInfo[network[task.chainId]];
@@ -146,11 +156,20 @@ async function setAssets() {
           abi.encode(["address", "uint256"], [asset.address, asset.heartbeat])
         );
       }
+
       if (await checkReader(asset)) {
         assets.push(asset.address);
         signatures.push("_setReader(address,address)");
         calldatas.push(
           abi.encode(["address", "address"], [asset.address, asset.reader])
+        );
+      }
+
+      if (await checkPythFeedID(asset)) {
+        assets.push(asset.address);
+        signatures.push("_setAssetFeedID(address,bytes32)");
+        calldatas.push(
+          abi.encode(["address", "bytes32"], [asset.address, asset.feedID])
         );
       }
     })

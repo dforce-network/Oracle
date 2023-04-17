@@ -165,4 +165,14 @@ contract PythModel is Base, Unit {
             block.timestamp < _price.publishTime.add(_assetValidInterval)
         );
     }
+
+    /**
+     * @notice Asset .
+     * @dev Get pyth feed ID.
+     * @param _asset Asset address.
+     * @return pyth feed ID.
+     */
+    function feedID(address _asset) external view returns (bytes32) {
+        return feedID_[_asset];
+    }
 }
