@@ -4,11 +4,12 @@ pragma experimental ABIEncoderV2;
 
 import "./base/Base.sol";
 import "./base/Unit.sol";
+import "./status/Heartbeat.sol";
 import "../interface/IERC20.sol";
 
 import "../interface/pyth/IPyth.sol";
 
-contract PythModel is Base, Unit {
+contract PythModel is Base, Unit, Heartbeat {
     IPyth public immutable pyth;
 
     /// @dev Mapping of asset addresses to feedIDs.
@@ -99,13 +100,13 @@ contract PythModel is Base, Unit {
     ) internal view virtual returns (uint256) {
         bytes32 _feedID = feedID_[_asset];
         if (_feedID == 0) return 0;
-        PythStructs.Price memory price = pyth.getPriceUnsafe(_feedID);
-        if (price.price < 0) return 0;
+        PythStructs.Price memory _price = pyth.getPriceUnsafe(_feedID);
+        if (_price.price < 0) return 0;
         return
             _correctPrice(
                 uint256(IERC20(_asset).decimals()),
-                uint256(-price.expo),
-                uint256(price.price)
+                uint256(-_price.expo),
+                uint256(_price.price)
             );
     }
 
@@ -132,10 +133,12 @@ contract PythModel is Base, Unit {
 
         if (_feedID == 0) return false;
 
-        PythStructs.Price memory price = pyth.getPriceUnsafe(_feedID);
-        uint256 _assetValidInterval = pyth.getValidTimePeriod();
+        PythStructs.Price memory _price = pyth.getPriceUnsafe(_feedID);
 
-        return block.timestamp < price.publishTime.add(_assetValidInterval);
+        uint256 _assetValidInterval = heartbeat_[_asset];
+        if (_assetValidInterval == 0) _assetValidInterval = defaultHeartbeat_;
+
+        return block.timestamp < _price.publishTime.add(_assetValidInterval);
     }
 
     /**
@@ -154,7 +157,8 @@ contract PythModel is Base, Unit {
 
         if (_price.price < 0) return (0, false);
 
-        uint256 _assetValidInterval = pyth.getValidTimePeriod();
+        uint256 _assetValidInterval = heartbeat_[_asset];
+        if (_assetValidInterval == 0) _assetValidInterval = defaultHeartbeat_;
 
         return (
             _correctPrice(
