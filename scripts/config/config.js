@@ -791,24 +791,42 @@ export const deployInfo = {
       iETH: {
         address: "0x81004bB91c611B646b630426eB8A46f0eBea69F5",
         priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("6000", "wei"),
         feedID:
           "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6",
       },
       iCFX: {
         address: "0xF77508f5deEc008238C226e074E00455be7B9c74",
         priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
         feedID:
           "0xeba2144f04b3af59382d92b8cbc3170008b4a2945a01f36e81f92dfdeb8cc519",
       },
-      // iWBTC: {
-      //   address: "",
-      //   priceModel: "PythModel",
-      //   aggregator: "0x0c9973e7a27d00e656B9f153348dA46CaD70d03d",
-      // },
       iUSX: {
         address: "0xC4fF55776eF0dAC86890cA2C1aD7859d5C0Ae3c6",
         priceModel: "ReaderPosterModel",
         price: ethers.utils.parseEther("1"),
+      },
+      iWBTC: {
+        address: "0xC52953db2C5764aB192C84eCd08508b0A7815E1D",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b",
+      },
+      iUSDC: {
+        address: "0x95659C4C8110E75459F5C39d12723930A57531B2",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x41f3625971ca2ed2263e78573fe5ce23e13d2558ed3f2e47ab0f84fb9e7ae722",
+      },
+      iUSDT: {
+        address: "0x4B0bFd5465761e111a021826B903Af2435A8C72d",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x1fc18861232290221461220bd4e2acd1dcdfbc89c84092c93c18bdc7756c1588",
       },
     },
   },
