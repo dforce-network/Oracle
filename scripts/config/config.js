@@ -8,6 +8,7 @@ export const network = {
   2222: "kava",
   421611: "arbitrumRinkeby",
   71: "confluxTestnet",
+  1030: "confluxeSpace",
 };
 export const deployInfo = {
   mainnet: {
@@ -827,6 +828,52 @@ export const deployInfo = {
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
         feedID:
           "0x1fc18861232290221461220bd4e2acd1dcdfbc89c84092c93c18bdc7756c1588",
+      },
+    },
+  },
+  confluxeSpace: {
+    poster: "",
+    pyth: "0xe9d69CdD6Fe41e7B621B4A688C5D1a68cB5c8ADc",
+    assets: {
+      iWBTC: {
+        address: "",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43",
+      },
+      iETH: {
+        address: "",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace",
+      },
+      iCFX: {
+        address: "",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+      },
+      iUSDT: {
+        address: "",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x2b89b9dc8fdf9f34709a5b106b472f0f39bb6ca9ce04b0fd7f2e971688e2e53b",
+      },
+      iUSDC: {
+        address: "",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a",
+      },
+      iUSX: {
+        address: "",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
       },
     },
   },
