@@ -849,13 +849,13 @@ export const deployInfo = {
         feedID:
           "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace",
       },
-      iCFX: {
-        address: "0x25CCd7E60550EF32266fA90441BcE2BA742d88bc",
-        priceModel: "PythModel",
-        heartbeat: ethers.utils.parseUnits("90000", "wei"),
-        feedID:
-          "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
-      },
+      // iCFX: {
+      //   address: "0x25CCd7E60550EF32266fA90441BcE2BA742d88bc",
+      //   priceModel: "PythModel",
+      //   heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      //   feedID:
+      //     "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+      // },
       iUSDT: {
         address: "0xC80aD49191113d31fe52427c01A197106ef5EB5b",
         priceModel: "PythModel",
