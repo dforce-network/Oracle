@@ -9,6 +9,8 @@ export const network = {
   421611: "arbitrumRinkeby",
   71: "confluxTestnet",
   1030: "confluxeSpace",
+  280: "zkSyncTestnet",
+  324: "zkSyncEra",
 };
 export const deployInfo = {
   mainnet: {
@@ -874,6 +876,38 @@ export const deployInfo = {
         address: "0x6f87b39a2e36F205706921d81a6861B655db6358",
         priceModel: "PosterModel",
         price: ethers.utils.parseEther("1"),
+      },
+    },
+  },
+  zkSyncTestnet: {
+    poster: "0x6b29b8af9AF126170513AE6524395E09025b214E",
+    pyth: "0xC38B1dd611889Abc95d4E0a472A667c3671c08DE",
+    assets: {
+      iETH: {
+        address: "0x3C5ab6f2BfBEFDcAd193BDf77c7E9D1F8f133849",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("6000", "wei"),
+        feedID:
+          "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6",
+      },
+      iUSX: {
+        address: "0x5bd08d06B68df89Ca47718FDeCD89FfE59d935F9",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      iWBTC: {
+        address: "0x8049CEa1F8BA92d9626467C09dE684a4a7FC6d82",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b",
+      },
+      iUSDC: {
+        address: "0x81E4DD580738063214121d8Ec156CE6426CDBb81",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x41f3625971ca2ed2263e78573fe5ce23e13d2558ed3f2e47ab0f84fb9e7ae722",
       },
     },
   },
