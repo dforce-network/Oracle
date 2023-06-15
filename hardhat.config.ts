@@ -36,6 +36,21 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
+    confluxTestnet: {
+      url: "https://evmtestnet.confluxrpc.com",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    lineaTestnet: {
+      url: "https://rpc.goerli.linea.build/",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    scrollAlphaTestnet: {
+      url: "https://alpha-rpc.scroll.io/l2",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
@@ -61,9 +76,7 @@ const config: HardhatUserConfig = {
     runOnCompile: true,
     clear: true,
     flat: true,
-    only: [
-      "Oracle",
-    ],
+    only: ["Oracle"],
     spacing: 2,
     pretty: false,
   },
