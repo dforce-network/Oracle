@@ -54,7 +54,6 @@ export async function deployContractInternal(signer, contract, path, args) {
   } else {
     const Contract = await getContractFactoryByName(contract, path);
 
-    const deploy = await Contract.connect(signer).deploy(...args);
     deploy = await Contract.connect(signer).deploy(...args);
     await deploy.deployed();
   }
