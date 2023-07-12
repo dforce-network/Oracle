@@ -61,6 +61,16 @@ const config: HardhatUserConfig = {
     //   ethNetwork: "mainnet",
     //   zksync: true,
     // },
+    lineaTestnet: {
+      url: "https://rpc.goerli.linea.build/",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    scrollAlphaTestnet: {
+      url: "https://alpha-rpc.scroll.io/l2",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,

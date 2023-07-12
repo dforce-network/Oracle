@@ -11,6 +11,8 @@ export const network = {
   1030: "confluxeSpace",
   280: "zkSyncTestnet",
   324: "zkSyncEra",
+  59140: "lineaTestnet",
+  534353: "scrollAlphaTestnet",
 };
 export const deployInfo = {
   mainnet: {
@@ -914,6 +916,56 @@ export const deployInfo = {
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
         feedID:
           "0x41f3625971ca2ed2263e78573fe5ce23e13d2558ed3f2e47ab0f84fb9e7ae722",
+      },
+    },
+  },
+  lineaTestnet: {
+    poster: "0x6b29b8af9AF126170513AE6524395E09025b214E",
+    assets: {
+      iETH: {
+        address: "0x1FC94B633F5F25171F86B7b4Ac845e762E3233Bd",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1875.07"),
+      },
+      iUSX: {
+        address: "0xC6d76E0706f3F75a13441Fc66A87D76C17BA6E70",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      iUSDC: {
+        address: "0x9Fd0b6668933f4FBc6b3897506DC70E147dfcf99",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseUnits("1", 30),
+      },
+      iUSDT: {
+        address: "0xF39A9AC259ef0d83A884Bc01f3a993D47b8Aa155",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseUnits("1.001", 30),
+      },
+    },
+  },
+  scrollAlphaTestnet: {
+    poster: "0x6b29b8af9AF126170513AE6524395E09025b214E",
+    assets: {
+      iETH: {
+        address: "0xD425Ce07D393CF5FF7b709E788a125ac7ffCdd8f",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1636.07"),
+      },
+      iUSX: {
+        address: "0x278149105c5cd6D0CbE84C2E6f59dc20C14a2ab2",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      iUSDC: {
+        address: "0x191397f929dAf294C744b60cD2A0EE11DA9652D9",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseUnits("1", 30),
+      },
+      iUSDT: {
+        address: "0x1FC94B633F5F25171F86B7b4Ac845e762E3233Bd",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseUnits("1.001", 30),
       },
     },
   },
