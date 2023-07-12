@@ -32,7 +32,7 @@ async function saveDeployments(task) {
 }
 
 export function isZkSync() {
-  return hre && hre.network.config.zksync;
+  return typeof hre == "object" && hre.network.config.zksync;
 }
 
 export async function init(task) {
@@ -48,7 +48,10 @@ export async function init(task) {
   task.signerAddr = signerAddr;
   console.log(`Signer Address: ${signerAddr}`);
 
-  if (isZkSync()) {
+  task.isZkSync = isZkSync();
+  console.log(`isZkSync: ${task.isZkSync}`);
+
+  if (task.isZkSync) {
     const { Wallet } = require("zksync-web3");
     const { Deployer } = require("@matterlabs/hardhat-zksync-deploy");
 
