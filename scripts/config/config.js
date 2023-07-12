@@ -834,7 +834,7 @@ export const deployInfo = {
     },
   },
   confluxeSpace: {
-    poster: "",
+    poster: "0x5c5bFFdB161E637B7f555CC122831126e02270d5",
     pyth: "0xe9d69CdD6Fe41e7B621B4A688C5D1a68cB5c8ADc",
     assets: {
       iWBTC: {
@@ -851,13 +851,13 @@ export const deployInfo = {
         feedID:
           "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace",
       },
-      // iCFX: {
-      //   address: "0x25CCd7E60550EF32266fA90441BcE2BA742d88bc",
-      //   priceModel: "PythModel",
-      //   heartbeat: ethers.utils.parseUnits("90000", "wei"),
-      //   feedID:
-      //     "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
-      // },
+      iCFX: {
+        address: "0x25CCd7E60550EF32266fA90441BcE2BA742d88bc",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+      },
       iUSDT: {
         address: "0xC80aD49191113d31fe52427c01A197106ef5EB5b",
         priceModel: "PythModel",
@@ -876,6 +876,12 @@ export const deployInfo = {
         address: "0x6f87b39a2e36F205706921d81a6861B655db6358",
         priceModel: "PosterModel",
         price: ethers.utils.parseEther("1"),
+      },
+      DF: {
+        address: "0x53aa2b7bead41614577ba5b636c482790c5f54c5",
+        priceModel: "ReaderPosterHeartbeatModel",
+        // heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        heartbeat: ethers.utils.parseUnits("262800", "wei"),
       },
     },
   },

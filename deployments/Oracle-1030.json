@@ -28,5 +28,10 @@
     "contract": "PosterModel",
     "path": "contracts/priceModel/",
     "address": "0xf9B434C01D3860bb329fdD2353a3f99543C2e0d2"
+  },
+  "ReaderPosterHeartbeatModel": {
+    "contract": "ReaderPosterHeartbeatModel",
+    "path": "contracts/priceModel/",
+    "address": "0xe97d120431c479947ec17c988d75b915e5059bb5"
   }
 }
