@@ -1,0 +1,37 @@
+{
+  "proxyAdmin": {
+    "contract": "ProxyAdmin",
+    "path": "contracts/library/",
+    "address": "0xD037c36dbc81a8890728D850E080e38F6EeB95EF"
+  },
+  "timeLock": {
+    "contract": "Timelock",
+    "path": "contracts/timelock/",
+    "address": "0x3f9E89ce069C3a5CAD749C9D953E9b57bEcCb236"
+  },
+  "OracleImpl": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0xc132624055A3e6e1EF4457053c528df179B18285"
+  },
+  "Oracle": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0xfd3868B848B5D9eD3583938B4db4746415bD43a3"
+  },
+  "PythModel": {
+    "contract": "PythModel",
+    "path": "contracts/priceModel/",
+    "address": "0x2434A722565E0d5C5b0f515666f39D1e63ef77d6"
+  },
+  "PosterModel": {
+    "contract": "PosterModel",
+    "path": "contracts/priceModel/",
+    "address": "0xf9B434C01D3860bb329fdD2353a3f99543C2e0d2"
+  },
+  "ReaderPosterHeartbeatModel": {
+    "contract": "ReaderPosterHeartbeatModel",
+    "path": "contracts/priceModel/",
+    "address": "0xe97d120431c479947ec17c988d75b915e5059bb5"
+  }
+}

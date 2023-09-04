@@ -1,0 +1,32 @@
+{
+  "timeLock": {
+    "contract": "Timelock",
+    "path": "contracts/timelock/",
+    "address": "0xD86E43f400e65d1e68fE1eea409799506C51652F"
+  },
+  "proxyAdmin": {
+    "contract": "ProxyAdmin",
+    "path": "contracts/library/",
+    "address": "0xE189e9585b392624c343b750632C00b452022d53"
+  },
+  "OracleImpl": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0xC6d76E0706f3F75a13441Fc66A87D76C17BA6E70"
+  },
+  "Oracle": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0x6005cA02F96B02501C45e39124026daFb9eAD00A"
+  },
+  "ReaderPosterModel": {
+    "contract": "ReaderPosterModel",
+    "path": "contracts/priceModel/",
+    "address": "0xAB86F7259de3a4D65E4cc79d46d06b9BC58AC18d"
+  },
+  "PythModel": {
+    "contract": "PythModel",
+    "path": "contracts/priceModel/",
+    "address": "0xae23214a5F188F5d3acF19B969BB386Ca5ca9335"
+  }
+}

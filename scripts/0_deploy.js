@@ -41,6 +41,11 @@ async function deploy() {
         item.getArgs = () => [info.layer2SequencerUptimeFeed];
         break;
 
+      case "PythMo":
+        item.path = "contracts/priceModel/";
+        item.getArgs = () => [info.pyth];
+        break;
+
       default:
         item.path = "contracts/priceModel/";
         item.getArgs = () => [];

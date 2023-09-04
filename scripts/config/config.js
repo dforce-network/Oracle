@@ -7,6 +7,10 @@ export const network = {
   43114: "avalanche",
   2222: "kava",
   421611: "arbitrumRinkeby",
+  71: "confluxTestnet",
+  1030: "confluxeSpace",
+  280: "zkSyncTestnet",
+  324: "zkSyncEra",
   59140: "lineaTestnet",
   534353: "scrollAlphaTestnet",
 };
@@ -782,6 +786,136 @@ export const deployInfo = {
         address: "0x261d5E1C34ad02e40D8E2A95A326821288a78718",
         priceModel: "Layer2ReaderPosterHeartbeatModel",
         reader: "0x515482d94b0d45C06532dbcb3443C09c6aB22Ed2",
+      },
+    },
+  },
+  confluxTestnet: {
+    poster: "0x6b29b8af9AF126170513AE6524395E09025b214E",
+    pyth: "0xA2aa501b19aff244D90cc15a4Cf739D2725B5729",
+    assets: {
+      iETH: {
+        address: "0x81004bB91c611B646b630426eB8A46f0eBea69F5",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("6000", "wei"),
+        feedID:
+          "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6",
+      },
+      iCFX: {
+        address: "0xF77508f5deEc008238C226e074E00455be7B9c74",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0xeba2144f04b3af59382d92b8cbc3170008b4a2945a01f36e81f92dfdeb8cc519",
+      },
+      iUSX: {
+        address: "0xC4fF55776eF0dAC86890cA2C1aD7859d5C0Ae3c6",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      iWBTC: {
+        address: "0xC52953db2C5764aB192C84eCd08508b0A7815E1D",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b",
+      },
+      iUSDC: {
+        address: "0x95659C4C8110E75459F5C39d12723930A57531B2",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x41f3625971ca2ed2263e78573fe5ce23e13d2558ed3f2e47ab0f84fb9e7ae722",
+      },
+      iUSDT: {
+        address: "0x4B0bFd5465761e111a021826B903Af2435A8C72d",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x1fc18861232290221461220bd4e2acd1dcdfbc89c84092c93c18bdc7756c1588",
+      },
+    },
+  },
+  confluxeSpace: {
+    poster: "0x5c5bFFdB161E637B7f555CC122831126e02270d5",
+    pyth: "0xe9d69CdD6Fe41e7B621B4A688C5D1a68cB5c8ADc",
+    assets: {
+      iWBTC: {
+        address: "0xE08020a6517c1AD321D47c45Efbe1d76F5035d75",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43",
+      },
+      iETH: {
+        address: "0x620e8Ed48945d97CBea0B794F50E5e51950EbA24",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace",
+      },
+      iCFX: {
+        address: "0x25CCd7E60550EF32266fA90441BcE2BA742d88bc",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+      },
+      iUSDT: {
+        address: "0xC80aD49191113d31fe52427c01A197106ef5EB5b",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x2b89b9dc8fdf9f34709a5b106b472f0f39bb6ca9ce04b0fd7f2e971688e2e53b",
+      },
+      iUSDC: {
+        address: "0xb88DC5AaE0C26903230ebc9a6fBAb8D511AF9897",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a",
+      },
+      iUSX: {
+        address: "0x6f87b39a2e36F205706921d81a6861B655db6358",
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      DF: {
+        address: "0x53aa2b7bead41614577ba5b636c482790c5f54c5",
+        priceModel: "ReaderPosterHeartbeatModel",
+        // heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        heartbeat: ethers.utils.parseUnits("262800", "wei"),
+      },
+    },
+  },
+  zkSyncTestnet: {
+    poster: "0x6b29b8af9AF126170513AE6524395E09025b214E",
+    pyth: "0xC38B1dd611889Abc95d4E0a472A667c3671c08DE",
+    assets: {
+      iETH: {
+        address: "0x3C5ab6f2BfBEFDcAd193BDf77c7E9D1F8f133849",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("6000", "wei"),
+        feedID:
+          "0xca80ba6dc32e08d06f1aa886011eed1d77c77be9eb761cc10d72b7d0a2fd57a6",
+      },
+      iUSX: {
+        address: "0x5bd08d06B68df89Ca47718FDeCD89FfE59d935F9",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      iWBTC: {
+        address: "0x8049CEa1F8BA92d9626467C09dE684a4a7FC6d82",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0xf9c0172ba10dfa4d19088d94f5bf61d3b54d5bd7483a322a982e1373ee8ea31b",
+      },
+      iUSDC: {
+        address: "0x81E4DD580738063214121d8Ec156CE6426CDBb81",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x41f3625971ca2ed2263e78573fe5ce23e13d2558ed3f2e47ab0f84fb9e7ae722",
       },
     },
   },
