@@ -22,11 +22,8 @@ contract SavingsDaiAggregator is Aggregator {
     }
 
     function _toInt256(uint256 _value) internal pure returns (int256) {
-        require(
-            _value <= uint256(type(int256).max),
-            "_toInt256: int256 overflow"
-        );
-        return int256(_value);
+        if (_value <= uint256(type(int256).max)) return int256(_value);
+        return int256(0);
     }
 
     /**
@@ -63,9 +60,9 @@ contract SavingsDaiAggregator is Aggregator {
             answeredInRound
         ) = assetAggregator_.latestRoundData();
 
-        int256 chi = int256(pot_.chi());
+        int256 chi = _toInt256(pot_.chi());
 
-        if (answer > 0 && chi > 0) answer = answer.mul(chi).div(RAY);
+        if (answer > 0) answer = answer.mul(chi).div(RAY);
     }
 
     /**
