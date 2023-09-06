@@ -34,6 +34,11 @@
     "path": "contracts/aggregator/",
     "address": "0x3A376f39b041E29b90C3d3a8833Dd1601E8facc6"
   },
+  "SavingsDaiAggregator(GOLDx)": {
+    "contract": "SavingsDaiAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0xf9B434C01D3860bb329fdD2353a3f99543C2e0d2"
+  },
   "ChainlinkHeartbeatModel": {
     "contract": "ChainlinkHeartbeatModel",
     "path": "contracts/priceModel/",
