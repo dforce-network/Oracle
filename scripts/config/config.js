@@ -68,7 +68,12 @@ export const deployInfo = {
         aggregator: "0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9",
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
-
+      isDAI: {
+        address: "0x5f02fb5f1203a502c701a12Fd409548993F795ba",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0xf9B434C01D3860bb329fdD2353a3f99543C2e0d2",
+        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      },
       iHBTC: {
         address: "0x47566acD7af49D2a192132314826ed3c3c5f3698",
         priceModel: "ChainlinkHeartbeatModel",
@@ -110,9 +115,11 @@ export const deployInfo = {
       },
       iFEI: {
         address: "0x47C19A2ab52DA26551A22e2b2aEED5d19eF4022F",
-        priceModel: "ChainlinkHeartbeatModel",
-        aggregator: "0x31e0a88fecB6eC0a411DBe0e9E76391498296EE9",
-        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+        // priceModel: "ChainlinkHeartbeatModel",
+        // aggregator: "0x31e0a88fecB6eC0a411DBe0e9E76391498296EE9",
+        // heartbeat: ethers.utils.parseUnits("7200", "wei"),
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
       },
       iGOLDx: {
         address: "0x164315EA59169D46359baa4BcC6479bB421764b6",
