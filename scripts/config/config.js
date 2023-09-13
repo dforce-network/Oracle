@@ -465,6 +465,12 @@ export const deployInfo = {
         aggregator: "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3",
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
+      iUSDCn: {
+        address: "0x70284c0C2dFa98a972c5c8cbE32a0b7f90b3B578",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregator: "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
       iUSDT: {
         address: "0xf52f079Af080C9FB5AFCA57DDE0f8B83d49692a9",
         priceModel: "Layer2ChainlinkHeartbeatModel",
@@ -544,6 +550,12 @@ export const deployInfo = {
       },
       iUSDC: {
         address: "0xB344795f0e7cf65a55cB0DDe1E866D46041A2cc2",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregator: "0x16a9FA2FDa030272Ce99B29CF780dFA30361E0f3",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      iUSDCn: {
+        address: "0x0fD11B5ED5B82Ef454BEe2516D1b23d1b07b6c46",
         priceModel: "Layer2ChainlinkHeartbeatModel",
         aggregator: "0x16a9FA2FDa030272Ce99B29CF780dFA30361E0f3",
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
