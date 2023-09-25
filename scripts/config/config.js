@@ -13,6 +13,7 @@ export const network = {
   324: "zkSyncEra",
   59140: "lineaTestnet",
   534353: "scrollAlphaTestnet",
+  5: "goerli",
 };
 export const deployInfo = {
   mainnet: {
@@ -227,6 +228,20 @@ export const deployInfo = {
         address: "0x431ad2ff6a9C365805eBaD47Ee021148d6f7DBe0",
         priceModel: "ReaderPosterHeartbeatModel",
         reader: "0xb3dc7425e63E1855Eb41107134D471DD34d7b239",
+      },
+
+      irETH: {
+        address: "0x33b5EdC15E05D3daC27fCCAd77cf550C5f3f02AA",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregatorModel: {
+          model: "TransitAggregator",
+          key: "rETH",
+          param: [
+            "0x536218f9E9Eb48863970252233c8F271f554C2d0", // rETH/ETH
+            "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419", // ETH/USD
+          ],
+        },
+        heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
     },
   },
@@ -536,6 +551,19 @@ export const deployInfo = {
         },
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
+      irETH: {
+        address: "0xFD7e2EACAB5Fd983a2189eB6A38c3ee2aD9F69Df",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregatorModel: {
+          model: "TransitAggregator",
+          key: "rETH",
+          param: [
+            "0xF3272CAfe65b190e76caAF483db13424a3e23dD2", // rETH/ETH
+            "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612", // ETH/USD
+          ],
+        },
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
     },
   },
   optimism: {
@@ -639,6 +667,20 @@ export const deployInfo = {
           param: [
             "0xe59EBa0D492cA53C6f46015EEa00517F2707dc77", // wstETH/stETH
             "0x41878779a388585509657CE5Fb95a80050502186", // stETH
+          ],
+        },
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+
+      irETH: {
+        address: "0x107d8661C2617B498941AfE8c2FbEa6b6976F71e",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregatorModel: {
+          model: "TransitAggregator",
+          key: "rETH",
+          param: [
+            "0x22F3727be377781d1579B7C9222382b21c9d1a8f", // rETH/ETH
+            "0x13e3Ee699D1909E989722E753853AE30b17e08c5", // ETH/USD
           ],
         },
         heartbeat: ethers.utils.parseUnits("90000", "wei"),

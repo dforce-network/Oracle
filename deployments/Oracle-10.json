@@ -38,5 +38,10 @@
     "contract": "TransitAggregator",
     "path": "contracts/aggregator/",
     "address": "0xc40C933210213Ea2Cb1F0b5773B88643E1342AC8"
+  },
+  "TransitAggregator(rETH)": {
+    "contract": "TransitAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0xF3c9766Fb389480d2Ffa60acd53dfF33dD69Bd56"
   }
 }
