@@ -46,6 +46,11 @@ async function deploy() {
         item.getArgs = () => [info.pyth];
         break;
 
+      case "OKXX1M":
+        item.path = "contracts/priceModel/";
+        item.getArgs = () => [info.oracle, info.dataSource];
+        break;
+
       default:
         item.path = "contracts/priceModel/";
         item.getArgs = () => [];

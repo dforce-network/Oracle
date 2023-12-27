@@ -14,6 +14,7 @@ export const network = {
   59140: "lineaTestnet",
   534353: "scrollAlphaTestnet",
   5: "goerli",
+  195: "OKXX1Testnet",
 };
 export const deployInfo = {
   mainnet: {
@@ -1027,6 +1028,60 @@ export const deployInfo = {
         address: "0x1FC94B633F5F25171F86B7b4Ac845e762E3233Bd",
         priceModel: "ReaderPosterModel",
         price: ethers.utils.parseUnits("1.001", 30),
+      },
+    },
+  },
+  OKXX1Testnet: {
+    poster: "0x6b29b8af9AF126170513AE6524395E09025b214E",
+    oracle: "0x64481ebfFe69d688d754e09918e82C89D8Da2507",
+    dataSource: "0x6cf2a39d1c85adfb50da183060dc0d46529f3f9c",
+    assets: {
+      iETH: {
+        address: "0xCE1A42eC7d25ceF9468d8A7D00B9C532a4aEB918",
+        priceModel: "OKXX1Model",
+        key: "ETH",
+        decimals: 6,
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      iBTC: {
+        address: "0xD425Ce07D393CF5FF7b709E788a125ac7ffCdd8f",
+        priceModel: "OKXX1Model",
+        key: "BTC",
+        decimals: 6,
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      iOKB: {
+        address: "0x278149105c5cd6D0CbE84C2E6f59dc20C14a2ab2",
+        priceModel: "OKXX1Model",
+        key: "OKB",
+        decimals: 6,
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      iUSX: {
+        address: "0x191397f929dAf294C744b60cD2A0EE11DA9652D9",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      iUSDC: {
+        address: "0x1FC94B633F5F25171F86B7b4Ac845e762E3233Bd",
+        priceModel: "OKXX1Model",
+        key: "USDC",
+        decimals: 6,
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      iUSDT: {
+        address: "0x524B4e48E9ADb3eDEb6f1Aa87932B73cAe192db0",
+        priceModel: "OKXX1Model",
+        key: "USDT",
+        decimals: 6,
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      iDAI: {
+        address: "0xC6d76E0706f3F75a13441Fc66A87D76C17BA6E70",
+        priceModel: "OKXX1Model",
+        key: "DAI",
+        decimals: 6,
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
     },
   },
