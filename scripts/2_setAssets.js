@@ -80,6 +80,16 @@ async function checkPythFeedID(asset) {
   return false;
 }
 
+async function checkX1Key(asset) {
+  if (asset.hasOwnProperty("key")) {
+    return (
+      (await task.contracts[asset.priceModel].priceConfig(asset.address).key) !=
+      asset.key
+    );
+  }
+  return false;
+}
+
 async function setAssets() {
   const abi = ethers.utils.defaultAbiCoder;
   let info = deployInfo[network[task.chainId]];
@@ -170,6 +180,17 @@ async function setAssets() {
         signatures.push("_setAssetFeedID(address,bytes32)");
         calldatas.push(
           abi.encode(["address", "bytes32"], [asset.address, asset.feedID])
+        );
+      }
+
+      if (await checkX1Key(asset)) {
+        assets.push(asset.address);
+        signatures.push("_setAssetPriceConfig(address,string,uint8)");
+        calldatas.push(
+          abi.encode(
+            ["address", "string", "uint8"],
+            [asset.address, asset.key, asset.decimals]
+          )
         );
       }
     })
