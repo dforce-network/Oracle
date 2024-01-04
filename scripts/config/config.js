@@ -156,9 +156,11 @@ export const deployInfo = {
       },
       iBUSD: {
         address: "0x24677e213DeC0Ea53a430404cF4A11a6dc889FCe",
-        priceModel: "ChainlinkHeartbeatModel",
-        aggregator: "0x833D8Eb16D306ed1FbB5D7A2E019e106B960965A",
-        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        // priceModel: "ChainlinkHeartbeatModel",
+        // aggregator: "0x833D8Eb16D306ed1FbB5D7A2E019e106B960965A",
+        // heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
       },
 
       iMKR: {
@@ -346,9 +348,11 @@ export const deployInfo = {
       },
       iBUSD: {
         address: "0x5511b64Ae77452C7130670C79298DEC978204a47",
-        priceModel: "ChainlinkHeartbeatModel",
-        aggregator: "0xcBb98864Ef56E9042e7d2efef76141f15731B82f",
-        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+        // priceModel: "ChainlinkHeartbeatModel",
+        // aggregator: "0xcBb98864Ef56E9042e7d2efef76141f15731B82f",
+        // heartbeat: ethers.utils.parseUnits("7200", "wei"),
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
       },
 
       iLINK: {
