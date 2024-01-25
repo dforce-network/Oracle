@@ -15,6 +15,7 @@ export const network = {
   534353: "scrollAlphaTestnet",
   5: "goerli",
   195: "OKXX1Testnet",
+  11155111: "sepolia",
 };
 export const deployInfo = {
   mainnet: {
@@ -205,7 +206,6 @@ export const deployInfo = {
         aggregator: "0xb49f677943BC038e9857d61E7d053CaA2C1734C1",
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
-
       iMxBTC: {
         address: "0xfa2e831c674B61475C175B2206e81A5938B298Dd",
         priceModel: "ChainlinkHeartbeatModel",
@@ -1087,6 +1087,71 @@ export const deployInfo = {
         decimals: 6,
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
+    },
+  },
+  sepolia: {
+    poster: "0x6b29b8af9AF126170513AE6524395E09025b214E",
+    assets: {
+      iWBTC: {
+        address: "0x6005cA02F96B02501C45e39124026daFb9eAD00A",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43",
+        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      },
+      iETH: {
+        address: "0x30aB1041306B11360a72eBDb0e011135AB619486",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0x694AA1769357215DE4FAC081bf1f309aDC325306",
+        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      },
+      iUSDC: {
+        address: "0xE78205C4D169034D8691DEf52F5e898c640fE27F",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0xA2F78ab2355fe2f984D808B5CeE7FD0A93D5270E",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      iUSDT: {
+        address: "0xDDe7cDdEB112bE1a6e8eBA9c06d8ae3946F42010",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseUnits("1.001", 30),
+      },
+      iDAI: {
+        address: "0x2B63d504729b326218d3F341D06153E7Bb82Ee8C",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0x14866185B1962B63C3Ea9E03Bc1da838bab34C19",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      iUSX: {
+        address: "0x05e65497f294f2713Cc88A0AC2a6292c8a31Ba14",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      iUNI: {
+        address: "0x7b48d9C51135dF0769dE7bb66827C023b4285758",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("5.8"),
+      },
+      iDF: {
+        address: "0x2293044610B9A0eaf259c9Af62e8303c0E389DA2",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("0.042"),
+      },
+      istETH: {
+        address: "0x7BA89BEAB220945666A28E58a1d54c9A713d88Ba",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0x694AA1769357215DE4FAC081bf1f309aDC325306",
+        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      },
+      // iARB: {
+      //   address: "",
+      //   priceModel: "ReaderPosterModel",
+      //   price: ethers.utils.parseEther("1"),
+      // },
+      // iMAI: {
+      //   address: "",
+      //   priceModel: "ReaderPosterModel",
+      //   price: ethers.utils.parseEther("1"),
+      // },
     },
   },
 };
