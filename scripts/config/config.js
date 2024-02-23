@@ -1127,7 +1127,7 @@ export const deployInfo = {
         price: ethers.utils.parseEther("1"),
       },
       iUNI: {
-        address: "0x7b48d9C51135dF0769dE7bb66827C023b4285758",
+        address: "0xEd29103a3bAAB0Ab5Fe1051200821A17337E6fB7",
         priceModel: "ReaderPosterModel",
         price: ethers.utils.parseEther("5.8"),
       },
@@ -1142,16 +1142,22 @@ export const deployInfo = {
         aggregator: "0x694AA1769357215DE4FAC081bf1f309aDC325306",
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
-      // iARB: {
-      //   address: "",
-      //   priceModel: "ReaderPosterModel",
-      //   price: ethers.utils.parseEther("1"),
-      // },
-      // iMAI: {
-      //   address: "",
-      //   priceModel: "ReaderPosterModel",
-      //   price: ethers.utils.parseEther("1"),
-      // },
+      iARB: {
+        address: "0x973a63b55de726b9242C65894C90c676C351179C",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1.62"),
+      },
+      iMAI: {
+        address: "0xfbfAf3b93946f917748b25B44737C8684639cF5F",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      irETH: {
+        address: "0x8c1598b991b5c32c8A6E55FE04e5A1a12B1227C8",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0x694AA1769357215DE4FAC081bf1f309aDC325306",
+        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      },
     },
   },
 };
