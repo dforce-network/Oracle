@@ -1,0 +1,42 @@
+{
+  "proxyAdmin": {
+    "contract": "ProxyAdmin",
+    "path": "contracts/library/",
+    "address": "0x3BbB16351059D7405b2C41D9Fb9B89d71A8A1A4f"
+  },
+  "timeLock": {
+    "contract": "Timelock",
+    "path": "contracts/timelock/",
+    "address": "0xa4e5ebEdcD1129Ed30C77644a70F4dd3c2d482cc"
+  },
+  "OracleImpl": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0x56e398fAf30D8D3f48ad4d3C3b9bD8F6E324E141"
+  },
+  "Oracle": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0x4B60aA7777c96D595c4a662B654D73F579fF3650"
+  },
+  "TransitAggregator(wstETH)": {
+    "contract": "TransitAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0x4bf24a7bE1D98b8Adbc2B3F8d4A6a5114666c096"
+  },
+  "TransitAggregator(cbETH)": {
+    "contract": "TransitAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0x47e4DB4Ba2A630A2FAEf17f2A605c5E451a882b0"
+  },
+  "Layer2ChainlinkHeartbeatModel": {
+    "contract": "Layer2ChainlinkHeartbeatModel",
+    "path": "contracts/priceModel/layer2/",
+    "address": "0x9913Ed5DD13E507D94d4118d96bd057F825e04f8"
+  },
+  "Layer2PosterModel": {
+    "contract": "Layer2PosterModel",
+    "path": "contracts/priceModel/layer2/",
+    "address": "0x4640DdDD85583D19460f3abAd3ce032EFcF9CCe5"
+  }
+}
