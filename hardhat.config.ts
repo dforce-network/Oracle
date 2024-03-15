@@ -81,6 +81,11 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
+    base: {
+      url: "https://mainnet.base.org",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
@@ -88,6 +93,24 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
+    customChains: [
+      {
+        network: "base",
+        chainId: 8453,
+        urls: {
+          apiURL: "https://api.basescan.org/api",
+          browserURL: "https://basescan.org/",
+        },
+      },
+      {
+        network: "confluxeSpace",
+        chainId: 1030,
+        urls: {
+          apiURL: "https://evmapi.confluxscan.net/api",
+          browserURL: "https://evm.confluxscan.net",
+        },
+      },
+    ],
   },
   solidity: {
     compilers: [

@@ -3,6 +3,7 @@ export const network = {
   56: "bsc",
   42161: "arbitrum",
   10: "optimism",
+  8453: "base",
   137: "polygon",
   43114: "avalanche",
   2222: "kava",
@@ -689,6 +690,55 @@ export const deployInfo = {
           ],
         },
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+    },
+  },
+  base: {
+    poster: "0x5c5bFFdB161E637B7f555CC122831126e02270d5",
+    layer2SequencerUptimeFeed: "0xBCF85224fc0756B9Fa45aA7892530B47e10b6433",
+    assets: {
+      iETH: {
+        address: "0x76B5f31A3A6048A437AfD86be6E1a40888Dc8Bba",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregator: "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70",
+        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      },
+      iwstETH: {
+        address: "0xf8fBD6202FBcfC607E31A99300e6c84C2645902f",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregatorModel: {
+          model: "TransitAggregator",
+          key: "wstETH",
+          param: [
+            "0xa669E5272E60f78299F4824495cE01a3923f4380", // wstETH/ETH
+            "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70", // ETH/USD
+          ],
+        },
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      icbETH: {
+        address: "0x6D9Ce334C2cc6b80a4cddf9aEA6D3F4683cf4a50",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregatorModel: {
+          model: "TransitAggregator",
+          key: "cbETH",
+          param: [
+            "0x868a501e68F3D1E89CfC0D22F6b22E8dabce5F04", // cbETH/ETH
+            "0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70", // ETH/USD
+          ],
+        },
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      iUSDC: {
+        address: "0xBb81632e9e1Fb675dB5e5a5ff66f16E822c9a2FD",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregator: "0x7e860098F58bBFC8648a4311b374B1D669a2bc6B",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      iUSX: {
+        address: "0x82AFc965E4E18009DD8d5AF05cfAa99bF0E605df",
+        priceModel: "Layer2PosterModel",
+        price: ethers.utils.parseEther("1"),
       },
     },
   },
