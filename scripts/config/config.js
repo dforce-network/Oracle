@@ -17,6 +17,7 @@ export const network = {
   5: "goerli",
   195: "OKXX1Testnet",
   11155111: "sepolia",
+  17000: "holesky",
 };
 export const deployInfo = {
   mainnet: {
@@ -1207,6 +1208,28 @@ export const deployInfo = {
         priceModel: "ChainlinkHeartbeatModel",
         aggregator: "0x694AA1769357215DE4FAC081bf1f309aDC325306",
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      },
+    },
+  },
+  holesky: {
+    poster: "0xF4Db6BB2bd78b42e3cFbA47B667ff8A2CebB570D",
+    assets: {
+      iETH: {
+        address: "0x888bec98BC26ef4cF59F2506bF780515C4E52d5F",
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("3578.35"),
+      },
+      issvETH: {
+        address: "0xB474637777d087eE3D217ec3258eF7b0c76D16f1",
+        priceModel: "ChainlinkModel",
+        aggregatorModel: {
+          model: "saETHExchangeRateAggregator",
+          key: "ssvETH",
+          param: [
+            "0x888bec98BC26ef4cF59F2506bF780515C4E52d5F", // iETH
+            "0x92a38d33007896DbE401eF1Ac4986D811874C8B7", // saETH
+          ],
+        },
       },
     },
   },
