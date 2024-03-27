@@ -1,0 +1,37 @@
+{
+  "proxyAdmin": {
+    "contract": "ProxyAdmin",
+    "path": "contracts/library/",
+    "address": "0x11598B9E99FCd8FBf5A96dC481F55B6F4A809321"
+  },
+  "timeLock": {
+    "contract": "Timelock",
+    "path": "contracts/governance/",
+    "address": "0xC115BDf299b3E395bFA4392e8a063D9Efb343D56"
+  },
+  "OracleImpl": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0x486C25F68947E351878e8E9ac781C3D3B451e167"
+  },
+  "Oracle": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0x90d309405CEfDaD7741C52561b18a8FFec413a9f"
+  },
+  "saETHExchangeRateAggregator(ssvETH)": {
+    "contract": "saETHExchangeRateAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0x06D0ca5a3d56a4c1519F34492631E372e757965B"
+  },
+  "PosterModel": {
+    "contract": "PosterModel",
+    "path": "contracts/priceModel/",
+    "address": "0xf15D2D513FC9a7123fb003A2D0bCCD1A411B03FF"
+  },
+  "ChainlinkModel": {
+    "contract": "ChainlinkModel",
+    "path": "contracts/priceModel/",
+    "address": "0x5a95D5c433820947C88d4F12bBb712E9ccf79601"
+  }
+}
