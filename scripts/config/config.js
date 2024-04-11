@@ -1209,6 +1209,11 @@ export const deployInfo = {
         aggregator: "0x694AA1769357215DE4FAC081bf1f309aDC325306",
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
+      iFRAX: {
+        address: "0xec97F8eb10a7602a64f9E396299769c3012CA1ff",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
     },
   },
   holesky: {
