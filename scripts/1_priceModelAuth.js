@@ -17,11 +17,14 @@ async function setOwner() {
     const priceModel = priceModels[index];
     const owner = await task.contracts[priceModel].owner();
     const pendingOwner = await task.contracts[priceModel].pendingOwner();
-    if (
-      pendingOwner == task.deployments.Oracle.address ||
-      owner != task.signerAddr
-    )
+
+    if (pendingOwner == task.deployments.Oracle.address) {
+      pendingModels.push(priceModel);
       continue;
+    }
+
+    if (owner != task.signerAddr) continue;
+
     console.log(
       `${priceModel} _setPendingOwner: ${task.deployments.Oracle.address}\n`
     );
@@ -29,6 +32,7 @@ async function setOwner() {
       task.deployments.Oracle.address
     );
     await tx.wait(2);
+
     pendingModels.push(priceModel);
   }
 
