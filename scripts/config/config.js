@@ -18,6 +18,7 @@ export const network = {
   195: "OKXX1Testnet",
   11155111: "sepolia",
   17000: "holesky",
+  421614: "arbitrumSepolia",
 };
 export const deployInfo = {
   mainnet: {
@@ -1235,6 +1236,19 @@ export const deployInfo = {
             "0x92a38d33007896DbE401eF1Ac4986D811874C8B7", // saETH
           ],
         },
+      },
+    },
+  },
+  arbitrumSepolia: {
+    poster: "0xF4Db6BB2bd78b42e3cFbA47B667ff8A2CebB570D",
+    layer2SequencerUptimeFeed: "0xb8Fe72fd6461b0FC5a68c88E83026f4FC6a2EaE4",
+    assets: {
+      isaETH: {
+        address: "0x65131ADe8F82e0e5205dB764d261814B9b334164",
+        priceModel: "Layer2ChainlinkHeartbeatExchangeRateSetModel",
+        aggregator: "0xd30e2101a97dcbAeBCBC04F14C3f624E67A35165",
+        heartbeat: ethers.utils.parseUnits("120", "wei"),
+        exchangeRate: ethers.utils.parseEther("1.24567890"),
       },
     },
   },
