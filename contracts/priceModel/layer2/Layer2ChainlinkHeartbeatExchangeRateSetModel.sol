@@ -23,8 +23,8 @@ contract Layer2ChainlinkHeartbeatExchangeRateSetModel is
     {}
 
     /**
-     * @dev This function retrieves the price of an asset.
-     * @param _asset The address of the asset.
+     * @dev Retrieves the price of an asset by recursively calling _getExchangeRatePrice.
+     * @param _asset The address of the asset for which to retrieve the price.
      * @return The price of the asset.
      */
     function _getAssetPrice(address _asset)
@@ -34,9 +34,9 @@ contract Layer2ChainlinkHeartbeatExchangeRateSetModel is
         override
         returns (uint256)
     {
-        // This function calls itself recursively to get the exchange rate price.
-        // This is a recursive call to _getExchangeRatePrice with the asset address and the asset price itself.
-        return _getExchangeRatePrice(_asset, _getAssetPrice(_asset));
+        // This function makes a recursive call to _getExchangeRatePrice, passing the asset address and its price.
+        // The price is obtained by calling the parent contract's _getAssetPrice function.
+        return _getExchangeRatePrice(_asset, super._getAssetPrice(_asset));
     }
 
     /**
