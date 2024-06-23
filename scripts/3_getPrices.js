@@ -11,8 +11,11 @@ async function getAssetPrice() {
       await task.contracts.Oracle.callStatic.getUnderlyingPriceAndStatus(
         asset.address
       );
+    const assetPrice =
+      await task.contracts.Oracle.callStatic.getUnderlyingPrice(asset.address);
 
     const priceString = price.toString();
+    console.log(`${key} \t: ${assetPrice.toString()}`);
     console.log(`${key} \t: ${status} ${priceString} `);
   }
 }
