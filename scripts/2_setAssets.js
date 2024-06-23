@@ -90,6 +90,16 @@ async function checkX1Key(asset) {
   return false;
 }
 
+async function checkExchangeRate(asset) {
+  if (asset.hasOwnProperty("exchangeRate")) {
+    return (
+      (await task.contracts[asset.priceModel].exchangeRate(asset.address)) !=
+      asset.exchangeRate.toString()
+    );
+  }
+  return false;
+}
+
 async function setAssets() {
   const abi = ethers.utils.defaultAbiCoder;
   let info = deployInfo[network[task.chainId]];
@@ -190,6 +200,17 @@ async function setAssets() {
           abi.encode(
             ["address", "string", "uint8"],
             [asset.address, asset.key, asset.decimals]
+          )
+        );
+      }
+
+      if (await checkExchangeRate(asset)) {
+        assets.push(asset.address);
+        signatures.push("_setExchangeRate(address,uint256)");
+        calldatas.push(
+          abi.encode(
+            ["address", "uint256"],
+            [asset.address, asset.exchangeRate]
           )
         );
       }
