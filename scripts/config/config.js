@@ -572,6 +572,25 @@ export const deployInfo = {
         },
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
+      // saETH vault
+      iToken_saETH: {
+        address: "0x8d717271b1A0aE97fcdF7D0a21Fa3DE4334b1EFd",
+        priceModel: "Layer2ChainlinkHeartbeatExchangeRateSetModel",
+        aggregator: "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        exchangeRate: ethers.utils.parseEther("1.010395747376633554"),
+      },
+      vMUSX_saETH: {
+        address: "0x149A632d2F147d08Da4cDBe730b486694Fa4Dd80",
+        priceModel: "Layer2PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      iARB: {
+        address: "0x912CE59144191C1204E64559FE8253a0e49E6548",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregator: "0xb2A824043730FE05F3DA2efaFa1CBbe83fa548D6",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
     },
   },
   optimism: {

@@ -73,5 +73,10 @@
     "contract": "TransitAggregator",
     "path": "contracts/aggregator/",
     "address": "0x107d8661C2617B498941AfE8c2FbEa6b6976F71e"
+  },
+  "Layer2ChainlinkHeartbeatExchangeRateSetModel": {
+    "contract": "Layer2ChainlinkHeartbeatExchangeRateSetModel",
+    "path": "contracts/priceModel/layer2/",
+    "address": "0x252eDCf92d47424ba2c14f5bA1F37Bf234f76aAe"
   }
 }
