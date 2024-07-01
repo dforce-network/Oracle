@@ -585,10 +585,23 @@ export const deployInfo = {
         priceModel: "Layer2PosterModel",
         price: ethers.utils.parseEther("1"),
       },
-      iARB: {
+      ARB: {
         address: "0x912CE59144191C1204E64559FE8253a0e49E6548",
         priceModel: "Layer2ChainlinkHeartbeatModel",
         aggregator: "0xb2A824043730FE05F3DA2efaFa1CBbe83fa548D6",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      // permission
+      iRWAGMM: {
+        address: "0x1243c1217fC31aDb4460920cBfcD6c10684A098D",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregator: "0x7105B6543d696BFA88C4b266Ef77A4e9acf4A4A6",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      iUSDC_Permission: {
+        address: "0xbfCD87C48e50847dA4823bDE4F004bb06eD94756",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregator: "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3",
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
     },
