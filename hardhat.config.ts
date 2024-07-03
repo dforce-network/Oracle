@@ -82,20 +82,35 @@ const config: HardhatUserConfig = {
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
     base: {
-      url: "https://mainnet.base.org",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      // url: "https://mainnet.base.org",
+      // accounts:
+      //   process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+
+      url: "http://localhost:24012/rpc", // truffle-dashboard
+      timeout: 200000,
     },
     holesky: {
       url: "https://ethereum-holesky.publicnode.com/",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
-    arbitrumSepolia: {
-      url: "https://endpoints.omniatech.io/v1/arbitrum/sepolia/public",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    mainnet: {
+      url: "http://localhost:24012/rpc", // truffle-dashboard
+      timeout: 200000,
     },
+    arbitrum: {
+      url: "http://localhost:24012/rpc", // truffle-dashboard
+      timeout: 200000,
+    },
+    optimism: {
+      url: "http://localhost:24012/rpc", // truffle-dashboard
+      timeout: 200000,
+    },
+    bsc: {
+      url: "http://localhost:24012/rpc", // truffle-dashboard
+      timeout: 200000,
+    },
+    
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,

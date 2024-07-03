@@ -38,5 +38,10 @@
     "contract": "Layer2PosterModel",
     "path": "contracts/priceModel/layer2/",
     "address": "0x4640DdDD85583D19460f3abAd3ce032EFcF9CCe5"
+  },
+  "sUSXExchangeRateAggregator(sUSX)": {
+    "contract": "sUSXExchangeRateAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0xec5cdc7B2f23C4268fBfE20BD177798567Dd574b"
   }
 }

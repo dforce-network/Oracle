@@ -63,5 +63,10 @@
     "contract": "TransitAggregator",
     "path": "contracts/aggregator/",
     "address": "0x2A7D1fD2d81dd0A8F2f03Dba4b75f51C6A0889E0"
+  },
+  "sUSXExchangeRateAggregator(sUSX)": {
+    "contract": "sUSXExchangeRateAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0xA6736aD7B5Ca1B594dD9032E69CF15907603494a"
   }
 }

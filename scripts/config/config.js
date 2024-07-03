@@ -249,6 +249,18 @@ export const deployInfo = {
         },
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
+      isUSX: {
+        address: "0x041D2c9250dc0cA2962BE94cF7c4D05abB1d5820",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregatorModel: {
+          model: "sUSXExchangeRateAggregator",
+          key: "sUSX",
+          param: [
+            "0xbC404429558292eE2D769E57d57D6E74bbd2792d", // sUSX
+          ],
+        },
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
     },
   },
   bsc: {
@@ -433,6 +445,18 @@ export const deployInfo = {
         priceModel: "ReaderPosterHeartbeatModel",
         reader: "0xeC3FD540A2dEE6F479bE539D64da593a59e12D08",
       },
+      isUSX: {
+        address: "0xc0BD38f08CDb278d0ff39E5c1996e4dc5062309C",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregatorModel: {
+          model: "sUSXExchangeRateAggregator",
+          key: "sUSX",
+          param: [
+            "0xbC404429558292eE2D769E57d57D6E74bbd2792d", // sUSX
+          ],
+        },
+        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      },
     },
   },
   arbitrum: {
@@ -568,6 +592,18 @@ export const deployInfo = {
           param: [
             "0xF3272CAfe65b190e76caAF483db13424a3e23dD2", // rETH/ETH
             "0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612", // ETH/USD
+          ],
+        },
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      isUSX: {
+        address: "0xB276FB21e29E8055044d31d093F8f1A4a88CA0BC",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregatorModel: {
+          model: "sUSXExchangeRateAggregator",
+          key: "sUSX",
+          param: [
+            "0xbC404429558292eE2D769E57d57D6E74bbd2792d", // sUSX
           ],
         },
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
@@ -725,6 +761,18 @@ export const deployInfo = {
         },
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
+      isUSX: {
+        address: "0xc0BD38f08CDb278d0ff39E5c1996e4dc5062309C",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregatorModel: {
+          model: "sUSXExchangeRateAggregator",
+          key: "sUSX",
+          param: [
+            "0xbC404429558292eE2D769E57d57D6E74bbd2792d", // sUSX
+          ],
+        },
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
     },
   },
   base: {
@@ -773,6 +821,18 @@ export const deployInfo = {
         address: "0x82AFc965E4E18009DD8d5AF05cfAa99bF0E605df",
         priceModel: "Layer2PosterModel",
         price: ethers.utils.parseEther("1"),
+      },
+      isUSX: {
+        address: "0x03cD2CfdC2DAB4949F46b2E4B7D1544302731398",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregatorModel: {
+          model: "sUSXExchangeRateAggregator",
+          key: "sUSX",
+          param: [
+            "0xbC404429558292eE2D769E57d57D6E74bbd2792d", // sUSX
+          ],
+        },
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
     },
   },

@@ -78,5 +78,10 @@
     "contract": "Layer2ChainlinkHeartbeatExchangeRateSetModel",
     "path": "contracts/priceModel/layer2/",
     "address": "0x252eDCf92d47424ba2c14f5bA1F37Bf234f76aAe"
+  },
+  "sUSXExchangeRateAggregator(sUSX)": {
+    "contract": "sUSXExchangeRateAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0x93FfdB3E056C2E7f0067Bafcaab22d2ae5B7F3a9"
   }
 }

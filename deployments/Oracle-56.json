@@ -38,5 +38,10 @@
     "contract": "ReaderPosterHeartbeatModel",
     "path": "contracts/priceModel/",
     "address": "0x995B838C2daA933402Cd9FBF7E6202ec8acDd714"
+  },
+  "sUSXExchangeRateAggregator(sUSX)": {
+    "contract": "sUSXExchangeRateAggregator",
+    "path": "contracts/aggregator/",
+    "address": "0xcE741D27877A33E99cb4f1B886D76dB06328e78d"
   }
 }
