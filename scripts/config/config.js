@@ -261,6 +261,17 @@ export const deployInfo = {
         },
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
+      USX: {
+        address: "0x0a5E677a6A24b2F1A2Bf4F3bFfC443231d2fDEc8",
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      UTS: {
+        address: "0x3B6564b5DA73A41d3A66e6558a98FD0e9E1e77ad",
+        priceModel: "UniV2Model",
+        pair: "0xA0E752441024D632E13ac193B4d519E0C2e6508D", // UTS/DF
+        // pair: "0xe4ca23187cC5e05C76360611323A8295C65Adc05", // UTS/USX
+      },
     },
   },
   bsc: {

@@ -100,6 +100,15 @@ async function checkExchangeRate(asset) {
   return false;
 }
 
+async function checkUniV2Pair(asset) {
+  if (asset.hasOwnProperty("pair")) {
+    return (
+      (await task.contracts[asset.priceModel].pair(asset.address)) != asset.pair
+    );
+  }
+  return false;
+}
+
 async function setAssets() {
   const abi = ethers.utils.defaultAbiCoder;
   let info = deployInfo[network[task.chainId]];
@@ -212,6 +221,14 @@ async function setAssets() {
             ["address", "uint256"],
             [asset.address, asset.exchangeRate]
           )
+        );
+      }
+
+      if (await checkUniV2Pair(asset)) {
+        assets.push(asset.address);
+        signatures.push("_setAssetPair(address,address)");
+        calldatas.push(
+          abi.encode(["address", "address"], [asset.address, asset.pair])
         );
       }
     })
