@@ -272,6 +272,14 @@ export const deployInfo = {
         pair: "0xA0E752441024D632E13ac193B4d519E0C2e6508D", // UTS/DF
         // pair: "0xe4ca23187cC5e05C76360611323A8295C65Adc05", // UTS/USX
       },
+      BLPUTSDF: {
+        address: "0xA0E752441024D632E13ac193B4d519E0C2e6508D",
+        priceModel: "UniV2LPModel",
+      },
+      BLPUTSUSX: {
+        address: "0xe4ca23187cC5e05C76360611323A8295C65Adc05",
+        priceModel: "UniV2LPModel",
+      },
     },
   },
   bsc: {

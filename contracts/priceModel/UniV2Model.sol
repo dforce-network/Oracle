@@ -2,20 +2,14 @@
 pragma solidity ^0.6.12;
 pragma experimental ABIEncoderV2;
 
-import "./base/Base.sol";
-import "./base/Unit.sol";
-import "../interface/IERC20.sol";
-
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 import "@uniswap/lib/contracts/libraries/FixedPoint.sol";
-
 import "@uniswap/v2-periphery/contracts/libraries/UniswapV2OracleLibrary.sol";
 
-interface IOracle {
-    function getUnderlyingPrice(
-        address _asset
-    ) external returns (uint256 _price);
-}
+import "../interface/IOracle.sol";
+
+import "./base/Base.sol";
+import "./base/Unit.sol";
 
 contract UniV2Model is Base, Unit {
     using FixedPoint for *;
@@ -42,10 +36,11 @@ contract UniV2Model is Base, Unit {
      * @param _asset Asset for which to set the `pair`.
      * @param _pair Pair to assign for `asset`.
      */
-    function _setAssetPair(
-        address _asset,
-        address _pair
-    ) public virtual onlyOwner {
+    function _setAssetPair(address _asset, address _pair)
+        public
+        virtual
+        onlyOwner
+    {
         require(
             _pair != address(0),
             "_setAssetPair: Pair cannot be the zero address."
@@ -121,9 +116,11 @@ contract UniV2Model is Base, Unit {
      * @dev Owner function to disable pairs.
      * @param _assets Assets for which to disable the `pair`.
      */
-    function _disableAssetPairBatch(
-        address[] calldata _assets
-    ) external virtual onlyOwner {
+    function _disableAssetPairBatch(address[] calldata _assets)
+        external
+        virtual
+        onlyOwner
+    {
         for (uint256 i = 0; i < _assets.length; i++) {
             _disableAssetPair(_assets[i]);
         }
@@ -170,9 +167,12 @@ contract UniV2Model is Base, Unit {
      * @param _asset Asset address.
      * @return Asset price.
      */
-    function getAssetPrice(
-        address _asset
-    ) external virtual override returns (uint256) {
+    function getAssetPrice(address _asset)
+        external
+        virtual
+        override
+        returns (uint256)
+    {
         return _getAssetPrice(_asset);
     }
 
@@ -189,9 +189,12 @@ contract UniV2Model is Base, Unit {
      * @param _asset Asset address.
      * @return Asset price and status.
      */
-    function getAssetPriceStatus(
-        address _asset
-    ) external virtual override returns (uint256, bool) {
+    function getAssetPriceStatus(address _asset)
+        external
+        virtual
+        override
+        returns (uint256, bool)
+    {
         return (_getAssetPrice(_asset), true);
     }
 
