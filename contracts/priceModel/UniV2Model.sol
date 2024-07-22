@@ -146,6 +146,8 @@ contract UniV2Model is Base, Unit {
         uint256 _priceCumulativeStart = _pairData.priceCumulative;
         uint256 _timeElapsed = block.timestamp.sub(_pairData.timestamp);
 
+        if (_timeElapsed == 0) return 0;
+
         FixedPoint.uq112x112 memory _priceAverage = FixedPoint.uq112x112(
             uint224(
                 (
