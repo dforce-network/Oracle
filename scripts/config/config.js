@@ -1326,6 +1326,35 @@ export const deployInfo = {
         priceModel: "ReaderPosterModel",
         price: ethers.utils.parseEther("1"),
       },
+      iMUSX: {
+        address: "0x87E63F6Ee8F6752Db64E29603ac7AD078D9506Ed",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      DF: {
+        address: "0x4ed818eDd4a0c36A3F43826A60630879b8164401",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("0.02797"),
+      },
+      USX: {
+        address: "0xeEB7C7280385AC9fAa609Fbc32AC64Df8ABACC02",
+        priceModel: "ReaderPosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      UTS: {
+        address: "0x1eFB5dD9e6cc0c4bbA8D9FBeFe29B6C8970C63ed",
+        priceModel: "UniV2Model",
+        pair: "0x1281Ce90FBF71c984d5A4c497824FFBD5431497A", // UTS/DF
+        // pair: "0x903CFC5BeF79745154ed0D5FDf9a22FeDF3EFa7B", // UTS/USX
+      },
+      BLPUTSDF: {
+        address: "0x1281Ce90FBF71c984d5A4c497824FFBD5431497A",
+        priceModel: "UniV2LPModel",
+      },
+      BLPUTSUSX: {
+        address: "0x903CFC5BeF79745154ed0D5FDf9a22FeDF3EFa7B",
+        priceModel: "UniV2LPModel",
+      },
     },
   },
   holesky: {

@@ -28,5 +28,15 @@
     "contract": "ReaderPosterModel",
     "path": "contracts/priceModel/",
     "address": "0xCE1A42eC7d25ceF9468d8A7D00B9C532a4aEB918"
+  },
+  "UniV2Model": {
+    "contract": "UniV2Model",
+    "path": "contracts/priceModel/",
+    "address": "0x6Af480FF56fB5E909A0Ca80b7F23F2347592A1fC"
+  },
+  "UniV2LPModel": {
+    "contract": "UniV2LPModel",
+    "path": "contracts/priceModel/",
+    "address": "0x7367117E05fB63411142f81f915184974B894F3E"
   }
 }
