@@ -101,7 +101,7 @@ async function checkExchangeRate(asset) {
 }
 
 async function checkUniV2Pair(asset) {
-  if (asset.hasOwnProperty("pair")) {
+  if (asset.priceModel == "UniV2Model" && asset.hasOwnProperty("pair")) {
     return (
       (await task.contracts[asset.priceModel].pair(asset.address)) != asset.pair
     );
@@ -230,6 +230,39 @@ async function setAssets() {
         calldatas.push(
           abi.encode(["address", "address"], [asset.address, asset.pair])
         );
+      }
+
+      if (asset.priceModel == "UniV2TwapModel") {
+        const data = await task.contracts[asset.priceModel].assetData(
+          asset.address
+        );
+        let twapDuration = data._twapDuration;
+
+        if (asset.hasOwnProperty("pair") && asset.pair != data._pair) {
+          twapDuration = await task.contracts[
+            asset.priceModel
+          ].defaultDuration();
+
+          assets.push(asset.address);
+          signatures.push("_setAsset(address,address)");
+          calldatas.push(
+            abi.encode(["address", "address"], [asset.address, asset.pair])
+          );
+        }
+
+        if (
+          asset.hasOwnProperty("twapDuration") &&
+          asset.twapDuration.toString() != twapDuration.toString()
+        ) {
+          assets.push(asset.address);
+          signatures.push("_setAssetTwapDuration(address,uint256)");
+          calldatas.push(
+            abi.encode(
+              ["address", "uint256"],
+              [asset.address, asset.twapDuration]
+            )
+          );
+        }
       }
     })
   );
