@@ -17,7 +17,7 @@ contract UniV2TwapModel is Base, Unit {
     using FixedPoint for *;
 
     /// @dev Default duration for TWAP calculation (7 days)
-    uint256 constant DEFAULT_DURATION = 7 days;
+    uint256 internal constant DEFAULT_DURATION = 7 days;
 
     /// @dev Struct to store TWAP data points
     struct Twap {
@@ -398,5 +398,14 @@ contract UniV2TwapModel is Base, Unit {
         AssetData storage _assetData = assetDatas_[_asset];
         _timestamp = _assetData.twap[_twapId].timestamp;
         _priceCumulative = _assetData.twap[_twapId].priceCumulative;
+    }
+
+    /**
+     * @dev Returns the default duration for TWAP calculations.
+     * This function is pure, meaning it does not modify the state of the contract.
+     * @return The default duration in seconds.
+     */
+    function defaultDuration() external pure returns (uint256) {
+        return DEFAULT_DURATION;
     }
 }
