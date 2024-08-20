@@ -1350,7 +1350,7 @@ export const deployInfo = {
       UTU: {
         address: "0x1eFB5dD9e6cc0c4bbA8D9FBeFe29B6C8970C63ed",
         priceModel: "UniV2TwapModel",
-        pair: "0x1281Ce90FBF71c984d5A4c497824FFBD5431497A", // UTS/DF
+        uniV2pair: "0x1281Ce90FBF71c984d5A4c497824FFBD5431497A", // UTS/DF
         twapDuration: ethers.utils.parseUnits("7200", "wei"),
         // pair: "0x903CFC5BeF79745154ed0D5FDf9a22FeDF3EFa7B", // UTS/USX
       },

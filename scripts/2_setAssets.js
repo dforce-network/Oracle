@@ -238,15 +238,18 @@ async function setAssets() {
         );
         let twapDuration = data._twapDuration;
 
-        if (asset.hasOwnProperty("pair") && asset.pair != data._pair) {
+        if (
+          asset.hasOwnProperty("uniV2pair") &&
+          asset.uniV2pair != data._pair
+        ) {
           twapDuration = await task.contracts[
             asset.priceModel
           ].defaultDuration();
 
           assets.push(asset.address);
-          signatures.push("_setAsset(address,address)");
+          signatures.push("_setAssetPair(address,address)");
           calldatas.push(
-            abi.encode(["address", "address"], [asset.address, asset.pair])
+            abi.encode(["address", "address"], [asset.address, asset.uniV2pair])
           );
         }
 
