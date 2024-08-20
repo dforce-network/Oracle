@@ -62,11 +62,14 @@ contract UniV2TwapModel is Base, Unit {
      * @param _asset The address of the asset
      * @param _pair The address of the Uniswap V2 pair
      */
-    function _setAssetInternal(address _asset, address _pair) internal virtual {
+    function _setAssetPairInternal(address _asset, address _pair)
+        internal
+        virtual
+    {
         AssetData storage _assetData = assetDatas_[_asset];
         require(
             _pair != _assetData.pair,
-            "_setAssetInternal: Old and new address cannot be the same."
+            "_setAssetPairInternal: Old and new address cannot be the same."
         );
 
         address _token0 = IUniswapV2Pair(_pair).token0();
@@ -76,12 +79,12 @@ contract UniV2TwapModel is Base, Unit {
 
         require(
             _isToken0 || _token1 == _asset,
-            "_setAssetInternal: asset is not in the pair"
+            "_setAssetPairInternal: asset is not in the pair"
         );
 
         require(
             IOracle(owner).getUnderlyingPrice(_pairToken) > 0,
-            "_setAssetInternal: other pair token price unavailable!"
+            "_setAssetPairInternal: other pair token price unavailable!"
         );
 
         _assetData.isToken0 = _isToken0;
@@ -159,8 +162,8 @@ contract UniV2TwapModel is Base, Unit {
      * @param _asset The address of the asset
      * @param _pair The address of the pair
      */
-    function _setAsset(address _asset, address _pair) external onlyOwner {
-        _setAssetInternal(_asset, _pair);
+    function _setAssetPair(address _asset, address _pair) external onlyOwner {
+        _setAssetPairInternal(_asset, _pair);
     }
 
     /**
@@ -168,16 +171,16 @@ contract UniV2TwapModel is Base, Unit {
      * @param _assets The array of asset addresses
      * @param _pairs The array of pair addresses
      */
-    function _setAssetBatch(
+    function _setAssetPairBatch(
         address[] calldata _assets,
         address[] calldata _pairs
     ) external virtual onlyOwner {
         require(
             _assets.length == _pairs.length,
-            "_setAssetBatch: assets & pairs must match in length."
+            "_setAssetPairBatch: assets & pairs must match in length."
         );
         for (uint256 i = 0; i < _assets.length; i++) {
-            _setAssetInternal(_assets[i], _pairs[i]);
+            _setAssetPairInternal(_assets[i], _pairs[i]);
         }
     }
 
