@@ -129,16 +129,18 @@ export const deployInfo = {
       },
       iGOLDx: {
         address: "0x164315EA59169D46359baa4BcC6479bB421764b6",
-        priceModel: "ChainlinkHeartbeatModel",
-        aggregatorModel: {
-          model: "UnitTransitAggregator",
-          key: "GOLDx",
-          param: [
-            "0x9B97304EA12EFed0FAd976FBeCAad46016bf269e",
-            "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-          ],
-        },
-        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        // priceModel: "ChainlinkHeartbeatModel",
+        // aggregatorModel: {
+        //   model: "UnitTransitAggregator",
+        //   key: "GOLDx",
+        //   param: [
+        //     "0x9B97304EA12EFed0FAd976FBeCAad46016bf269e",
+        //     "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+        //   ],
+        // },
+        // heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("81.38"),
       },
       iUNI: {
         address: "0xbeC9A824D6dA8d0F923FD9fbec4FAA949d396320",
@@ -300,13 +302,15 @@ export const deployInfo = {
 
       iGOLDx: {
         address: "0xc35ACAeEdB814F42B2214378d8950F8555B2D670",
-        priceModel: "ChainlinkHeartbeatModel",
-        aggregatorModel: {
-          model: "UnitAggregator",
-          key: "GOLDx",
-          param: ["0x7F8caD4690A38aC28BDA3D132eF83DB1C17557Df"],
-        },
-        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        // priceModel: "ChainlinkHeartbeatModel",
+        // aggregatorModel: {
+        //   model: "UnitAggregator",
+        //   key: "GOLDx",
+        //   param: ["0x7F8caD4690A38aC28BDA3D132eF83DB1C17557Df"],
+        // },
+        // heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("81.38"),
       },
       iFIL: {
         address: "0xD739A569Ec254d6a20eCF029F024816bE58Fb810",
