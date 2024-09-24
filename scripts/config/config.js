@@ -263,6 +263,12 @@ export const deployInfo = {
         },
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
+      icbBTC: {
+        address: "0x6D9Ce334C2cc6b80a4cddf9aEA6D3F4683cf4a50",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c", // BTC
+        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      },
       USX: {
         address: "0x0a5E677a6A24b2F1A2Bf4F3bFfC443231d2fDEc8",
         priceModel: "PosterModel",
@@ -856,6 +862,12 @@ export const deployInfo = {
           ],
         },
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      icbBTC: {
+        address: "0x7a2F91Ab4D5E97dE41c1df46d4A923D40CE224Dd",
+        priceModel: "Layer2ChainlinkHeartbeatModel",
+        aggregator: "0x64c911996D3c6aC71f9b455B1E8E7266BcbD848F", // BTC
+        heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
     },
   },
