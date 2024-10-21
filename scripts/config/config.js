@@ -802,6 +802,26 @@ export const deployInfo = {
         },
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
       },
+      USX: {
+        address: "0xbfD291DA8A403DAAF7e5E9DC1ec0aCEaCd4848B9",
+        priceModel: "Layer2PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      UTS: {
+        address: "0x3B6564b5DA73A41d3A66e6558a98FD0e9E1e77ad",
+        priceModel: "VelodromeModel",
+        pair: "0xb2737C2d51f919d1aF35E8fd9067A9C3bda5aCEe", // DFUTS
+        // pair: "0x1F143C3b8A5a98a5b69437d5d54F301d201076cA", // USXUTS
+        // granularity: 2,
+      },
+      BLPDFUTS: {
+        address: "0xb2737C2d51f919d1aF35E8fd9067A9C3bda5aCEe",
+        priceModel: "UniV2LPModel",
+      },
+      BLPUSXUTS: {
+        address: "0x1F143C3b8A5a98a5b69437d5d54F301d201076cA",
+        priceModel: "UniV2LPModel",
+      },
     },
   },
   base: {
@@ -868,6 +888,21 @@ export const deployInfo = {
         priceModel: "Layer2ChainlinkHeartbeatModel",
         aggregator: "0x64c911996D3c6aC71f9b455B1E8E7266BcbD848F", // BTC
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      },
+      USX: {
+        address: "0xc142171B138DB17a1B7Cb999C44526094a4dae05",
+        priceModel: "Layer2PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      UTS: {
+        address: "0x3B6564b5DA73A41d3A66e6558a98FD0e9E1e77ad",
+        priceModel: "VelodromeModel",
+        pair: "0xB0770d4f5c430b1C3C832c62Ac1AB12B49c9D277", // USXUTS
+        // granularity: 2,
+      },
+      BLPUSXUTS: {
+        address: "0xB0770d4f5c430b1C3C832c62Ac1AB12B49c9D277",
+        priceModel: "UniV2LPModel",
       },
     },
   },

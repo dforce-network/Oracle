@@ -109,6 +109,33 @@ async function checkUniV2Pair(asset) {
   return false;
 }
 
+async function checkAndSetVeloDrome(asset, assets, signatures, calldatas, abi) {
+  if (asset.priceModel == "VelodromeModel") {
+    const data = await task.contracts[asset.priceModel].assetData(
+      asset.address
+    );
+
+    if (asset.hasOwnProperty("pair") && asset.pair != data._pair) {
+      assets.push(asset.address);
+      signatures.push("_setAssetPair(address,address)");
+      calldatas.push(
+        abi.encode(["address", "address"], [asset.address, asset.pair])
+      );
+    }
+
+    if (
+      asset.hasOwnProperty("granularity") &&
+      asset.granularity.toString() != data._granularity.toString()
+    ) {
+      assets.push(asset.address);
+      signatures.push("_setAssetGranularity(address,uint256)");
+      calldatas.push(
+        abi.encode(["address", "uint256"], [asset.address, asset.granularity])
+      );
+    }
+  }
+}
+
 async function setAssets() {
   const abi = ethers.utils.defaultAbiCoder;
   let info = deployInfo[network[task.chainId]];
@@ -267,6 +294,8 @@ async function setAssets() {
           );
         }
       }
+
+      await checkAndSetVeloDrome(asset, assets, signatures, calldatas, abi);
     })
   );
 
