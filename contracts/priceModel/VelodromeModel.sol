@@ -11,25 +11,26 @@ import "../interface/IERC20.sol";
 
 /// @dev Interface for Velodrome/Aerodrome pair
 interface IVelodromePair {
-    function quote(
+    function sample(
         address tokenIn,
         uint256 amountIn,
-        uint256 granularity
-    ) external view returns (uint256 amountOut);
+        uint256 points,
+        uint256 window
+    ) external view returns (uint256[] memory);
 }
 
 /// @title VelodromeModel
 /// @notice A contract for read price from Velodrome pairs
 contract VelodromeModel is Base, Unit {
-    /// @dev Default granularity for quote() call (usually 30 mins)
-    uint256 internal constant DEFAULT_GRANULARITY = 1;
+    /// @dev Default window for sample() call (usually 300 mins)
+    uint256 internal constant DEFAULT_WINDOW = 10;
 
     /// @dev Struct to store asset-specific data
     struct AssetData {
         bool isToken0;
         address pair;
         address pairToken;
-        uint256 granularity;
+        uint256 window;
     }
 
     /// @dev Mapping of asset address to its AssetData
@@ -43,8 +44,8 @@ contract VelodromeModel is Base, Unit {
         address pairToken
     );
 
-    /// @dev Event emitted when an asset's granularity is set
-    event SetAssetGranularity(address asset, uint256 granularity);
+    /// @dev Event emitted when an asset's window is set
+    event SetAssetWindow(address asset, uint256 window);
 
     /**
      * @dev Internal function to set asset data
@@ -79,28 +80,28 @@ contract VelodromeModel is Base, Unit {
         _assetData.isToken0 = _isToken0;
         _assetData.pair = _pair;
         _assetData.pairToken = _pairToken;
-        _assetData.granularity = DEFAULT_GRANULARITY;
+        _assetData.window = DEFAULT_WINDOW;
         emit SetAsset(_asset, _isToken0, _pair, _pairToken);
 
-        _setAssetGranularityInternal(_asset, DEFAULT_GRANULARITY);
+        _setAssetWindowInternal(_asset, DEFAULT_WINDOW);
     }
 
     /**
-     * @dev Internal function to set the granularity for an asset
+     * @dev Internal function to set the window for an asset
      * @param _asset The address of the asset
-     * @param _granularity The granularity for TWAP calculation
+     * @param _window The window for TWAP calculation
      */
-    function _setAssetGranularityInternal(address _asset, uint256 _granularity)
+    function _setAssetWindowInternal(address _asset, uint256 _window)
         internal
         virtual
     {
         require(
-            _granularity > 0,
-            "_setAssetGranularityInternal: granularity must greater than zero!"
+            _window > 0,
+            "_setAssetWindowInternal: window must greater than zero!"
         );
         AssetData storage _assetData = assetDatas_[_asset];
-        _assetData.granularity = _granularity;
-        emit SetAssetGranularity(_asset, _granularity);
+        _assetData.window = _window;
+        emit SetAssetWindow(_asset, _window);
     }
 
     /**
@@ -133,13 +134,13 @@ contract VelodromeModel is Base, Unit {
     /**
      * @dev External function to set the TWAP duration for an asset
      * @param _asset The address of the asset
-     * @param _granularity The TWAP duration to be set
+     * @param _window The TWAP duration to be set
      */
-    function _setAssetGranularity(address _asset, uint256 _granularity)
+    function _setAssetWindow(address _asset, uint256 _window)
         external
         onlyOwner
     {
-        _setAssetGranularityInternal(_asset, _granularity);
+        _setAssetWindowInternal(_asset, _window);
     }
 
     /**
@@ -147,16 +148,16 @@ contract VelodromeModel is Base, Unit {
      * @param _assets The array of asset addresses
      * @param _granularities The array of TWAP durations to be set
      */
-    function _setAssetGranularityBatch(
+    function _setAssetWindowBatch(
         address[] calldata _assets,
         uint256[] calldata _granularities
     ) external virtual onlyOwner {
         require(
             _assets.length == _granularities.length,
-            "_setAssetgranularityBatch: assets & granularitys must match in length."
+            "_setAssetWindowBatch: assets & windows must match in length."
         );
         for (uint256 i = 0; i < _assets.length; i++) {
-            _setAssetGranularityInternal(_assets[i], _granularities[i]);
+            _setAssetWindowInternal(_assets[i], _granularities[i]);
         }
     }
 
@@ -175,12 +176,14 @@ contract VelodromeModel is Base, Unit {
         uint256 _tokenDecimals = IERC20(_asset).decimals();
         uint256 _amountIn = 10**_tokenDecimals;
 
-        // Call quote() function to get the TWAP amountOut
-        uint256 _amountOut = IVelodromePair(_assetData.pair).quote(
+        // Call sample() function to get the TWAP amountOut
+        // Directly use [0] as only queried 1 point
+        uint256 _amountOut = IVelodromePair(_assetData.pair).sample(
             _asset,
             _amountIn,
-            _assetData.granularity
-        );
+            1,
+            _assetData.window
+        )[0];
 
         return
             _amountOut
@@ -228,12 +231,12 @@ contract VelodromeModel is Base, Unit {
      * @dev Retrieves the asset data for a given asset address.
      * This function provides information about the asset's status in the TWAP model,
      * including whether it is token0 in the pair, the pair address, the paired token address,
-     * the granularity for quote() call.
+     * the window for quote() call.
      * @param _asset The address of the asset for which data is being retrieved.
      * @return _isToken0 A boolean indicating if the asset is token0 in the pair.
      * @return _pair The address of the Uniswap V2 pair associated with the asset.
      * @return _pairToken The address of the token paired with the asset.
-     * @return _granularity The duration for which the TWAP is calculated.
+     * @return _window The duration for which the TWAP is calculated.
      */
     function assetData(address _asset)
         external
@@ -242,21 +245,21 @@ contract VelodromeModel is Base, Unit {
             bool _isToken0,
             address _pair,
             address _pairToken,
-            uint256 _granularity
+            uint256 _window
         )
     {
         AssetData storage _assetData = assetDatas_[_asset];
         _isToken0 = _assetData.isToken0;
         _pair = _assetData.pair;
         _pairToken = _assetData.pairToken;
-        _granularity = _assetData.granularity;
+        _window = _assetData.window;
     }
 
     /**
-     * @dev Returns the default granularity for quote() call.
-     * @return The default granularity.
+     * @dev Returns the default window for sample() call.
+     * @return The default window.
      */
-    function defaultGranularity() external pure returns (uint256) {
-        return DEFAULT_GRANULARITY;
+    function defaultWindow() external pure returns (uint256) {
+        return DEFAULT_WINDOW;
     }
 }

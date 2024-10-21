@@ -812,7 +812,7 @@ export const deployInfo = {
         priceModel: "VelodromeModel",
         pair: "0xb2737C2d51f919d1aF35E8fd9067A9C3bda5aCEe", // DFUTS
         // pair: "0x1F143C3b8A5a98a5b69437d5d54F301d201076cA", // USXUTS
-        // granularity: 2,
+        window: 20,
       },
       BLPDFUTS: {
         address: "0xb2737C2d51f919d1aF35E8fd9067A9C3bda5aCEe",
@@ -898,7 +898,7 @@ export const deployInfo = {
         address: "0x3B6564b5DA73A41d3A66e6558a98FD0e9E1e77ad",
         priceModel: "VelodromeModel",
         pair: "0xB0770d4f5c430b1C3C832c62Ac1AB12B49c9D277", // USXUTS
-        // granularity: 2,
+        // window: 2,
       },
       BLPUSXUTS: {
         address: "0xB0770d4f5c430b1C3C832c62Ac1AB12B49c9D277",

@@ -124,13 +124,13 @@ async function checkAndSetVeloDrome(asset, assets, signatures, calldatas, abi) {
     }
 
     if (
-      asset.hasOwnProperty("granularity") &&
-      asset.granularity.toString() != data._granularity.toString()
+      asset.hasOwnProperty("window") &&
+      asset.window.toString() != data._window.toString()
     ) {
       assets.push(asset.address);
-      signatures.push("_setAssetGranularity(address,uint256)");
+      signatures.push("_setAssetWindow(address,uint256)");
       calldatas.push(
-        abi.encode(["address", "uint256"], [asset.address, asset.granularity])
+        abi.encode(["address", "uint256"], [asset.address, asset.window])
       );
     }
   }
