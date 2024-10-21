@@ -100,15 +100,6 @@ async function checkExchangeRate(asset) {
   return false;
 }
 
-async function checkUniV2Pair(asset) {
-  if (asset.priceModel == "UniV2Model" && asset.hasOwnProperty("pair")) {
-    return (
-      (await task.contracts[asset.priceModel].pair(asset.address)) != asset.pair
-    );
-  }
-  return false;
-}
-
 async function checkAndSetVeloDrome(asset, assets, signatures, calldatas, abi) {
   if (asset.priceModel == "VelodromeModel") {
     const data = await task.contracts[asset.priceModel].assetData(
@@ -251,24 +242,13 @@ async function setAssets() {
         );
       }
 
-      if (await checkUniV2Pair(asset)) {
-        assets.push(asset.address);
-        signatures.push("_setAssetPair(address,address)");
-        calldatas.push(
-          abi.encode(["address", "address"], [asset.address, asset.pair])
-        );
-      }
-
       if (asset.priceModel == "UniV2TwapModel") {
         const data = await task.contracts[asset.priceModel].assetData(
           asset.address
         );
         let twapDuration = data._twapDuration;
 
-        if (
-          asset.hasOwnProperty("uniV2pair") &&
-          asset.uniV2pair != data._pair
-        ) {
+        if (asset.hasOwnProperty("pair") && asset.pair != data._pair) {
           twapDuration = await task.contracts[
             asset.priceModel
           ].defaultDuration();
@@ -276,7 +256,7 @@ async function setAssets() {
           assets.push(asset.address);
           signatures.push("_setAssetPair(address,address)");
           calldatas.push(
-            abi.encode(["address", "address"], [asset.address, asset.uniV2pair])
+            abi.encode(["address", "address"], [asset.address, asset.pair])
           );
         }
 

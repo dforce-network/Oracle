@@ -276,15 +276,15 @@ export const deployInfo = {
       },
       UTS: {
         address: "0x3B6564b5DA73A41d3A66e6558a98FD0e9E1e77ad",
-        priceModel: "UniV2Model",
-        pair: "0xA0E752441024D632E13ac193B4d519E0C2e6508D", // UTS/DF
-        // pair: "0xe4ca23187cC5e05C76360611323A8295C65Adc05", // UTS/USX
+        priceModel: "UniV2TwapModel",
+        pair: "0xA0E752441024D632E13ac193B4d519E0C2e6508D", // DFUTS
+        // pair: "0xe4ca23187cC5e05C76360611323A8295C65Adc05", // USXUTS
       },
-      BLPUTSDF: {
+      BLPDFUTS: {
         address: "0xA0E752441024D632E13ac193B4d519E0C2e6508D",
         priceModel: "UniV2LPModel",
       },
-      BLPUTSUSX: {
+      BLPUSXUTS: {
         address: "0xe4ca23187cC5e05C76360611323A8295C65Adc05",
         priceModel: "UniV2LPModel",
       },
@@ -486,6 +486,25 @@ export const deployInfo = {
         },
         heartbeat: ethers.utils.parseUnits("7200", "wei"),
       },
+      USX: {
+        address: "0xB5102CeE1528Ce2C760893034A4603663495fD72",
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      UTS: {
+        address: "0x3B6564b5DA73A41d3A66e6558a98FD0e9E1e77ad",
+        priceModel: "UniV2TwapModel",
+        pair: "0x3c8968361D3F97637Bb5be39Cdb40C722B7F445E", // DFUTS
+        // pair: "0xdF2374842101a931180d96DdB44886E343391a0A", // USXUTS
+      },
+      BLPDFUTS: {
+        address: "0x3c8968361D3F97637Bb5be39Cdb40C722B7F445E",
+        priceModel: "UniV2LPModel",
+      },
+      BLPUSXUTS: {
+        address: "0xdF2374842101a931180d96DdB44886E343391a0A",
+        priceModel: "UniV2LPModel",
+      },
     },
   },
   arbitrum: {
@@ -668,6 +687,25 @@ export const deployInfo = {
         priceModel: "Layer2ChainlinkHeartbeatModel",
         aggregator: "0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3",
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      USX: {
+        address: "0x641441c631e2F909700d2f41FD87F0aA6A6b4EDb",
+        priceModel: "Layer2PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      UTS: {
+        address: "0x3B6564b5DA73A41d3A66e6558a98FD0e9E1e77ad",
+        priceModel: "UniV2TwapModel",
+        pair: "0x8044cA6F20A515af963ad726A50AeDAB9bBe0673", // DFUTS
+        // pair: "0x2d8cb4b49871419d9BaD4E93e87Eafd2Bf5341BA", // USXUTS
+      },
+      BLPDFUTS: {
+        address: "0x8044cA6F20A515af963ad726A50AeDAB9bBe0673",
+        priceModel: "UniV2LPModel",
+      },
+      BLPUSXUTS: {
+        address: "0x2d8cb4b49871419d9BaD4E93e87Eafd2Bf5341BA",
+        priceModel: "UniV2LPModel",
       },
     },
   },
@@ -980,6 +1018,25 @@ export const deployInfo = {
         priceModel: "ReaderPosterHeartbeatModel",
         reader: "0xcB5D9b6A9BA8eA6FA82660fAA9cC130586F939B2",
       },
+      USX: {
+        address: "0xCf66EB3D546F0415b368d98A95EAF56DeD7aA752",
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      UTS: {
+        address: "0x3B6564b5DA73A41d3A66e6558a98FD0e9E1e77ad",
+        priceModel: "UniV2TwapModel",
+        pair: "0xaAB1550aCC159D242F0f9C4D86774556984c90d4", // DFUTS
+        // pair: "0x14bD4F084358D688d055450549Fa4FD915a2AFf3", // USXUTS
+      },
+      BLPDFUTS: {
+        address: "0xaAB1550aCC159D242F0f9C4D86774556984c90d4",
+        priceModel: "UniV2LPModel",
+      },
+      BLPUSXUTS: {
+        address: "0x14bD4F084358D688d055450549Fa4FD915a2AFf3",
+        priceModel: "UniV2LPModel",
+      },
     },
   },
   avalanche: {
@@ -1164,6 +1221,25 @@ export const deployInfo = {
         priceModel: "ReaderPosterHeartbeatModel",
         // heartbeat: ethers.utils.parseUnits("90000", "wei"),
         heartbeat: ethers.utils.parseUnits("262800", "wei"),
+      },
+      USX: {
+        address: "0x422a86f57b6b6F1e557d406331c25EEeD075E7aA",
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      UTS: {
+        address: "0x3B6564b5DA73A41d3A66e6558a98FD0e9E1e77ad",
+        priceModel: "UniV2TwapModel",
+        pair: "0xc9113991BAF5D40dF195d9a9E82F371D8D7E6bbd", // DFUTS
+        // pair: "0x1BE11c918Df623e095961af276Ef9426d22aFf2F", // USXUTS
+      },
+      BLPDFUTS: {
+        address: "0xc9113991BAF5D40dF195d9a9E82F371D8D7E6bbd",
+        priceModel: "UniV2LPModel",
+      },
+      BLPUSXUTS: {
+        address: "0x1BE11c918Df623e095961af276Ef9426d22aFf2F",
+        priceModel: "UniV2LPModel",
       },
     },
   },
