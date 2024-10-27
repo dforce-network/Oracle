@@ -68,5 +68,15 @@
     "contract": "sUSXExchangeRateAggregator",
     "path": "contracts/aggregator/",
     "address": "0xA6736aD7B5Ca1B594dD9032E69CF15907603494a"
+  },
+  "UniV2TwapModel": {
+    "contract": "UniV2TwapModel",
+    "path": "contracts/priceModel/",
+    "address": "0x96E83c538Bd813E6cF3A4b252C7511cB636544d8"
+  },
+  "UniV2LPModel": {
+    "contract": "UniV2LPModel",
+    "path": "contracts/priceModel/",
+    "address": "0xf3939d6Bd3aC5bAB90EFFDd939CcF2bD0784f74b"
   }
 }

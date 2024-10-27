@@ -32,6 +32,16 @@
   "ReaderPosterHeartbeatModel": {
     "contract": "ReaderPosterHeartbeatModel",
     "path": "contracts/priceModel/",
-    "address": "0xe97d120431c479947ec17c988d75b915e5059bb5"
+    "address": "0xE97D120431c479947EC17C988d75b915e5059bb5"
+  },
+  "UniV2TwapModel": {
+    "contract": "UniV2TwapModel",
+    "path": "contracts/priceModel/",
+    "address": "0x37c0b3b47466C894DC3F7d6aFbbD3869D10e3027"
+  },
+  "UniV2LPModel": {
+    "contract": "UniV2LPModel",
+    "path": "contracts/priceModel/",
+    "address": "0x39b92dF2DaFEcB9d9be5b2299A654dc588F13380"
   }
 }

@@ -43,5 +43,15 @@
     "contract": "sUSXExchangeRateAggregator",
     "path": "contracts/aggregator/",
     "address": "0xec5cdc7B2f23C4268fBfE20BD177798567Dd574b"
+  },
+  "VelodromeModel": {
+    "contract": "VelodromeModel",
+    "path": "contracts/priceModel/",
+    "address": "0xC2a795BCdb89c4b48BFcf97e87A34D5De899A44F"
+  },
+  "UniV2LPModel": {
+    "contract": "UniV2LPModel",
+    "path": "contracts/priceModel/",
+    "address": "0x33C2851982CF102BCC962E805F49B5fe332B4297"
   }
 }

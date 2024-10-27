@@ -33,5 +33,15 @@
     "contract": "ReaderPosterHeartbeatModel",
     "path": "contracts/priceModel/",
     "address": "0x7EC1F05FAdFfd3e8c0dAb508E7F3266aa2e815dD"
+  },
+  "UniV2TwapModel": {
+    "contract": "UniV2TwapModel",
+    "path": "contracts/priceModel/",
+    "address": "0xC88B3CcdB76c47CA4CF8e9c4AEf74E950D036FE6"
+  },
+  "UniV2LPModel": {
+    "contract": "UniV2LPModel",
+    "path": "contracts/priceModel/",
+    "address": "0x4a32452A7b7F54B582bbEf61B24cb957EdD8301A"
   }
 }
