@@ -1489,6 +1489,12 @@ export const deployInfo = {
         address: "0x903CFC5BeF79745154ed0D5FDf9a22FeDF3EFa7B",
         priceModel: "UniV2LPModel",
       },
+      WETH: {
+        address: "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0x694AA1769357215DE4FAC081bf1f309aDC325306",
+        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      },
     },
   },
   holesky: {
