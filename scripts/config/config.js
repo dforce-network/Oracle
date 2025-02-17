@@ -505,6 +505,12 @@ export const deployInfo = {
         address: "0xdF2374842101a931180d96DdB44886E343391a0A",
         priceModel: "UniV2LPModel",
       },
+      WBNB: {
+        address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0x0567F2323251f0Aab15c8dFb1967E4e8A7D42aeE",
+        heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      },
     },
   },
   arbitrum: {
