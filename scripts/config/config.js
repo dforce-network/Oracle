@@ -1247,6 +1247,16 @@ export const deployInfo = {
         address: "0x1BE11c918Df623e095961af276Ef9426d22aFf2F",
         priceModel: "UniV2LPModel",
       },
+      iEAG: {
+        address: "0x590Cf4E760f311b7eA41344eC3128f11Ae8308Cf",
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+      iUSDTs1: {
+        address: "0x9077c80848175028575673a6C10Ce07A41702B0A",
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
     },
   },
   zkSyncTestnet: {
