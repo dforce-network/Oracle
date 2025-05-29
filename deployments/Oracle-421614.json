@@ -1,0 +1,37 @@
+{
+  "timeLock": {
+    "contract": "Timelock",
+    "path": "contracts/timelock/",
+    "address": "0x17e66B1e0260C930bfA567ff3ab5c71794279b94"
+  },
+  "proxyAdmin": {
+    "contract": "ProxyAdmin",
+    "path": "contracts/library/",
+    "address": "0xAf059E3089fb67ee6FB2d43358708f0860d90FBb"
+  },
+  "OracleImpl": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0xbd895ce7311B4C22dA27AbC1C4dA4D1dEF3B023e"
+  },
+  "Oracle": {
+    "contract": "Oracle",
+    "path": "contracts/",
+    "address": "0x4b7c6ddB0AB3AB75A232ad3e0b07e8f9acFA78cB"
+  },
+  "Layer2ChainlinkHeartbeatExchangeRateSetModel": {
+    "contract": "Layer2ChainlinkHeartbeatExchangeRateSetModel",
+    "path": "contracts/priceModel/layer2/",
+    "address": "0x90d309405CEfDaD7741C52561b18a8FFec413a9f"
+  },
+  "ChainlinkHeartbeatModel": {
+    "contract": "ChainlinkHeartbeatModel",
+    "path": "contracts/priceModel/",
+    "address": "0x4E8632E4C11EF6105FDd968e235Ae60DcB80d27c"
+  },
+  "PosterModel": {
+    "contract": "PosterModel",
+    "path": "contracts/priceModel/",
+    "address": "0x1b4D4F1055B82A450D4B1593DEF0D0Ae760c242D"
+  }
+}

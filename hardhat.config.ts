@@ -81,6 +81,14 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
+    arbitrumSepolia: {
+      url: "http://localhost:24012/rpc", // truffle-dashboard
+      timeout: 200000,
+    },
+    baseSepolia: {
+      url: "http://localhost:24012/rpc", // truffle-dashboard
+      timeout: 200000,
+    },
     holesky: {
       url: "https://ethereum-holesky.publicnode.com/",
       accounts:
@@ -108,6 +116,7 @@ const config: HardhatUserConfig = {
     },
     bsc: {
       url: "http://localhost:24012/rpc", // truffle-dashboard
+      // url: "https://rpc.ankr.com/bsc/95bec6cdaac12deb45134982c4e8f0f93e97a2c393d833fed85edcd1991c3475", // truffle-dashboard
       timeout: 200000,
     },
     polygon: {

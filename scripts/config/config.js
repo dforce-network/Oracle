@@ -19,6 +19,7 @@ export const network = {
   11155111: "sepolia",
   17000: "holesky",
   421614: "arbitrumSepolia",
+  84532: "baseSepolia",
 };
 export const deployInfo = {
   mainnet: {
@@ -1545,6 +1546,57 @@ export const deployInfo = {
         aggregator: "0xd30e2101a97dcbAeBCBC04F14C3f624E67A35165",
         heartbeat: ethers.utils.parseUnits("120", "wei"),
         exchangeRate: ethers.utils.parseEther("1.24567890"),
+      },
+      iETH: {
+        address: "0x0718D28B25228450b789E1AC6D4baf76f7064f66",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0xd30e2101a97dcbAeBCBC04F14C3f624E67A35165",
+        heartbeat: ethers.utils.parseUnits("600", "wei"),
+      },
+      iUSDC: {
+        address: "0x148E0F9eefdac5f1e84e40C81C42b027Fb60B444",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0x0153002d20B96532C639313c2d54c3dA09109309",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      // iUSDT: {
+      //   address: "",
+      //   priceModel: "ChainlinkHeartbeatModel",
+      //   aggregator: "0x80EDee6f667eCc9f63a0a6f55578F870651f06A4",
+      //   heartbeat: ethers.utils.parseUnits("7200", "wei"),
+      // },
+      iUSX: {
+        address: "0xb4269768255894dd3a62bDfA909F338fFB9F9f4e",
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
+    },
+  },
+  baseSepolia: {
+    poster: "0xF4Db6BB2bd78b42e3cFbA47B667ff8A2CebB570D",
+    assets: {
+      iETH: {
+        address: "0xfCc1Ae8899237757002167211251309898ae7723",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0x4aDC67696bA383F43DD60A9e78F2C97Fbbfc7cb1",
+        heartbeat: ethers.utils.parseUnits("4800", "wei"),
+      },
+      iUSDC: {
+        address: "0x57Db8462ba0b08f04bC04B294D9b15CDC1d93b59",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0xd30e2101a97dcbAeBCBC04F14C3f624E67A35165",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
+      // iUSDT: {
+      //   address: "",
+      //   priceModel: "ChainlinkHeartbeatModel",
+      //   aggregator: "0x3ec8593F930EA45ea58c968260e6e9FF53FC934f",
+      //   heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      // },
+      iUSX: {
+        address: "0x772C6832257Fd0D82D4458A08133BCb977aD30aC",
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
       },
     },
   },
