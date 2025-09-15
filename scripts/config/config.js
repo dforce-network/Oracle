@@ -1258,6 +1258,11 @@ export const deployInfo = {
         priceModel: "PosterModel",
         price: ethers.utils.parseEther("1"),
       },
+      iUSDTs2: {
+        address: "0xACE157d876C9Cfbb5E3Af32F9DBdA3Ae26b64571",
+        priceModel: "PosterModel",
+        price: ethers.utils.parseEther("1"),
+      },
     },
   },
   zkSyncTestnet: {
