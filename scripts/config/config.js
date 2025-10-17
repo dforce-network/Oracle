@@ -1263,6 +1263,20 @@ export const deployInfo = {
         priceModel: "PosterModel",
         price: ethers.utils.parseEther("1"),
       },
+      WCFX: {
+        address: "0x14b2d3bc65e74dae1030eafd8ac30c533c976a9b",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+      },
+      iAxCNH: {
+        address: "0xf3939d6Bd3aC5bAB90EFFDd939CcF2bD0784f74b",
+        priceModel: "PythInversePriceModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0xeef52e09c878ad41f6a81803e3640fe04dceea727de894edd4ea117e2e332e66",
+      },
     },
   },
   zkSyncTestnet: {

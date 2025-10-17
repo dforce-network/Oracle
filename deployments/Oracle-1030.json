@@ -43,5 +43,10 @@
     "contract": "UniV2LPModel",
     "path": "contracts/priceModel/",
     "address": "0x39b92dF2DaFEcB9d9be5b2299A654dc588F13380"
+  },
+  "PythInversePriceModel": {
+    "contract": "PythInversePriceModel",
+    "path": "contracts/priceModel/",
+    "address": "0xB276FB21e29E8055044d31d093F8f1A4a88CA0BC"
   }
 }
