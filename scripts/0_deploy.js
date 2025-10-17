@@ -42,6 +42,7 @@ async function deploy() {
         break;
 
       case "PythMo":
+      case "PythIn":
         item.path = "contracts/priceModel/";
         item.getArgs = () => [info.pyth];
         break;
