@@ -1273,7 +1273,7 @@ export const deployInfo = {
       iAxCNH: {
         address: "0xf3939d6Bd3aC5bAB90EFFDd939CcF2bD0784f74b",
         priceModel: "PythInversePriceModel",
-        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        heartbeat: ethers.utils.parseUnits("608400", "wei"),
         feedID:
           "0xeef52e09c878ad41f6a81803e3640fe04dceea727de894edd4ea117e2e332e66",
       },
