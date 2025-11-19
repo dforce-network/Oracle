@@ -1277,6 +1277,13 @@ export const deployInfo = {
         feedID:
           "0xeef52e09c878ad41f6a81803e3640fe04dceea727de894edd4ea117e2e332e66",
       },
+      iUSDT0: {
+        address: "0xB7cb18cDf811a5Ea04E823980eDb028635650Fd0",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x2b89b9dc8fdf9f34709a5b106b472f0f39bb6ca9ce04b0fd7f2e971688e2e53b",
+      },
     },
   },
   zkSyncTestnet: {
