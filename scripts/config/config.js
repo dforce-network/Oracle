@@ -289,6 +289,12 @@ export const deployInfo = {
         address: "0xe4ca23187cC5e05C76360611323A8295C65Adc05",
         priceModel: "UniV2LPModel",
       },
+      iXAUt: {
+        address: "0x7b37231059358931eE81df1F26291270C93f13B2",
+        priceModel: "ChainlinkHeartbeatModel",
+        aggregator: "0x214eD9Da11D2fbe465a6fc601a91E62EbEc1a0D6",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+      },
     },
   },
   bsc: {
