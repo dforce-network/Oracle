@@ -1047,7 +1047,10 @@ export const deployInfo = {
   },
   confluxeSpace: {
     poster: "0x5c5bFFdB161E637B7f555CC122831126e02270d5",
-    pyth: "0xe9d69CdD6Fe41e7B621B4A688C5D1a68cB5c8ADc",
+    // Pyth Network sunset Conflux eSpace support (2026-07-31). Replaced with the
+    // Conflux community oracle (drop-in, Pyth-compatible read API, same feed IDs).
+    // Contract: conflux-fans/oracle-contracts (UUPS proxy). Old Pyth: 0xe9d69CdD6Fe41e7B621B4A688C5D1a68cB5c8ADc
+    pyth: "0x5286BD91e2C79fE066926a15193C7e531bBF6750",
     assets: {
       iWBTC: {
         address: "0xE08020a6517c1AD321D47c45Efbe1d76F5035d75",
@@ -1083,6 +1086,23 @@ export const deployInfo = {
         heartbeat: ethers.utils.parseUnits("90000", "wei"),
         feedID:
           "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a",
+      },
+      // USDT0 shares the USDT feed ID (identical price per the Conflux oracle spec).
+      iUSDT0: {
+        address: "0xB7cb18cDf811a5Ea04E823980eDb028635650Fd0",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("90000", "wei"),
+        feedID:
+          "0x2b89b9dc8fdf9f34709a5b106b472f0f39bb6ca9ce04b0fd7f2e971688e2e53b",
+      },
+      // AxCNH/USD uses the Conflux oracle's dedicated feed (keccak256("ConfluxOracle.AxCNH/USD")).
+      // Heartbeat kept at 608400s to match its prior Pyth-model configuration.
+      iAxCNH: {
+        address: "0xf3939d6Bd3aC5bAB90EFFDd939CcF2bD0784f74b",
+        priceModel: "PythModel",
+        heartbeat: ethers.utils.parseUnits("608400", "wei"),
+        feedID:
+          "0x6412f0e5469e5ab64fccf0eea916ae6db2bcd56568daaaf583b3054d465e8e2d",
       },
       iUSX: {
         address: "0x6f87b39a2e36F205706921d81a6861B655db6358",

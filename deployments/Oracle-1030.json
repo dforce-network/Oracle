@@ -19,11 +19,6 @@
     "path": "contracts/",
     "address": "0xfd3868B848B5D9eD3583938B4db4746415bD43a3"
   },
-  "PythModel": {
-    "contract": "PythModel",
-    "path": "contracts/priceModel/",
-    "address": "0x2434A722565E0d5C5b0f515666f39D1e63ef77d6"
-  },
   "PosterModel": {
     "contract": "PosterModel",
     "path": "contracts/priceModel/",
@@ -33,5 +28,10 @@
     "contract": "ReaderPosterHeartbeatModel",
     "path": "contracts/priceModel/",
     "address": "0xe97d120431c479947ec17c988d75b915e5059bb5"
+  },
+  "PythModel": {
+    "contract": "PythModel",
+    "path": "contracts/priceModel/",
+    "address": "0x5a1E54666207b35A6a561655aE028dAe9DE1A725"
   }
 }
